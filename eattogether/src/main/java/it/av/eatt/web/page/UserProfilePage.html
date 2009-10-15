@@ -1,0 +1,21 @@
+<wicket:extend>
+    	<div id="container">
+        <form wicket:id="userProfileForm" class="cmxform">
+        	<fieldset>
+        	 <ol>
+    			<li>
+	        	<label for="name"><wicket:message key="name"/></label>
+	        	<input type="text" wicket:id="name"/>
+	        	<label for="description"><wicket:message key="description"/></label>
+	        	<input type="text" wicket:id="description"/>
+	        	</li>
+	        	<li>
+	        	<input type="submit" wicket:id="ajax-button" />
+	        	<button wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button>
+	        	</li>
+	        </ol>
+        	</fieldset>
+        </form>
+        <table class="datatable" wicket:id="usersDataTable">[table]</table>
+        </div>
+</wicket:extend>
