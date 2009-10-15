@@ -1,0 +1,22 @@
+<wicket:extend>
+	<div id="main">
+	<h2>Title</h2>
+		<span wicket:id="ristoranteSearchPanel"></span>
+		<table class="datatable" wicket:id="ristoranteDataTable">[table]</table>	
+		<label><wicket:message key="userHomePage.myRistoActivities" /></label>
+		<ul wicket:id="activitiesList">
+			<li wicket:id="type"></li>
+			<li wicket:id="date.time" style="padding: 10px;"></li>
+			<a href="#" wicket:id="ristorante.name" style="padding: 10px;"></a>
+		</ul>
+		<label><wicket:message key="userHomePage.myFriendRistoActivities" /></label>
+		<ul wicket:id="friendsActivitiesList">
+			<li wicket:id="user.lastname"></li>
+			<li wicket:id="type"></li>
+			<li wicket:id="date.time" style="padding: 10px;"></li>
+			<li wicket:id="ristorante.name" style="padding: 10px;"></li>
+		</ul>
+	</div>
+	<div class="layoutfix"> </div>
+</wicket:extend>
+
