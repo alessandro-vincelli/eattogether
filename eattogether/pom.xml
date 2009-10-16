@@ -7,7 +7,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<name>Eat Together</name>
 	<description>Wiki and social network to share food experiences</description>
-	<url>http://www.alessandro.vincelli.name/eattogether</url>
+	<url>http://code.google.com/p/eattogether</url>
 	<ciManagement>
 		<system>Hudson</system>
 		<url>http://www.alessandro.vincelli.name/hudson</url>
@@ -358,9 +358,9 @@
 		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 	</dependencies>
 	<scm>
-		<url>http://www.alessandro.vincelli.name/svn/deals-3/eattogether</url>
-		<connection>scm:svn:http://www.alessandro.vincelli.name/svn/deals-3/eattogether</connection>
-    	<developerConnection>scm:svn:http://www.alessandro.vincelli.name/svn/deals-3/eattogether</developerConnection>
+		<url>https://eattogether.googlecode.com/svn/trunk/eattogether</url>
+		<connection>scm:svn:https://eattogether.googlecode.com/svn/trunk/eattogether</connection>
+    	<developerConnection>scm:svn:https://eattogether.googlecode.com/svn/trunk/eattogether</developerConnection>
 	</scm>
 	<build>
 		<resources>
