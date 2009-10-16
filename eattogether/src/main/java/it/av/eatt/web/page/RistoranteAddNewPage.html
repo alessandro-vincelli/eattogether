@@ -1,0 +1,62 @@
+<wicket:extend>
+
+        <div id="container">
+      	<p>
+      		<label><strong>Risto page</strong></label>
+      	</p>
+        <form wicket:id="ristoranteForm" class="cmxform">
+        	<fieldset>
+        	 <ol>
+    			<li>
+	        	<label for="name"><wicket:message key="name"/></label>
+	        	<input type="text" wicket:id="name"/>
+	        	<!--<a wicket:id="autocompleteForm"><wicket:message key="button.clean"/></a>-->
+	        	</li>
+	        	<li>
+	        	<label for="address"><wicket:message key="address"/></label>
+	        	<input type="text" wicket:id="address"/>
+	        	<label for="city"><wicket:message key="city"/></label>
+	        	<input type="text" wicket:id="city"/>
+	        	</li>
+	        	<li>
+	        	<label for="province"><wicket:message key="province"/></label>
+	        	<input type="text" wicket:id="province"/>
+	        	<label for="postalCode"><wicket:message key="postalCode"/></label>
+	        	<input type="text" wicket:id="postalCode"/>
+	        	</li>
+	        	<li>
+	        	<label for="country"><wicket:message key="country"/></label>
+	        	<input type="text" wicket:id="country"/>
+	        	<label for="type"><wicket:message key="type"/></label>
+	        	<input type="text" wicket:id="type"/>
+	        	</li>
+	        	<li>
+	        	<label for="phoneNumber"><wicket:message key="phoneNumber"/></label>
+	        	<input type="text" wicket:id="phoneNumber"></input>
+	        	<label for="mobilePhoneNumber"><wicket:message key="mobilePhoneNumber"/></label>
+	        	<input type="text" wicket:id="mobilePhoneNumber"></input>
+	        	<label for="faxNumber"><wicket:message key="faxNumber"/></label>
+	        	<input type="text" wicket:id="faxNumber"></input>
+	        	</li>
+	        	<li>
+	        	<label for="www"><wicket:message key="www"/></label>
+	        	<input type="text" wicket:id="www"></input>
+	        	</li>
+	        	<li>
+	        	<label for="description"><wicket:message key="description"/></label>
+	        	<input type="text" wicket:id="description"/>
+	        	</li>
+	        	<li>
+	        	<label for="version"><wicket:message key="version"/></label>
+	        	<span wicket:id="version"/>
+	        	</li>
+	        	
+	        	<li>
+	        	<input type="submit" wicket:id="submitRestaurant" />
+	        	<a wicket:id="buttonClearForm"><wicket:message key="button.clean"/></a>
+	        	</li>
+	        </ol>
+        	</fieldset>
+        </form>
+       </div>
+</wicket:extend>
