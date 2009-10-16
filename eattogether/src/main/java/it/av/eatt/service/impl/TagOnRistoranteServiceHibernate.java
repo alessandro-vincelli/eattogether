@@ -75,9 +75,7 @@ public class TagOnRistoranteServiceHibernate extends ApplicationServiceHibernate
         Query query = getJpaTemplate().getEntityManager().createQuery("select tag from Ristorante as risto join risto.tags as tag where risto = :risto and tag.tag.tag = :tag");
         query.setParameter("risto", risto);
         query.setParameter("tag", tag);
-        Tag tagItem = tagService.getByTagValue(tag);
-        List<TagOnRistorante> results = query.getResultList();
-        return results;
+        return query.getResultList();
     }
 
     /*
