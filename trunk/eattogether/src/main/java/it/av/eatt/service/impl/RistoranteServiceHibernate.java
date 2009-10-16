@@ -114,9 +114,10 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
         if (tags.size() == 0) {
             risto.addTag(tagOnRistoranteService.insert(tag));
             save(risto);
-        } else {
-            // tag already presents, don't do anything
         }
+        //else {
+            // tag already presents, don't do anything
+        //}
         return risto;
     }
 
