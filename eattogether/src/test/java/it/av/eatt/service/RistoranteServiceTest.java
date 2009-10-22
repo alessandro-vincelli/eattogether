@@ -106,16 +106,6 @@ public class RistoranteServiceTest {
             a = ristoranteService.update(a, user);
             assertTrue("Rates losts after update ", a.getRates().get(0).getRate() == 1);
             
-            
-            a = ristoranteService.addTag(a, user, "tag1");
-            
-            assertTrue(a.getTags().size() > 0);
-            assertEquals(a.getTags().get(0).getTag().getTag(), "tag1");
-            
-            a = ristoranteService.addTag(a, user, "tag2");
-            
-            assertTrue(a.getTags().size() == 2);
-            
             Collection<Ristorante> all = ristoranteService.getAll();
             assertNotNull(all);
             assertTrue(all.size() > 0);

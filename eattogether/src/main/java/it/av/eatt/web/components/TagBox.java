@@ -40,12 +40,11 @@ public class TagBox extends AutoCompleteTextField<String> {
     @Override
     protected Iterator<String> getChoices(String input) {
         Collection<String> choises = new ArrayList<String>();
-        try {
-            for (Tag tag : ristoranteService.findTagsNotLinked(input + "%", ristorante)) {
-                choises.add(tag.getTag());
-            }
-        } catch (JackWicketException e) {
-        }
+            //FIXME change the implementation
+            //for (Tag tag : ristoranteService.findTagsNotLinked(input + "%", ristorante)) {
+             //   choises.add(tag.getTag());
+            //}
+        
         return choises.iterator();
     }
 

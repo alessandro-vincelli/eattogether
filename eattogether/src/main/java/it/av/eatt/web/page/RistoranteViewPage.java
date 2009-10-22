@@ -17,7 +17,7 @@ package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
-import it.av.eatt.ocm.model.TagOnRistorante;
+import it.av.eatt.ocm.model.Tag;
 import it.av.eatt.service.RistoranteService;
 
 import org.apache.wicket.PageParameters;
@@ -84,11 +84,11 @@ public class RistoranteViewPage extends BasePage {
         form.add(new Label(Ristorante.FAX_NUMBER));
         form.add(new Label(Ristorante.WWW));
         form.add(new ListMultipleChoice<String>(Ristorante.RATES));
-        form.add(new ListView<TagOnRistorante>(Ristorante.TAGS){
+        form.add(new ListView<Tag>(Ristorante.TAGS){
             private static final long serialVersionUID = 1L;
             @Override
-            protected void populateItem(ListItem<TagOnRistorante> item) {
-                item.add(new Label("tagItem", item.getModelObject().getTag().getTag()));
+            protected void populateItem(ListItem<Tag> item) {
+                item.add(new Label("tagItem", item.getModelObject().getTag()));
             } 
         });
         form.add(new MultiLineLabel(Ristorante.DESCRIPTION));
