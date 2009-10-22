@@ -38,7 +38,6 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
@@ -181,9 +180,9 @@ public class RistoranteEditPage extends BasePage {
         protected void onComponentTag(ComponentTag tag) {
             super.onComponentTag(tag);
             if (form.getModelObject().getId() == 0) {
-                tag.getAttributes().put("value", new StringResourceModel("button.create", this, null).getString());
+                tag.getAttributes().put("value", getString("button.create"));
             } else {
-                tag.getAttributes().put("value", new StringResourceModel("button.update", this, null).getString());
+                tag.getAttributes().put("value", getString("button.update"));
             }
         }
 
@@ -192,10 +191,10 @@ public class RistoranteEditPage extends BasePage {
             try {
                 if(ristorante.getId() != 0){
                     ristorante = ristoranteService.update(ristorante, getLoggedInUser());
-                    getFeedbackPanel().info(new StringResourceModel("info.ristoranteupdated", this, null).getString());
+                    getFeedbackPanel().info(getString("info.ristoranteupdated"));
                 }
                 else{
-                    getFeedbackPanel().error(new StringResourceModel("error.onUpdate", this, null).getString());
+                    getFeedbackPanel().error(getString("error.onUpdate"));
                 }
                 form.setModelObject(ristorante);
             } catch (JackWicketException e) {
