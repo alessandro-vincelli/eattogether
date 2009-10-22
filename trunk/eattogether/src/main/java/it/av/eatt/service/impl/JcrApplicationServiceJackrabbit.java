@@ -24,7 +24,6 @@ import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.jcr.Node;
 import javax.jcr.RepositoryException;
@@ -33,7 +32,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.jackrabbit.ocm.query.Filter;
 import org.apache.jackrabbit.ocm.query.Query;
 import org.apache.jackrabbit.ocm.query.QueryManager;
-import org.apache.jackrabbit.ocm.query.impl.QueryManagerImpl;
 import org.apache.jackrabbit.ocm.version.Version;
 import org.apache.jackrabbit.ocm.version.VersionIterator;
 import org.apache.wicket.spring.injection.annot.SpringBean;

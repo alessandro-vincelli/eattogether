@@ -1,8 +1,6 @@
 package it.av.eatt.web.components;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
-import it.av.eatt.ocm.model.Tag;
 import it.av.eatt.service.RistoranteService;
 
 import java.util.ArrayList;

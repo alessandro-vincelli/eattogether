@@ -1,8 +1,8 @@
 package it.av.eatt.ocm.model.data;
 
-import javax.persistence.Entity;
-
 import it.av.eatt.ocm.model.BasicEntity;
+
+import javax.persistence.Entity;
 
 /**
  * countries and regions/state

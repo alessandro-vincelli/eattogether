@@ -19,10 +19,8 @@ import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.JcrRistoranteService;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.transaction.annotation.Transactional;
 

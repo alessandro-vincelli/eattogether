@@ -1,7 +1,6 @@
 package it.av.eatt.todb;
 
 import it.av.eatt.JackWicketException;
-
 import it.av.eatt.ocm.model.data.Country;
 import it.av.eatt.ocm.model.data.CountryRegion;
 import it.av.eatt.service.CountryRegionService;

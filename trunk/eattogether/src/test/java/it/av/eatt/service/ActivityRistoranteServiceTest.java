@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.ActivityRistorante;
-import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterRelation;
+import it.av.eatt.ocm.model.Ristorante;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;

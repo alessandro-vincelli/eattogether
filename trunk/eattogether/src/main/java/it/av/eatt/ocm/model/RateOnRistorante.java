@@ -16,7 +16,6 @@
 package it.av.eatt.ocm.model;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
 
 /**

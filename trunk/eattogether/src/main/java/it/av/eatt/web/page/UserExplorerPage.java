@@ -16,7 +16,6 @@
 package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
-import it.av.eatt.ocm.model.Activity;
 import it.av.eatt.ocm.model.ActivityRistorante;
 import it.av.eatt.service.ActivityRistoranteService;
 

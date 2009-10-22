@@ -37,7 +37,6 @@ import it.av.eatt.JackWicketException;
 
 import javax.jcr.Session;
 
-
 import org.apache.jackrabbit.util.ISO9075;
 import org.apache.jackrabbit.util.Text;
 

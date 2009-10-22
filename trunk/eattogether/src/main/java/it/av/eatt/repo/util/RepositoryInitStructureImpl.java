@@ -16,20 +16,14 @@
 package it.av.eatt.repo.util;
 
 import it.av.eatt.JackWicketException;
-import it.av.eatt.ocm.model.Folder;
-import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterProfile;
+import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.RistoranteService;
 import it.av.eatt.service.UserProfileService;
 import it.av.eatt.service.UserService;
-import it.av.eatt.service.impl.JcrApplicationServiceJackrabbit;
-
-import java.util.List;
 
 import javax.annotation.Resource;
-
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Check the base SC repository structure and eventually create the base nodes

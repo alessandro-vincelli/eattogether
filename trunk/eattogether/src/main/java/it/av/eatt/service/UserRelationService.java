@@ -19,7 +19,6 @@ import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterRelation;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Service;

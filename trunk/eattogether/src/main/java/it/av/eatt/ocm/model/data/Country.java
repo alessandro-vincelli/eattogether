@@ -3,8 +3,6 @@ package it.av.eatt.ocm.model.data;
 import it.av.eatt.ocm.model.BasicEntity;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 
 import org.hibernate.search.annotations.Indexed;
 

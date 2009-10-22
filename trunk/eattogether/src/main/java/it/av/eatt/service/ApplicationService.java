@@ -20,8 +20,6 @@ import it.av.eatt.JackWicketException;
 import java.util.List;
 
 import org.hibernate.criterion.Criterion;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 /**
  * General operations
  * 
