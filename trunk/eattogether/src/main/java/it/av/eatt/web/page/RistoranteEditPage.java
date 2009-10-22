@@ -18,7 +18,6 @@ package it.av.eatt.web.page;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.Tag;
-import it.av.eatt.ocm.model.TagOnRistorante;
 import it.av.eatt.service.RistoranteService;
 import it.av.eatt.service.TagService;
 import it.av.eatt.web.components.TagBox;
@@ -98,11 +97,11 @@ public class RistoranteEditPage extends BasePage {
         form.add(new TextField<String>(Ristorante.WWW).setOutputMarkupId(true));
         form.add(new TagBox(new Model<String>(""), "tagBox", ristoranteService, ristorante));
         
-        form.add(new ListView<TagOnRistorante>(Ristorante.TAGS){
+        form.add(new ListView<Tag>(Ristorante.TAGS){
             private static final long serialVersionUID = 1L;
             @Override
-            protected void populateItem(ListItem<TagOnRistorante> item) {
-                item.add(new Label("tagItem", item.getModelObject().getTag().getTag()));
+            protected void populateItem(ListItem<Tag> item) {
+                item.add(new Label("tagItem", item.getModelObject().getTag()));
                 item.add(new AjaxFallbackLink<String>("buttonTagItemRemove"){
                     @Override
                     public void onClick(AjaxRequestTarget target) {
@@ -126,15 +125,8 @@ public class RistoranteEditPage extends BasePage {
                 String tagValue = ((TagBox)form.get("tagBox")).getModelObject();
                 if (StringUtils.isNotBlank(tagValue)){
                     Ristorante risto = ((Ristorante)form.getModelObject());
-                    Tag tag;
-                    try {
-                        tag = tagService.getByTagValue(tagValue);
-                        if(tag != null){
-                            risto.getTags().add(new TagOnRistorante(tag));
-                        }
-                        else{
-                            risto.getTags().add(new TagOnRistorante(new Tag(tagValue)));
-                        }
+                    try {    
+                        risto.getTags().add(tagService.insert(tagValue));
                         form.setModelObject(risto);
                         if(target != null){
                             target.addComponent(form);

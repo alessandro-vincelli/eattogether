@@ -28,7 +28,6 @@ import javax.persistence.OneToMany;
 
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -102,7 +101,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     @Fetch(FetchMode.SELECT)
     //@JoinTable
     //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-    private List<TagOnRistorante> tags;
+    private List<Tag> tags;
     //@OneToMany(mappedBy = "ristorante", cascade = { CascadeType.ALL })
     //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
@@ -119,7 +118,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
 
     public Ristorante() {
         rates = new ArrayList<RateOnRistorante>();
-        tags = new ArrayList<TagOnRistorante>();
+        tags = new ArrayList<Tag>();
         activities = new ArrayList<ActivityRistorante>();
         revisions = new ArrayList<RistoranteRevision>();
     }
@@ -225,15 +224,15 @@ public class Ristorante extends BasicEntity implements BasicNode{
         this.rates.add(rate);
     }
 
-    public List<TagOnRistorante> getTags() {
+    public List<Tag> getTags() {
         return tags;
     }
 
-    public void setTags(List<TagOnRistorante> tags) {
+    public void setTags(List<Tag> tags) {
         this.tags = tags;
     }
 
-    public void addTag(TagOnRistorante tag) {
+    public void addTag(Tag tag) {
         this.tags.add(tag);
     }
     

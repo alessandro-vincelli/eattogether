@@ -16,10 +16,9 @@
 package it.av.eatt.service;
 
 import it.av.eatt.JackWicketException;
+import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.Tag;
-import it.av.eatt.ocm.model.TagOnRistorante;
-import it.av.eatt.ocm.model.Eater;
 
 import java.util.Collection;
 import java.util.List;
@@ -109,27 +108,6 @@ public interface RistoranteService {
     Ristorante addRate(Ristorante risto, Eater user, int rate) throws JackWicketException;
     
     /**
-     * add tag on the the risto
-     * 
-     * @param risto
-     * @param user
-     * @param tag
-     * @return
-     * @throws JackWicketException
-     */
-    @Transactional
-    Ristorante addTag(Ristorante risto, Eater user, String tag) throws JackWicketException;
-    
-    /**
-     * add tag on the the risto
-     * 
-     * @param tag
-     * @throws JackWicketException
-     */
-    @Transactional
-    void removeTag(TagOnRistorante tag) throws JackWicketException;
-
-    /**
      * check if the given user has already voted the given risto
      * 
      * @param risto
@@ -139,15 +117,4 @@ public interface RistoranteService {
      */
     @Transactional(readOnly = true)
     boolean hasUsersAlreadyRated(Ristorante risto, Eater user) throws JackWicketException;
-    
-    /**
-     * return a list with the tags non associated to the given restaurant
-     * 
-     * @param string search pattern
-     * @param risto
-     * @return list of tags
-     * @throws JackWicketException
-     */
-    @Transactional(readOnly = true)
-    List<Tag> findTagsNotLinked(String pettern, Ristorante risto) throws JackWicketException;
 }

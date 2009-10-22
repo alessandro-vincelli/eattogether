@@ -124,18 +124,11 @@
 
 	<bean id="tagService" class="it.av.eatt.service.impl.TagServiceHibernate" parent="jpaDaoSupport" />
 
-	<bean id="tagOnRistoranteService" class="it.av.eatt.service.impl.TagOnRistoranteServiceHibernate" parent="jpaDaoSupport">
-		<property name="tagService" ref="tagService" />
-	</bean>
-
 	<bean id="ristoranteRevisionService" class="it.av.eatt.service.impl.RistoranteRevisionServiceHibernate"/>
 	
 	<bean id="rateRistoranteService" class="it.av.eatt.service.impl.RateRistoranteServiceHibernate"/>
 	
-	<bean id="ristoranteService" class="it.av.eatt.service.impl.RistoranteServiceHibernate" parent="jpaDaoSupport">
-		<property name="activityRistoranteService" ref="activityRistoranteService" />
-		<property name="tagOnRistoranteService" ref="tagOnRistoranteService" />
-	</bean>
+	<bean id="ristoranteService" class="it.av.eatt.service.impl.RistoranteServiceHibernate" parent="jpaDaoSupport"/>
 	
 	
 	<!--<bean id="jcrRistoranteService" class="it.av.eatt.service.impl.JcrRistoranteServiceJackrabbit">

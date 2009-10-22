@@ -22,14 +22,11 @@ import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.RateOnRistorante;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.RistoranteRevision;
-import it.av.eatt.ocm.model.Tag;
-import it.av.eatt.ocm.model.TagOnRistorante;
 import it.av.eatt.ocm.util.DateUtil;
 import it.av.eatt.service.ActivityRistoranteService;
 import it.av.eatt.service.RateRistoranteService;
 import it.av.eatt.service.RistoranteRevisionService;
 import it.av.eatt.service.RistoranteService;
-import it.av.eatt.service.TagOnRistoranteService;
 
 import java.util.Collection;
 import java.util.List;
@@ -44,9 +41,9 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 
  */
 public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Ristorante> implements RistoranteService {
-
+    
+    @Autowired
     private ActivityRistoranteService activityRistoranteService;
-    private TagOnRistoranteService tagOnRistoranteService;
     @Autowired
     private RistoranteRevisionService ristoranteRevisionService;
     @Autowired
@@ -103,34 +100,6 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
 		}
 	}
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see it.av.eatt.service.RistoranteService#addTag(it.av.eatt.ocm.model.Ristorante, it.av.eatt.ocm.model.Eater, java.lang.String)
-     */
-    @Override
-    public Ristorante addTag(Ristorante risto, Eater user, String tag) throws JackWicketException {
-        List<TagOnRistorante> tags = tagOnRistoranteService.find(tag, risto);
-        if (tags.size() == 0) {
-            risto.addTag(tagOnRistoranteService.insert(tag));
-            save(risto);
-        }
-        //else {
-            // tag already presents, don't do anything
-        //}
-        return risto;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see it.av.eatt.service.RistoranteService#removeTag(it.av.eatt.ocm.model.Ristorante, it.av.eatt.ocm.model.Eater, java.lang.String)
-     */
-    @Override
-    public void removeTag(TagOnRistorante tag) throws JackWicketException {
-        tagOnRistoranteService.remove(tag);
-    }
-
     @Override
     public boolean hasUsersAlreadyRated(Ristorante risto, Eater user) throws JackWicketException {
         List<ActivityRistorante> results = activityRistoranteService.findByUserRistoType(user, risto, ActivityRistorante.TYPE_VOTED);
@@ -175,16 +144,6 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
         super.remove(object);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see it.av.eatt.service.RistoranteService#findTagsNotLinked(java.lang.String, it.av.eatt.ocm.model.Ristorante)
-     */
-    @Override
-    public List<Tag> findTagsNotLinked(String pettern, Ristorante risto) throws JackWicketException {
-        return tagOnRistoranteService.findTagsNotLinked(pettern, risto);
-    }
-
     /**
      * @param activityRistoranteService
      */
@@ -192,10 +151,4 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
         this.activityRistoranteService = activityRistoranteService;
     }
 
-    /**
-     * @param tagOnRistoranteService
-     */
-    public void setTagOnRistoranteService(TagOnRistoranteService tagOnRistoranteService) {
-        this.tagOnRistoranteService = tagOnRistoranteService;
-    }
 }
