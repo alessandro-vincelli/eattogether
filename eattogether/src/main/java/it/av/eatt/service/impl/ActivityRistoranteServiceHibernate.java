@@ -2,9 +2,9 @@ package it.av.eatt.service.impl;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.ActivityRistorante;
-import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterRelation;
+import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.ActivityRistoranteService;
 import it.av.eatt.service.UserRelationService;
 

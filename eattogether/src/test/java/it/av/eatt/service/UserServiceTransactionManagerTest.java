@@ -16,8 +16,6 @@
 package it.av.eatt.service;
 
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import it.av.eatt.ocm.model.Eater;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

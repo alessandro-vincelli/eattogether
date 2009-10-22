@@ -15,8 +15,6 @@
  */
 package it.av.eatt.repo.util;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import it.av.eatt.JackWicketException;
 
 /**

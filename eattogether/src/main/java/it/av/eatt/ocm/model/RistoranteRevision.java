@@ -20,12 +20,8 @@ import it.av.eatt.JackWicketRunTimeException;
 
 import java.lang.reflect.InvocationTargetException;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.AttributeOverrides;
-import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 
 import org.apache.commons.beanutils.BeanUtils;
 

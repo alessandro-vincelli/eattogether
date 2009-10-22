@@ -18,18 +18,14 @@ package it.av.eatt.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import it.av.eatt.JackWicketException;
-import it.av.eatt.ocm.model.ActivityRistorante;
 import it.av.eatt.ocm.model.Comment;
-import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.Eater;
-
-import java.util.List;
+import it.av.eatt.ocm.model.Ristorante;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;

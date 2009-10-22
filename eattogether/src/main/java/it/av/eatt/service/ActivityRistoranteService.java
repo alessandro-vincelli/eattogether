@@ -2,8 +2,8 @@ package it.av.eatt.service;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.ActivityRistorante;
-import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.Eater;
+import it.av.eatt.ocm.model.Ristorante;
 
 import java.util.List;
 
