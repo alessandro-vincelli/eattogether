@@ -18,10 +18,8 @@ package it.av.eatt.service;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.Ristorante;
-import it.av.eatt.ocm.model.Tag;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
