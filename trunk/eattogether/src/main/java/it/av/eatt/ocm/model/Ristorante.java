@@ -24,6 +24,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
@@ -97,7 +98,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private List<RateOnRistorante> rates;
     //@Collection(collectionConverter = MultiValueCollectionConverterImpl.class)
-    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     //@JoinTable
     //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)

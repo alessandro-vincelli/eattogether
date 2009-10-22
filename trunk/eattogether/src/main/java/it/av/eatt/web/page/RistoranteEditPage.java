@@ -95,7 +95,7 @@ public class RistoranteEditPage extends BasePage {
         form.add(new TextField<String>(Ristorante.MOBILE_PHONE_NUMBER));
         form.add(new TextField<String>(Ristorante.FAX_NUMBER).setOutputMarkupId(true));
         form.add(new TextField<String>(Ristorante.WWW).setOutputMarkupId(true));
-        form.add(new TagBox(new Model<String>(""), "tagBox", ristoranteService, ristorante));
+        form.add(new TagBox(new Model<String>(""), "tagBox", ristorante));
         
         form.add(new ListView<Tag>(Ristorante.TAGS){
             private static final long serialVersionUID = 1L;
@@ -138,6 +138,8 @@ public class RistoranteEditPage extends BasePage {
                         }
                     }
                 }
+                //after clean up the tagBox
+                ((TagBox)form.get("tagBox")).setModelObject(null);
             }
             @Override
             protected void onError(AjaxRequestTarget target, Form<?> form) {
