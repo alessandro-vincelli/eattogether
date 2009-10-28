@@ -29,8 +29,8 @@
 				<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
 				<property name="hibernate.connection.url"
 				value="jdbc:postgresql://localhost/eat" />
-				<property name="hibernate.connection.username" value="postgres" />
-				<property name="hibernate.connection.password" value="" />
+				<property name="hibernate.connection.username" value="eat" />
+				<property name="hibernate.connection.password" value="eat" />
 				<property name="hibernate.hbm2ddl.auto" value="update" />
 				<property name="hibernate.show_sql" value="true" />
 				<property name="hibernate.format_sql" value="true" />
