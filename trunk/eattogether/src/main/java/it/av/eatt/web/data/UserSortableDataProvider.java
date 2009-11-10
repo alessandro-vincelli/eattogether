@@ -25,14 +25,12 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.wicket.Request;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.IModel;
 
 /**
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
 public class UserSortableDataProvider extends SortableDataProvider<Eater> {
     private static final long serialVersionUID = 1L;
@@ -50,18 +48,16 @@ public class UserSortableDataProvider extends SortableDataProvider<Eater> {
     }
 
     /**
-     * 
-     * @see org.apache.wicket.markup.repeater.data.IDataProvider#iterator(int,
-     *      int)
+     *{@inheritDoc}
      */
     @Override
     public final Iterator<Eater> iterator(int first, int count) {
         return Collections.synchronizedList(new ArrayList<Eater>(results)).subList(first, first + count).iterator();
     }
 
+
     /**
-     * 
-     * @see org.apache.wicket.markup.repeater.data.IDataProvider#size()
+     *{@inheritDoc}
      */
     @Override
     public final int size() {
@@ -80,22 +76,14 @@ public class UserSortableDataProvider extends SortableDataProvider<Eater> {
     }
 
     /**
-     * @see org.apache.wicket.model.IDetachable#detach()
-     */
-    @Override
-    public void detach() {
-    }
-
-    /**
      * Performs the search
      * 
-     * @param request
+     * @param searchData the string to use for the search
      * @throws JackWicketException 
      */
-    public final void fetchResults(Request request) throws JackWicketException {
-        String pattern = request.getParameter("searchData");
-        if (StringUtils.isNotBlank(pattern)) {
-            results = usersService.find(pattern);
+    public final void fetchResults(String searchData) throws JackWicketException {
+        if (StringUtils.isNotBlank(searchData)) {
+            results = usersService.find(searchData);
         } else {
             results = usersService.getAll();
         }

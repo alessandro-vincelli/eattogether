@@ -47,8 +47,8 @@ public class UserTableActionPanel extends Panel {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 UserManagerPage page = ((UserManagerPage) getPage());
-                page.setUser(getModelObject());
-                target.addComponent(page.getUsersVersionsListFrag());
+                page.getForm().setModelObject(getModelObject());
+                target.addComponent(page.getForm());
             }
         });
         add(new AjaxLink<Eater>("edit", model) {
