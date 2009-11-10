@@ -29,7 +29,6 @@ import org.apache.wicket.extensions.rating.RatingPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.ListMultipleChoice;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -83,7 +82,6 @@ public class RistoranteViewPage extends BasePage {
         form.add(new Label(Ristorante.PHONE_NUMBER));
         form.add(new Label(Ristorante.FAX_NUMBER));
         form.add(new Label(Ristorante.WWW));
-        form.add(new ListMultipleChoice<String>(Ristorante.RATES));
         form.add(new ListView<Tag>(Ristorante.TAGS){
             private static final long serialVersionUID = 1L;
             @Override
