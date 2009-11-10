@@ -26,6 +26,7 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
@@ -90,7 +91,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     private String mobilePhoneNumber;
     @Field
     private String faxNumber;
-    private int versionNumber;
+    private Integer versionNumber;
     //@Collection(collectionConverter = MultiValueCollectionConverterImpl.class)
     @OneToMany(cascade = { CascadeType.ALL}, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
@@ -115,6 +116,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     @Fetch(FetchMode.SELECT)
     //@JoinTable
     //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    @OrderBy("ristoranteRevision.versionNumber DESC")
     private List<RistoranteRevision> revisions;
 
     public Ristorante() {
@@ -311,14 +313,14 @@ public class Ristorante extends BasicEntity implements BasicNode{
     /**
      * @return the versionNumber
      */
-    public int getVersionNumber() {
+    public Integer getVersionNumber() {
         return versionNumber;
     }
 
     /**
      * @param versionNumber the versionNumber to set
      */
-    public void setVersionNumber(int versionNumber) {
+    public void setVersionNumber(Integer versionNumber) {
         this.versionNumber = versionNumber;
     }
 

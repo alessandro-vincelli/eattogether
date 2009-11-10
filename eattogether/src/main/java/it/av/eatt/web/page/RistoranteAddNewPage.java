@@ -37,7 +37,6 @@ import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInst
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -46,8 +45,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
- * The page provides some basic operation on the {@link Ristorante}.
- * 
+ * To add a new {@link Ristorante}.
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  * 
@@ -60,6 +58,8 @@ public class RistoranteAddNewPage extends BasePage {
     private RistoranteService ristoranteService;
     @SpringBean(name = "dataRistoranteService")
     private DataRistoranteService dataRistoranteService;
+    
+    private final AjaxFallbackLink<Ristorante> buttonClearForm;
 
     private Ristorante ristorante;
     private Form<Ristorante> form;
@@ -125,16 +125,17 @@ public class RistoranteAddNewPage extends BasePage {
         form.add(new TextField<String>(Ristorante.WWW).setOutputMarkupId(true));
         // form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new
         // UserProfilesList()).setOutputMarkupId(true));
-        form.add(new Label("version"));
 
-        form.add(new AjaxFallbackLink<Ristorante>("buttonClearForm", new Model<Ristorante>(ristorante)) {
+        buttonClearForm = new AjaxFallbackLink<Ristorante>("buttonClearForm", new Model<Ristorante>(ristorante)) {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 form.setModelObject(new Ristorante());
                 target.addComponent(form);
             }
-        });
+        };
 
+        form.add(buttonClearForm);
+        
         form.add(new SubmitButton("submitRestaurant", form));
         
         OnChangeAjaxBehavior onChangeAjaxBehavior = new OnChangeAjaxBehavior()
@@ -185,6 +186,7 @@ public class RistoranteAddNewPage extends BasePage {
             }
             getForm().setEnabled(false);
             setVisible(false);
+            buttonClearForm.setVisible(false);
             if (target != null) {
                 target.addComponent(getForm());
                 target.addComponent(getFeedbackPanel());
@@ -218,10 +220,6 @@ public class RistoranteAddNewPage extends BasePage {
         @Override
         protected void onSubmit(AjaxRequestTarget target, Form form) {
             try {
-                // getForm().p
-                System.out.println(form.get(Ristorante.NAME).getDefaultModelObjectAsString());
-                System.out.println("ddd" + ((FormComponent<String>) form.get(Ristorante.NAME)).getValue());
-
                 DataRistorante dataRistorante = dataRistoranteService.find(form.get(Ristorante.NAME).getDefaultModelObjectAsString()).iterator().next();
                 form.get(Ristorante.ADDRESS).setDefaultModelObject(dataRistorante.getAddress());
                 if (target != null) {

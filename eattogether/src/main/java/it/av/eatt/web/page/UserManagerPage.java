@@ -21,7 +21,6 @@ import it.av.eatt.ocm.model.EaterProfile;
 import it.av.eatt.service.UserProfileService;
 import it.av.eatt.service.UserService;
 import it.av.eatt.web.data.UserSortableDataProvider;
-import it.av.eatt.web.page.SearchPanel.SearchBean;
 
 import java.util.ArrayList;
 import java.util.List;

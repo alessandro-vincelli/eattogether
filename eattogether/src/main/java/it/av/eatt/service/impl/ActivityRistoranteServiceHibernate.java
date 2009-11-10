@@ -1,6 +1,7 @@
 package it.av.eatt.service.impl;
 
 import it.av.eatt.JackWicketException;
+import it.av.eatt.ocm.model.Activity;
 import it.av.eatt.ocm.model.ActivityRistorante;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterRelation;
@@ -12,14 +13,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibernate<ActivityRistorante> implements ActivityRistoranteService{
     
     private UserRelationService userRelationService;
     
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ActivityService#findByRistorante(it.av.eatt.ocm.model.Ristorante)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<ActivityRistorante> findByRistorante(Ristorante risto) throws JackWicketException {
@@ -28,18 +30,19 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
         return results;
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ActivityRistoranteService#findByUser(it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<ActivityRistorante> findByUser(Eater user) throws JackWicketException {
         Criterion crit = Restrictions.eq(ActivityRistorante.USER, user);
-        List<ActivityRistorante> results = findByCriteria(crit);
+        Order orderByDate = Order.desc(Activity.DATE);
+        List<ActivityRistorante> results = findByCriteria(orderByDate, crit);
         return results;
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ActivityRistoranteService#findByUserFriend(it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<ActivityRistorante> findByUserFriend(Eater ofUser) throws JackWicketException {
@@ -50,8 +53,8 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
         return results;
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ActivityRistoranteService#findByUserAndType(it.av.eatt.ocm.model.Eater, java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<ActivityRistorante> findByUserRistoType(Eater user, Ristorante risto, String activityType) throws JackWicketException {
@@ -62,9 +65,11 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
         return results;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public ActivityRistorante save(ActivityRistorante activityRistorante) throws JackWicketException{
-        return super.save(activityRistorante);
-        
+        return super.save(activityRistorante); 
     }
     
     public void setUserRelationService(UserRelationService userRelationService) {
