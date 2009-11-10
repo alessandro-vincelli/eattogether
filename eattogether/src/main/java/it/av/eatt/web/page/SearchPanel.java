@@ -40,6 +40,7 @@ import org.apache.wicket.util.time.Duration;
 public class SearchPanel extends Panel {
     private static final long serialVersionUID = 1L;
     private SearchBean searchBean = new SearchBean();
+    private Form<SearchBean> form;
 
     /**
      * Constructor
@@ -49,9 +50,10 @@ public class SearchPanel extends Panel {
      * @param id
      * @param feedbackPanel
      */
-    public SearchPanel(final UserSortableDataProvider dataProvider, final AjaxFallbackDefaultDataTable dataTable, String id, final FeedbackPanel feedbackPanel) {
+    public SearchPanel(final UserSortableDataProvider dataProvider, final AjaxFallbackDefaultDataTable dataTable,
+            String id, final FeedbackPanel feedbackPanel) {
         super(id);
-        Form<String> form = new Form<String>("searchForm", new CompoundPropertyModel(searchBean));
+        form = new Form<SearchBean>("searchForm", new CompoundPropertyModel<SearchBean>(searchBean));
         add(form);
         form.setOutputMarkupId(true);
         FormComponent<String> fc;
@@ -66,8 +68,8 @@ public class SearchPanel extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form form) {
                 try {
-                    dataProvider.fetchResults(this.getRequest());
-                }catch (JackWicketException e) {
+                    dataProvider.fetchResults(((SearchBean)getForm().getModelObject()).getSearchData());
+                } catch (JackWicketException e) {
                     feedbackPanel.error(e.getMessage());
                 }
                 target.addComponent(dataTable);
@@ -81,11 +83,7 @@ public class SearchPanel extends Panel {
     }
 
     /**
-     * 
      * Simple Bean to store the Form data
-     * 
-     * @author Alessandro Vincelli
-     * 
      */
     public static class SearchBean implements IClusterable {
         private static final long serialVersionUID = 1L;
@@ -99,11 +97,15 @@ public class SearchPanel extends Panel {
         }
 
         /**
-         * @param searchData
-         *            the searchData to set
+         * @param searchData the searchData to set
          */
         public final void setSearchData(String searchData) {
             this.searchData = searchData;
         }
     }
+
+    public Form<SearchBean> getForm() {
+        return form;
+    }
+
 }

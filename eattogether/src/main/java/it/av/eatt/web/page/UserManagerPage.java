@@ -21,11 +21,11 @@ import it.av.eatt.ocm.model.EaterProfile;
 import it.av.eatt.service.UserProfileService;
 import it.av.eatt.service.UserService;
 import it.av.eatt.web.data.UserSortableDataProvider;
+import it.av.eatt.web.page.SearchPanel.SearchBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -36,14 +36,10 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColu
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.PropertyListView;
-import org.apache.wicket.markup.html.panel.Fragment;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
@@ -66,12 +62,10 @@ public class UserManagerPage extends BasePage {
     @SpringBean(name="userProfileService")
     private UserProfileService userProfileService;
 
-    private Eater user;
     private AjaxFallbackDefaultDataTable<Eater> usersDataTable;
     private UserSortableDataProvider dataProvider;
     private Form<Eater> form;
-    private PropertyListView<Eater> usersVersionsList;
-    private UsersVersionsListFrag usersVersionsListFrag;
+    private SearchPanel searchPanel;
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -79,9 +73,8 @@ public class UserManagerPage extends BasePage {
      * @throws JackWicketException
      */
     public UserManagerPage() throws JackWicketException {
-        user = new Eater();
         
-        form = new Form<Eater>("userForm", new CompoundPropertyModel<Eater>(user));
+        form = new Form<Eater>("userForm", new CompoundPropertyModel<Eater>(new Eater()));
         form.setOutputMarkupId(true);
         form.add(new TextField<String>("password"));
         form.add(new TextField<String>("lastname"));
@@ -89,7 +82,7 @@ public class UserManagerPage extends BasePage {
         form.add(new TextField<String>("email"));
         form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
 
-        form.add(new AjaxLink<Eater>("buttonClearForm", new Model<Eater>(user)) {
+        form.add(new AjaxLink<Eater>("buttonClearForm", new Model<Eater>()) {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 form.setModelObject(new Eater());
@@ -111,11 +104,10 @@ public class UserManagerPage extends BasePage {
         columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("email", this, null).getString()), "email"));
         columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("userProfile", this, null).getString()), "userProfile.name"));
         dataProvider = new UserSortableDataProvider(userService);
-        refreshDataTable();
         usersDataTable = new AjaxFallbackDefaultDataTable<Eater>("usersDataTable", columns, dataProvider, 10);
         add(usersDataTable);
-
-        add(new SearchPanel(dataProvider, usersDataTable, "searchPanel", getFeedbackPanel()));
+        searchPanel = new SearchPanel(dataProvider, usersDataTable, "searchPanel", getFeedbackPanel());
+        add(searchPanel);
     }
 
     private class SubmitButton extends AjaxButton {
@@ -128,7 +120,7 @@ public class UserManagerPage extends BasePage {
         @Override
         protected void onComponentTag(ComponentTag tag) {
             super.onComponentTag(tag);
-            if (form.getModelObject().getId() != 0) {
+            if (form.getModelObject().getId() == 0) {
                 tag.getAttributes().put("value", new StringResourceModel("button.create", this, null).getString());
             } else {
                 tag.getAttributes().put("value", new StringResourceModel("button.update", this, null).getString());
@@ -163,52 +155,17 @@ public class UserManagerPage extends BasePage {
             target.addComponent(getFeedbackPanel());
         }
     }
-
-    private class UsersVersionsListFrag extends Fragment {
-        private static final long serialVersionUID = 1L;
-
-        public UsersVersionsListFrag(String id, String markupId, MarkupContainer container) throws JackWicketException {
-            super(id, markupId, container);
-            setOutputMarkupId(true);
-            usersVersionsList = new PropertyListView<Eater>("versions", new ArrayList<Eater>()) {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                protected void populateItem(ListItem<Eater> item) {
-                    item.add(new Label("email"));
-                    item.add(new Label("password"));
-                    item.add(new Label("firstname"));
-                    item.add(new Label("lastname"));
-                    item.add(new Label("userProfile.name"));
-                    item.add(new Label("version"));
-                }
-            };
-            add(usersVersionsList.setOutputMarkupId(true));
-        }
-    }
-
+    
     /**
      * Fill with fresh data the repetear
      * @throws JackWicketException 
      */
     public final void refreshDataTable() throws JackWicketException {
-        dataProvider.fetchResults(this.getRequest());
+        dataProvider.fetchResults(searchPanel.getForm().getModelObject().getSearchData());
     }
 
     public final  Form<Eater> getForm() {
         return form;
-    }
-
-    public final Eater getUser() {
-        return user;
-    }
-
-    public final void setUser(Eater user) {
-        this.user = user;
-    }
-
-    public final UsersVersionsListFrag getUsersVersionsListFrag() {
-        return usersVersionsListFrag;
     }
 
     public final UserService getUsersServices() {
