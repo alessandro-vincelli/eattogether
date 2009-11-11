@@ -1,76 +1,85 @@
 <wicket:extend>
-	<div id="container">
-		<span wicket:id="revisionsPanel"></span>
-        <form wicket:id="ristoranteForm" class="cmxform">
-        	<fieldset>
-        	 <ol>
-    			<li>
-	        	<label for="name"><wicket:message key="name"/></label>
-	        	<span wicket:id="name"></span>
-	        	</li>
-	        	<li>
-	        	<label for="address"><wicket:message key="address"/></label>
-	        	<span wicket:id="address"></span>
-	        	</li>
-	        	<li>
-	        	<label for="city"><wicket:message key="city"/></label>
-	        	<span wicket:id="city"></span>
-	        	</li>
-	        	<li>
-	        	<label for="province"><wicket:message key="province"/></label>
-	        	<span wicket:id="province"></span>
-	        	</li>
-	        	<li>
-	        	<label for="postalCode"><wicket:message key="postalCode"/></label>
-	        	<span wicket:id="postalCode"></span>
-	        	</li>
-	        	<li>
-	        	<label for="country"><wicket:message key="country"/></label>
-	        	<span wicket:id="country"></span>
-	        	</li>
-	        	<li>
-	        	<label for="type"><wicket:message key="type"/></label>
-	        	<span wicket:id="type"></span>
-	        	</li>
-	        	<li>
-	        	<label for="phoneNumber"><wicket:message key="phoneNumber"/></label>
-	        	<span wicket:id="phoneNumber"></span>
-	        	</li>
-	        	<li>
-	        	<label for="mobilePhoneNumber"><wicket:message key="mobilePhoneNumber"/></label>
-	        	<span wicket:id="mobilePhoneNumber"></span>
-	        	<label for="faxNumber"><wicket:message key="faxNumber"/></label>
-	        	<span wicket:id="faxNumber"></span>
-	        	</li>
-	        	<li>
-	        	<label for="www"><wicket:message key="www"/></label>
-	        	<span type="text" wicket:id="www"></span>
-	        	</li>
-	        	<li>
-	        	<label for="tags"><wicket:message key="tags"/></label>
-				  <ul wicket:id="tags">
-				    <li><span wicket:id="tagItem"></span></li>
-				  </ul>
-				</li>
-	        	<li>
-	        	<label for="description"><wicket:message key="description"/></label>
-	        	<span wicket:id="description"></span>
-	        	</li>
-	        	<li>
-	        	<label for="version"><wicket:message key="version"/></label>
-	        	<span wicket:id="version"></span>
-	        	</li>
-        	</ol>
-        	</fieldset>
-       </form>
-       <ol>
-	     	<li>
-	       	<button wicket:id="showsAllRevisions"><wicket:message key="button.showsAllRevisions"/></button>
-	       	<button wicket:id="editRistorante"><wicket:message key="button.editRistorante"/></button>
-	      	</li>
-	      	<li>
-	        	<span wicket:id="rating1"></span>
-	        </li>
-	   </ol>
-	</div>
+    <div id="wrapper">
+    <div id="content"><span wicket:id="revisionsPanel"></span>
+    <form wicket:id="ristoranteForm" class="cmxform">
+    <fieldset>
+    <table class="input-form" cellspacing="0">
+        <tbody>
+            <tr>
+                <td><span wicket:id="name"></span></td>
+                <td><span wicket:id="rating1"></span></td>
+            </tr>
+            <tr>
+                <td><span wicket:id="type"></span></td>
+            </tr>
+            <tr>
+                <td><span type="text" wicket:id="www"></span></td>
+            </tr>
+            <tr>
+                <th><label for="tags"><wicket:message key="tags" /></label></th>
+                <td>
+                <ul wicket:id="tags">
+                    <li><span wicket:id="tagItem"></span></li>
+                </ul>
+                </td>
+            </tr>
+            <tr>
+                <th><label for="description"><wicket:message key="description" /></label></th>
+                <td><span wicket:id="description"></span></td>
+            </tr>
+            <tr>
+                <th><label for="version"><wicket:message key="version" /></label></th>
+                <td><span wicket:id="version"></span></td>
+            </tr>
+        </tbody>
+    </table>
+    </fieldset>
+    </form>
+    <ol>
+        <li>
+        <button wicket:id="showsAllRevisions"><wicket:message
+            key="button.showsAllRevisions" /></button>
+        <button wicket:id="editRistorante"><wicket:message key="button.editRistorante" /></button>
+        </li>
+    </ol>
+    </div>
+    </div>
+    <div id="extra">
+    <form wicket:id="ristoranteAddressForm">
+    <table class="addressRisto">
+        <tr>
+            <th><label for="address"><wicket:message key="address" /></label></th>
+            <td><span wicket:id="address"></span></td>
+        </tr>
+        <tr>
+            <th><label for="city"><wicket:message key="city" /></label></th>
+            <td><span wicket:id="city"></span></td>
+        </tr>
+        <tr>
+            <th><label for="province"><wicket:message key="province" /></label></th>
+            <td><span wicket:id="province"></span></td>
+        </tr>
+        <tr>
+            <th><label for="postalCode"><wicket:message key="postalCode" /></label></th>
+            <td><span wicket:id="postalCode"></span></td>
+        </tr>
+        <tr>
+            <th><label for="country"><wicket:message key="country" /></label></th>
+            <td><span wicket:id="country"></span></td>
+        </tr>
+        <tr>
+            <th><label for="phoneNumber"><wicket:message key="phoneNumber" /></label></th>
+            <td><span wicket:id="phoneNumber"></span></td>
+        </tr>
+        <tr>
+            <th><label for="mobilePhoneNumber"><wicket:message key="mobilePhoneNumber" /></label></th>
+            <td><span wicket:id="mobilePhoneNumber"></span></td>
+        </tr>
+        <tr>
+            <th><label for="faxNumber"><wicket:message key="faxNumber" /></label></th>
+            <td><span wicket:id="faxNumber"></span></td>
+        </tr>
+    </table>
+    </form>
+    </div>
 </wicket:extend>

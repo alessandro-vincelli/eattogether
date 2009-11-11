@@ -404,8 +404,8 @@
 				<artifactId>maven-jetty-plugin</artifactId>
 				<configuration>
 					<contextPath>/</contextPath>
-					<scanIntervalSeconds>6</scanIntervalSeconds>
-					<connectors>
+					<!--<scanIntervalSeconds>6</scanIntervalSeconds>
+					--><connectors>
 						<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
 							<port>8889</port>
 							<maxIdleTime>30000</maxIdleTime>
