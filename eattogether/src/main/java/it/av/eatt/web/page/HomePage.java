@@ -63,7 +63,12 @@ public class HomePage extends BasePage {
             }
         });
         
-        columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("name", this, null).getString()), "name"));
+        columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("name", this, null).getString()), "name"){
+            @Override
+            public String getCssClass() {
+                return "ristoName";
+            }
+        });
         columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("type", this, null).getString()), "type"));
         columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("city", this, null).getString()), "city"));
 

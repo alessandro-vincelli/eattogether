@@ -93,8 +93,11 @@ public class UserHomePage extends BasePage {
             @Override
             protected void populateItem(ListItem<ActivityRistorante> item) {
                 item.add(new Label("type"));
+
                 item.add(new Label("date.time", DateUtil.sdf2Show.format(item.getModelObject().getDate().getTime())));
-                item.add(new BookmarkablePageLink<String>("ristorante.name", RistoranteViewPage.class, new PageParameters("ristoranteId=" + item.getModelObject().getRistorante().getId())));
+                BookmarkablePageLink<String> ristoLink = new BookmarkablePageLink<String>("ristorante.link", RistoranteViewPage.class, new PageParameters("ristoranteId=" + item.getModelObject().getRistorante().getId()));
+                ristoLink.add(new Label("ristorante.name"));
+                item.add(ristoLink);
             }
         };
         add(activitiesList);
@@ -114,8 +117,10 @@ public class UserHomePage extends BasePage {
             protected void populateItem(ListItem<ActivityRistorante> item) {
                 item.add(new Label("type"));
                 item.add(new Label("date.time", DateUtil.sdf2Show.format(item.getModelObject().getDate().getTime())));
-                item.add(new Label("ristorante.name"));
-                item.add(new Label("user.lastname"));
+                BookmarkablePageLink<String> ristoLink = new BookmarkablePageLink<String>("ristorante.link", RistoranteViewPage.class, new PageParameters("ristoranteId=" + item.getModelObject().getRistorante().getId()));
+                ristoLink.add(new Label("ristorante.name"));
+                item.add(ristoLink);
+                item.add(new Label("eater.lastname"));
             }
         };
         add(friendsActivitiesList);

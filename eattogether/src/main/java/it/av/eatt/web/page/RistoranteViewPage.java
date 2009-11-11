@@ -50,7 +50,7 @@ public class RistoranteViewPage extends BasePage {
     private RistoranteService ristoranteService;
 
     private Ristorante ristorante = new Ristorante();;
-    private Form<Ristorante> form;
+    
     private ModalWindow revisionsPanel;
     private boolean hasVoted = Boolean.FALSE;
     /**
@@ -69,18 +69,11 @@ public class RistoranteViewPage extends BasePage {
         }
         setOutputMarkupId(true);
 
-        form = new Form<Ristorante>("ristoranteForm", new CompoundPropertyModel<Ristorante>(ristorante));
+        Form<Ristorante> form = new Form<Ristorante>("ristoranteForm", new CompoundPropertyModel<Ristorante>(ristorante));
+        add(form);
         form.setOutputMarkupId(true);
         form.add(new Label(Ristorante.NAME));
-        form.add(new Label(Ristorante.ADDRESS));
-        form.add(new Label(Ristorante.CITY));
-        form.add(new Label(Ristorante.PROVINCE));
-        form.add(new Label(Ristorante.POSTALCODE));
-        form.add(new Label(Ristorante.COUNTRY));
         form.add(new Label(Ristorante.TYPE));
-        form.add(new Label(Ristorante.MOBILE_PHONE_NUMBER));
-        form.add(new Label(Ristorante.PHONE_NUMBER));
-        form.add(new Label(Ristorante.FAX_NUMBER));
         form.add(new Label(Ristorante.WWW));
         form.add(new ListView<Tag>(Ristorante.TAGS){
             private static final long serialVersionUID = 1L;
@@ -92,8 +85,34 @@ public class RistoranteViewPage extends BasePage {
         form.add(new MultiLineLabel(Ristorante.DESCRIPTION));
         // form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
         form.add(new Label("version"));
-        add(form);
+        form.add(new RatingPanel("rating1", new PropertyModel<Integer>(getRistorante(), "rating"), new Model<Integer>(5), new PropertyModel<Integer>(getRistorante(), "rates.size"), new PropertyModel<Boolean>(this, "hasVoted"), true ) {
+            @Override
+            protected boolean onIsStarActive(int star) {
+                return star < ((int) (getRistorante().getRating() + 0.5));
+            }
 
+            @Override
+            protected void onRated(int rating, AjaxRequestTarget target) {
+                try {
+                    setHasVoted(Boolean.TRUE);
+                    ristoranteService.addRate(getRistorante(), getLoggedInUser(), rating);
+                } catch (JackWicketException e) {
+                    error(e);
+                }
+            }
+        });
+        
+        Form<Ristorante> formAddress = new Form<Ristorante>("ristoranteAddressForm", new CompoundPropertyModel<Ristorante>(ristorante));
+        add(formAddress);
+        formAddress.add(new Label(Ristorante.ADDRESS));
+        formAddress.add(new Label(Ristorante.CITY));
+        formAddress.add(new Label(Ristorante.PROVINCE));
+        formAddress.add(new Label(Ristorante.POSTALCODE));
+        formAddress.add(new Label(Ristorante.COUNTRY));
+        formAddress.add(new Label(Ristorante.MOBILE_PHONE_NUMBER));
+        formAddress.add(new Label(Ristorante.PHONE_NUMBER));
+        formAddress.add(new Label(Ristorante.FAX_NUMBER));
+        
         AjaxFallbackLink<String> editRistorante = new AjaxFallbackLink<String>("editRistorante") {
             private static final long serialVersionUID = 1L;
 
@@ -143,33 +162,14 @@ public class RistoranteViewPage extends BasePage {
         });
 
         setHasVoted(ristoranteService.hasUsersAlreadyRated(getRistorante(), getLoggedInUser()) || getLoggedInUser() == null);
-        add(new RatingPanel("rating1", new PropertyModel<Integer>(getRistorante(), "rating"), new Model<Integer>(5), new PropertyModel<Integer>(getRistorante(), "rates.size"), new PropertyModel<Boolean>(this, "hasVoted"), true ) {
-            @Override
-            protected boolean onIsStarActive(int star) {
-                return star < ((int) (getRistorante().getRating() + 0.5));
-            }
-
-            @Override
-            protected void onRated(int rating, AjaxRequestTarget target) {
-                try {
-                    setHasVoted(Boolean.TRUE);
-                    ristoranteService.addRate(getRistorante(), getLoggedInUser(), rating);
-                } catch (JackWicketException e) {
-                    error(e);
-                }
-            }
-        });
-
+        
     }
 
     public RistoranteViewPage(Ristorante ristorante) throws JackWicketException {
         this(new PageParameters("ristoranteId=" + ristorante.getId()));
     }
 
-    public final Form<Ristorante> getForm() {
-        return form;
-    }
-
+    
     public final Ristorante getRistorante() {
         return ristorante;
     }
