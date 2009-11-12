@@ -6,15 +6,6 @@ html,body {
 	color: #333;
 }
 
-p {
-    margin: 0 10px 10px
-}
-
-a {
-    display: block;
-    color: #981793;
-    padding: 10px
-}
 
 div#header h1 {
     height: 80px;
@@ -26,7 +17,7 @@ div#header h1 {
 }
 
 div#content p {
-    line-height: 1.4
+    line-height: 1.4;
 }
 
 div#content {
@@ -42,14 +33,15 @@ div#navigation {
     float: left;
     width: 200px;
     margin-left: -200px;
-    background: #B9CAFF
+    /*background: #B9CAFF*/
 }
 
 div#extra {
     float: left;
     width: 200px;
     margin-left: -100%;
-    background: #FF8539
+    padding-left: 10px;
+    /*background: #FF8539*/
 }
 
 div#footer {
@@ -111,3 +103,26 @@ tr.headers{
 .addressRisto{
     font-size: x-small;
 }
+
+.activitiesList ul{
+    text-align: left;
+    font-size: 150%;
+    display: inline;
+    float: left;
+    margin: 0.2em 0 0 8px;
+}
+
+.activitiesList li{
+    text-align: left;
+}
+
+.activitiesList li a{
+    color: #A4A0A1;
+    padding: 3px 12px;
+    text-decoration: none;
+}
+
+.activitiesList li a:hover{
+    color: #000;
+}
+

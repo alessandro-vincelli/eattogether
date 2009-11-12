@@ -1,26 +1,29 @@
 <wicket:extend>
-	<div id="main">
-	<h2>Title</h2>
-		<span wicket:id="ristoranteSearchPanel"></span>
-		<table class="datatable" wicket:id="ristoranteDataTable">[table]</table>	
-		<label><wicket:message key="userHomePage.myRistoActivities" /></label>
-		<ul>
-		<li wicket:id="activitiesList">
-			<span wicket:id="type"></span>
-			<span wicket:id="date.time" style="padding: 10px;"></span>
-			<a href="#" wicket:id="ristorante.link" style="padding: 10px;"><span wicket:id="ristorante.name"></span></a>
-		</li>
-		</ul>
-		<label><wicket:message key="userHomePage.myFriendRistoActivities" /></label>
-		<ul>
-		<li wicket:id="friendsActivitiesList">
-			<span wicket:id="eater.lastname"></span>
-			<span wicket:id="type"></span>
-			<span wicket:id="date.time" style="padding: 10px;"></span>
-			<a href="#" wicket:id="ristorante.link" style="padding: 10px;"><span wicket:id="ristorante.name"></span></a>
-		</li>
-		</ul>
-	</div>
-	<div class="layoutfix"> </div>
+    <div id="wrapper">
+    <div id="content">
+    <h2>Title</h2>
+    <span wicket:id="ristoranteSearchPanel"></span>
+    <table class="datatable" wicket:id="ristoranteDataTable">
+        [table]
+    </table>
+    </div>
+    </div>
+    <div id="extra">
+    <label><wicket:message key="userHomePage.myRistoActivities" /></label>
+    <ul class="activitiesList">
+        <li wicket:id="activitiesList">
+            <span wicket:id="type"></span>
+            <span wicket:id="date.time"></span> 
+            <a href="#" wicket:id="ristorante.link" style="padding: 10px;"><span wicket:id="ristorante.name"></span></a>
+        </li>
+    </ul>
+    <label><wicket:message key="userHomePage.myFriendRistoActivities" /></label>
+    <ul class="activitiesList">
+        <li wicket:id="friendsActivitiesList"><span wicket:id="eater.lastname"></span> 
+        <span wicket:id="type"></span> 
+        <span wicket:id="date.time" style="padding: 10px;"></span> 
+        <a href="#" wicket:id="ristorante.link" style="padding: 10px;"><span wicket:id="ristorante.name"></span></a>
+        </li>
+    </ul>
+    </div>
 </wicket:extend>
-

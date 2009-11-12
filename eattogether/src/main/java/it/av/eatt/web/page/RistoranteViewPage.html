@@ -7,7 +7,6 @@
         <tbody>
             <tr>
                 <td><span wicket:id="name"></span></td>
-                <td><span wicket:id="rating1"></span></td>
             </tr>
             <tr>
                 <td><span wicket:id="type"></span></td>
@@ -16,37 +15,33 @@
                 <td><span type="text" wicket:id="www"></span></td>
             </tr>
             <tr>
-                <th><label for="tags"><wicket:message key="tags" /></label></th>
-                <td>
-                <ul wicket:id="tags">
-                    <li><span wicket:id="tagItem"></span></li>
-                </ul>
-                </td>
-            </tr>
-            <tr>
-                <th><label for="description"><wicket:message key="description" /></label></th>
                 <td><span wicket:id="description"></span></td>
             </tr>
             <tr>
-                <th><label for="version"><wicket:message key="version" /></label></th>
-                <td><span wicket:id="version"></span></td>
+                <td>
+                <label for="tags"><wicket:message key="tags" />:</label>
+                <span wicket:id="tags">
+                    <span wicket:id="tagItem"></span>
+                </span>
+                </td>
+            </tr>
+            <tr>
+                <td><label for="version"><wicket:message key="version" />:</label> 
+                <span wicket:id="version"></span>
+                </td>
             </tr>
         </tbody>
     </table>
     </fieldset>
     </form>
-    <ol>
-        <li>
-        <button wicket:id="showsAllRevisions"><wicket:message
-            key="button.showsAllRevisions" /></button>
-        <button wicket:id="editRistorante"><wicket:message key="button.editRistorante" /></button>
-        </li>
-    </ol>
     </div>
     </div>
     <div id="extra">
     <form wicket:id="ristoranteAddressForm">
     <table class="addressRisto">
+        <tr>
+            <td colspan="2"><span wicket:id="rating1"></span></td>
+        </tr>
         <tr>
             <th><label for="address"><wicket:message key="address" /></label></th>
             <td><span wicket:id="address"></span></td>
@@ -81,5 +76,15 @@
         </tr>
     </table>
     </form>
+    </div>
+    
+    <div id="navigation">
+    
+    <p>
+    <button wicket:id="showsAllRevisions"><wicket:message key="button.showsAllRevisions" /></button>
+    </p>
+    <p>
+    <button wicket:id="editRistorante"><wicket:message key="button.editRistorante" /></button>
+    </p>
     </div>
 </wicket:extend>
