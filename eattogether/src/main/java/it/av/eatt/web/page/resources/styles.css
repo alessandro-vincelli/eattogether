@@ -1,27 +1,23 @@
 html,body {
     margin: 0;
     padding: 0;
-    text-align: center;
-	font: .75em 'Lucida Grande', sans-serif;
-	color: #333;
+    font: .75em 'Lucida Grande', sans-serif;
+    color: #333;
 }
 
-
-div#header h1 {
-    height: 80px;
-    line-height: 80px;
-    margin: 0;
-    padding-left: 10px;
-    background: #EEE;
-    color: #79B30B
+a:hover {
+    text-decoration: underline;
 }
 
-div#content p {
-    line-height: 1.4;
+a {
+    color: #2276BB;
+    text-decoration: none;
 }
+
 
 div#content {
-    margin: 0 200px
+    margin: 0 200px;
+    text-align: center;
 }
 
 div#wrapper {
@@ -75,6 +71,7 @@ div#footer p {
     list-style-position: outside;
     list-style-type: disc;
 }
+
 #menu li a:hover {
     border: 1px solid #999999;
     color: #999999;
@@ -92,19 +89,19 @@ div#footer p {
     color: #000000;
 }
 
-tr{  
+/*tr {
     text-align: left;
 }
-tr.headers{
+
+tr.headers {
     font-weight: bold;
     text-align: center;
-}
-
-.addressRisto{
+}*/
+.addressRisto {
     font-size: x-small;
 }
 
-.activitiesList ul{
+.activitiesList ul {
     text-align: left;
     font-size: 150%;
     display: inline;
@@ -112,17 +109,58 @@ tr.headers{
     margin: 0.2em 0 0 8px;
 }
 
-.activitiesList li{
+.activitiesList li {
     text-align: left;
 }
 
-.activitiesList li a{
+.activitiesList li a {
     color: #A4A0A1;
     padding: 3px 12px;
     text-decoration: none;
 }
 
-.activitiesList li a:hover{
+.activitiesList li a:hover {
     color: #000;
 }
 
+#search-panel form fieldset {
+    border: none;
+}
+
+.datatable {
+    width: 70%;
+    margin-left: 15%;
+    margin-right: 15%;
+    text-align: left;
+}
+
+.datatable tr {
+    border-bottom: thin solid;
+}
+
+.datatable th {
+    font-weight: normal;
+    padding-top: 10px;
+    width: 11em;
+}
+
+.datatable th {
+    display: none;
+}
+
+.datatable td {
+    font-weight: normal;
+}
+
+.datatable td {
+    font-weight: normal;
+    padding-top: 10px;
+    text-align: left;
+    width: 11em;
+}
+
+.datatable td.ristoname {
+    font-weight: normal;
+    padding-top: 10px;
+    width: 22em;
+}

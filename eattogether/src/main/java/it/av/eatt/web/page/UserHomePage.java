@@ -21,6 +21,7 @@ import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.util.DateUtil;
 import it.av.eatt.service.ActivityRistoranteService;
 import it.av.eatt.service.RistoranteService;
+import it.av.eatt.web.components.RistoNameColumn;
 import it.av.eatt.web.data.RistoranteSortableDataProvider;
 
 import java.util.ArrayList;
@@ -63,14 +64,19 @@ public class UserHomePage extends BasePage {
         setOutputMarkupId(true);
         RistoranteSortableDataProvider ristoranteSortableDataProvider = new RistoranteSortableDataProvider(ristoranteService);
         List<IColumn<Ristorante>> columns = new ArrayList<IColumn<Ristorante>>();
-        columns.add(new AbstractColumn<Ristorante>(new Model<String>(new StringResourceModel("datatableactionpanel.actions", this, null).getString())) {
-            public void populateItem(Item<ICellPopulator<Ristorante>> cellItem, String componentId, IModel<Ristorante> model) {
-                cellItem.add(new RistoranteTableActionPanel(componentId, model));
+        columns.add(new AbstractColumn<Ristorante>(new Model<String>(new StringResourceModel(
+                "datatableactionpanel.actions", this, null).getString())) {
+            public void populateItem(Item<ICellPopulator<Ristorante>> cellItem, String componentId,
+                    IModel<Ristorante> model) {
+                cellItem.add(new RistoNameColumn(componentId, model));
+            }
+
+            @Override
+            public String getCssClass() {
+                return "ristoName";
             }
         });
         
-        columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("name", this, null).getString()), "name"));
-        columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("type", this, null).getString()), "type"));
         columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("city", this, null).getString()), "city"));
 
         AjaxFallbackDefaultDataTable<Ristorante> ristoranteDataTable = new AjaxFallbackDefaultDataTable<Ristorante>("ristoranteDataTable", columns, ristoranteSortableDataProvider, 10);
