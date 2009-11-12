@@ -85,7 +85,18 @@ public class RistoranteViewPage extends BasePage {
         form.add(new MultiLineLabel(Ristorante.DESCRIPTION));
         // form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
         form.add(new Label("version"));
-        form.add(new RatingPanel("rating1", new PropertyModel<Integer>(getRistorante(), "rating"), new Model<Integer>(5), new PropertyModel<Integer>(getRistorante(), "rates.size"), new PropertyModel<Boolean>(this, "hasVoted"), true ) {
+          
+        Form<Ristorante> formAddress = new Form<Ristorante>("ristoranteAddressForm", new CompoundPropertyModel<Ristorante>(ristorante));
+        add(formAddress);
+        formAddress.add(new Label(Ristorante.ADDRESS));
+        formAddress.add(new Label(Ristorante.CITY));
+        formAddress.add(new Label(Ristorante.PROVINCE));
+        formAddress.add(new Label(Ristorante.POSTALCODE));
+        formAddress.add(new Label(Ristorante.COUNTRY));
+        formAddress.add(new Label(Ristorante.MOBILE_PHONE_NUMBER));
+        formAddress.add(new Label(Ristorante.PHONE_NUMBER));
+        formAddress.add(new Label(Ristorante.FAX_NUMBER));
+        formAddress.add(new RatingPanel("rating1", new PropertyModel<Integer>(getRistorante(), "rating"), new Model<Integer>(5), new PropertyModel<Integer>(getRistorante(), "rates.size"), new PropertyModel<Boolean>(this, "hasVoted"), true ) {
             @Override
             protected boolean onIsStarActive(int star) {
                 return star < ((int) (getRistorante().getRating() + 0.5));
@@ -101,17 +112,7 @@ public class RistoranteViewPage extends BasePage {
                 }
             }
         });
-        
-        Form<Ristorante> formAddress = new Form<Ristorante>("ristoranteAddressForm", new CompoundPropertyModel<Ristorante>(ristorante));
-        add(formAddress);
-        formAddress.add(new Label(Ristorante.ADDRESS));
-        formAddress.add(new Label(Ristorante.CITY));
-        formAddress.add(new Label(Ristorante.PROVINCE));
-        formAddress.add(new Label(Ristorante.POSTALCODE));
-        formAddress.add(new Label(Ristorante.COUNTRY));
-        formAddress.add(new Label(Ristorante.MOBILE_PHONE_NUMBER));
-        formAddress.add(new Label(Ristorante.PHONE_NUMBER));
-        formAddress.add(new Label(Ristorante.FAX_NUMBER));
+
         
         AjaxFallbackLink<String> editRistorante = new AjaxFallbackLink<String>("editRistorante") {
             private static final long serialVersionUID = 1L;
