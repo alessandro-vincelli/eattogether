@@ -1,8 +1,14 @@
 html,body {
     margin: 0;
     padding: 0;
-    font: .75em 'Lucida Grande', sans-serif;
+    font: 0.75em 'Lucida Grande', sans-serif;
     color: #333;
+    font-size: 0.75em;
+    font-size-adjust: none;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: normal;
 }
 
 a:hover {
@@ -13,7 +19,6 @@ a {
     color: #2276BB;
     text-decoration: none;
 }
-
 
 div#content {
     margin: 0 200px;
@@ -43,8 +48,7 @@ div#extra {
 div#footer {
     clear: left;
     width: 100%;
-    background: #333;
-    color: #FFF
+    color: #000
 }
 
 div#footer p {
@@ -56,9 +60,42 @@ div#footer p {
     float: left;
     display: block;
     width: 100%;
+    text-align: right;
+    padding-right: 100px;
+    margin-right: 100px;
+}
+
+#menu ul {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
 }
 
 #menu li {
+    border: 1px solid transparent;
+    display: inline-block;
+    font-size: 1em;
+    padding: 0.5em 0.15em;
+}
+
+#menu li a {
+    border: 1px solid transparent;
+    display: inline-block;
+    font-size: 1.05em;
+    padding: 0.5em 0.15em;
+}
+
+#menu li a:hover {
+    text-decoration: underline;
+}
+
+#menu-dashed {
+    float: left;
+    display: block;
+    width: 100%;
+}
+
+#menu-dashed li {
     font-size: 150%;
     display: inline;
     float: left;
@@ -66,25 +103,19 @@ div#footer p {
     padding: 3px 2px;
 }
 
-.intro ul {
-    list-style-image: none;
-    list-style-position: outside;
-    list-style-type: disc;
-}
-
-#menu li a:hover {
+#menu-dashed li a:hover {
     border: 1px solid #999999;
     color: #999999;
 }
 
-#menu li a {
+#menu-dashed li a {
     border: 1px dashed #A4A0A1;
     color: #A4A0A1;
     padding: 3px 12px;
     text-decoration: none;
 }
 
-#menu a.act {
+#menu-dashed a.act {
     border: 1px solid #000000;
     color: #000000;
 }
@@ -134,22 +165,19 @@ tr.headers {
     text-align: left;
 }
 
-.datatable tr {
-    border-bottom: thin solid;
-}
-
-.datatable th {
+.datatable tbody th {
     font-weight: normal;
     padding-top: 10px;
     width: 11em;
 }
 
-.datatable th {
+.datatable tbody th {
     display: none;
 }
 
 .datatable td {
     font-weight: normal;
+    border-bottom: 1px solid #EEEEEE;
 }
 
 .datatable td {
@@ -163,4 +191,41 @@ tr.headers {
     font-weight: normal;
     padding-top: 10px;
     width: 22em;
+}
+
+input {
+    border: 1px solid #AAAAAA;
+    padding: 4px 2px;
+}
+
+
+.searchRistoInput {
+    border-color: #B4B4B4 #CCCCCC #CCCCCC #B4B4B4;
+    border-style: solid solid solid solid;
+    border-width: 1px 1 1px 1px;
+    font-size: 1em;
+    margin: 0.25em 0 0.25em 12px;
+    outline-color: -moz-use-text-color;
+    outline-style: none;
+    outline-width: medium;
+    padding: 0.4em;
+    width: 250px !important;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-topright: 5px;
+}
+
+.searchRistoButton {
+    -moz-border-radius-bottomright: 3px;
+    -moz-border-radius-topright: 3px;
+    -moz-border-radius-topleft: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    background-color: #EEEEEE;
+    background-position: center top;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    line-height:1.2;
+    
 }
