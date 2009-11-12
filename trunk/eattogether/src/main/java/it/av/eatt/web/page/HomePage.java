@@ -18,6 +18,7 @@ package it.av.eatt.web.page;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.RistoranteService;
+import it.av.eatt.web.components.RistoNameColumn;
 import it.av.eatt.web.data.RistoranteSortableDataProvider;
 
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
- * The page provides user sign up panel.
+ * The page provides the home page.
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  * 
@@ -43,10 +44,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 public class HomePage extends BasePage {
 
     private static final long serialVersionUID = 1L;
-    @SpringBean(name="ristoranteService")
+    @SpringBean(name = "ristoranteService")
     private RistoranteService ristoranteService;
-    private  RistoranteSortableDataProvider ristoranteSortableDataProvider;
-   
+    private RistoranteSortableDataProvider ristoranteSortableDataProvider;
+
     /**
      * Constructor that is invoked when page is invoked without a session.
      * 
@@ -55,29 +56,31 @@ public class HomePage extends BasePage {
     public HomePage() throws JackWicketException {
         setOutputMarkupId(true);
         ristoranteSortableDataProvider = new RistoranteSortableDataProvider(ristoranteService);
-        
+
         List<IColumn<Ristorante>> columns = new ArrayList<IColumn<Ristorante>>();
-        columns.add(new AbstractColumn<Ristorante>(new Model<String>(new StringResourceModel("datatableactionpanel.actions", this, null).getString())) {
-            public void populateItem(Item<ICellPopulator<Ristorante>> cellItem, String componentId, IModel<Ristorante> model) {
-                cellItem.add(new RistoranteTableActionPanel(componentId, model));
+        columns.add(new AbstractColumn<Ristorante>(new Model<String>(new StringResourceModel(
+                "datatableactionpanel.actions", this, null).getString())) {
+            public void populateItem(Item<ICellPopulator<Ristorante>> cellItem, String componentId,
+                    IModel<Ristorante> model) {
+                cellItem.add(new RistoNameColumn(componentId, model));
             }
-        });
-        
-        columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("name", this, null).getString()), "name"){
+
             @Override
             public String getCssClass() {
                 return "ristoName";
             }
         });
-        columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("type", this, null).getString()), "type"));
-        columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("city", this, null).getString()), "city"));
 
-        AjaxFallbackDefaultDataTable<Ristorante> ristoranteDataTable = new AjaxFallbackDefaultDataTable<Ristorante>("ristoranteDataTable", columns, ristoranteSortableDataProvider, 10);
+        columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("city", this, null)
+                .getString()), "city"));
+
+        AjaxFallbackDefaultDataTable<Ristorante> ristoranteDataTable = new AjaxFallbackDefaultDataTable<Ristorante>(
+                "ristoranteDataTable", columns, ristoranteSortableDataProvider, 10);
         add(ristoranteDataTable);
-        
-        RistoranteSearchPanel ristoranteSearchPanel = new RistoranteSearchPanel("ristoranteSearchPanel", ristoranteSortableDataProvider, ristoranteDataTable, getFeedbackPanel());
+
+        RistoranteSearchPanel ristoranteSearchPanel = new RistoranteSearchPanel("ristoranteSearchPanel",
+                ristoranteSortableDataProvider, ristoranteDataTable, getFeedbackPanel());
         add(ristoranteSearchPanel);
     }
 
-  
 }
