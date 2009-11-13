@@ -16,6 +16,17 @@
 package it.av.eatt.web.page;
 
 import org.apache.wicket.authentication.pages.SignOutPage;
+import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 
-public class SignOut extends SignOutPage{
+public class SignOut extends SignOutPage {
+
+    private static final CompressedResourceReference STYLES_CSS = new CompressedResourceReference(BasePage.class,
+            "resources/styles.css");
+
+    public SignOut() {
+        super();
+        add(CSSPackageResource.getHeaderContribution(STYLES_CSS));
+    }
+
 }

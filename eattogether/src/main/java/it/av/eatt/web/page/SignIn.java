@@ -20,6 +20,8 @@ import java.util.Locale;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authentication.pages.SignInPage;
+import org.apache.wicket.markup.html.CSSPackageResource;
+import org.apache.wicket.markup.html.resources.CompressedResourceReference;
 
 /**
  * 
@@ -27,10 +29,12 @@ import org.apache.wicket.authentication.pages.SignInPage;
  * 
  */
 public class SignIn extends SignInPage {
+    private static final CompressedResourceReference STYLES_CSS = new CompressedResourceReference(BasePage.class, "resources/styles.css");
     /**
      * Constructor
      */
     public SignIn() {
+        add(CSSPackageResource.getHeaderContribution(STYLES_CSS));
         getSession().setLocale(new Locale("en", "US"));
         add(new AjaxLink<String>("signUp") {
             private static final long serialVersionUID = 1L;

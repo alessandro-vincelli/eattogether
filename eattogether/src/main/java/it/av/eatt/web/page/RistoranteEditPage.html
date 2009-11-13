@@ -3,7 +3,7 @@
     <div id="wrapper">
     <div id="content">
       		
-        <form wicket:id="ristoranteForm">
+        <form wicket:id="ristoranteForm" class="form-risto">
         	<fieldset>
         	 <table>
     			<tr>
@@ -13,27 +13,37 @@
 	        	<tr>
 	        	<th><label for="address"><wicket:message key="address"/></label></th>
 	        	<td><input type="text" wicket:id="address"></input></td>
-	        	<th><label for="city"><wicket:message key="city"/></label></th>
+	        	</tr>
+                <tr>
+                <th><label for="city"><wicket:message key="city"/></label></th>
 	        	<td><input type="text" wicket:id="city"></input></td>
 	        	</tr>
 	        	<tr>
 	        	<th><label for="province"><wicket:message key="province"/></label></th>
 	        	<td><input type="text" wicket:id="province"></input></td>
-	        	<th><label for="postalCode"><wicket:message key="postalCode"/></label></th>
+	        	</tr>
+                <tr>
+                <th><label for="postalCode"><wicket:message key="postalCode"/></label></th>
 	        	<td><input type="text" wicket:id="postalCode"></input></td>
 	        	</tr>
 	        	<tr>
 	        	<th><label for="country"><wicket:message key="country"/></label></th>
 	        	<td><input type="text" wicket:id="country"></input></td>
-	        	<th><label for="type"><wicket:message key="type"/></label></th>
+	        	</tr>
+                <tr>
+                <th><label for="type"><wicket:message key="type"/></label></th>
 	        	<td><input type="text" wicket:id="type"></input></td>
 	        	</tr>
 	        	<tr>
 	        	<th><label for="phoneNumber"><wicket:message key="phoneNumber"/></label></th>
 	        	<td><input type="text" wicket:id="phoneNumber"></input></td>
-	        	<th><label for="mobilePhoneNumber"><wicket:message key="mobilePhoneNumber"/></label></th>
+	        	</tr>
+                <tr>
+                <th><label for="mobilePhoneNumber"><wicket:message key="mobilePhoneNumber"/></label></th>
 	        	<td><input type="text" wicket:id="mobilePhoneNumber"></input></td>
-	        	<th><label for="faxNumber"><wicket:message key="faxNumber"/></label></th>
+	        	</tr>
+                <tr>
+                <th><label for="faxNumber"><wicket:message key="faxNumber"/></label></th>
 	        	<td><input type="text" wicket:id="faxNumber"></input></td>
 	        	</tr>
 	        	<tr>
@@ -61,8 +71,8 @@
 	        	<td><span wicket:id="version"></span></td>
 	        	</tr>
 	        	<tr>
-	        	<th><input type="submit" wicket:id="submitRestaurant" /></th>
-	        	<td><button wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button></td>
+	        	<td class="submit"><input type="submit" wicket:id="submitRestaurant" /></td>
+	        	<td><button class="submit" wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button></td>
 	        	</tr>
 	        </table>
         	</fieldset>

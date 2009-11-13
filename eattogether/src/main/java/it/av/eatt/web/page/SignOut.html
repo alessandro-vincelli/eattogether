@@ -1,29 +1,30 @@
-<html xmlns:wicket="http://wicket.apache.org/">
+<html>
 <wicket:head>
-	<title>:: Eattogether - Signout</title>
-	<wicket:link>
-		<link rel='stylesheet' type='text/css' media='all' href='resources/styles.css' />
-		<link rel='stylesheet' type='text/css' media='print' href='resources/print.css' />
-		<link rel='shortcut icon' href='resources/images/favicon.ico' />
-	</wicket:link>
+    <title>:: EatTogether ::</title>
+    <wicket:link>
+        <link rel="shortcut icon" href="resources/images/favicon.ico" />
+    </wicket:link>
 </wicket:head>
 <body>
-
-<div id='page'>
-
-<div id='header'>
-	<div class='top'>
-	<div class='screenlogo'><a href='/' title='Eattogether'>Eattogether</a></div>
-	</div>
-	<div class="intro">
-		<ul id="menu">
-			<li><a href='mailto:dev@mailing.antwoordvoorbedrijven.net'>Help</a></li>
-		</ul>
-	</div>
+<div id="container">
+<div id="header">
+<a href="/" title="Eattogether">EatTogether</a>
+    <ul id="menu">
+        <li><a href="mailto:dev@mailing.antwoordvoorbedrijven.net">Help</a></li>
+        <!-- <li><a wicket:id="goUserPage"><wicket:message key="basepage.goUserPage" /></a></li>
+        <li><a wicket:id="goUserProfilePage"><wicket:message key="basepage.goUserProfilePage" /></a></li>
+        <li><a wicket:id="goRistoranteAddNewPage"><wicket:message key="basepage.goRistorantePage" /></a></li>
+        <li><a wicket:id="goFriendPage"><wicket:message key="basepage.goFriendPage" /></a></li>
+        <li><a wicket:id="goSearchFriendPage"><wicket:message key="basepage.goSearchFriendPage" /></a></li>
+        <li>
+            <a wicket:id="goSignOut"><wicket:message key="basepage.goSignOut" /></a>
+            <a wicket:id="goSignIn"><wicket:message key="basepage.goSignIn" /></a>
+        </li> -->
+    </ul>
 </div>
-	<div id="content" class="sidebarwide">
-		<div class="contentcontainer">
-		<div id="main"></div>
+
+    <div id="wrapper">
+      <div id="content">
 		<div id="login">
 			<h2 class="sbtitle"><wicket:message key="signout.goodbye"/>.</h2>
 			<br/>
@@ -34,10 +35,16 @@
 		    </wicket:link>
 		    </p>
 		</div>
-		<div class="layoutfix"></div>
-		</div>
-	</div>
+		
+    </div>
+    </div>
+    <div id="footer"><p>© 2009 Alessandro Vincelli</p></div>
 </div>
-	
 </body>
 </html>
+
+
+
+
+
+
