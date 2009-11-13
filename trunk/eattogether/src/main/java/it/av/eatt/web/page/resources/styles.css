@@ -20,9 +20,23 @@ a {
     text-decoration: none;
 }
 
+div#container{
+    width:1024px;
+    margin:0 auto;
+    border-left: 1px;
+    border-right: 1px solid #C8C8DE;
+    border-left: 1px solid #C8C8DE;
+}
+
 div#content {
     margin: 0 200px;
     text-align: center;
+}
+
+div#content fieldset {
+    border: none;
+    border-left: 1px solid #C8C8DE;
+    border-right: 1px solid #C8C8DE;
 }
 
 div#wrapper {
@@ -34,7 +48,7 @@ div#navigation {
     float: left;
     width: 200px;
     margin-left: -200px;
-    /*background: #B9CAFF*/
+    /*background: #B9CAFF;*/
 }
 
 div#extra {
@@ -42,7 +56,7 @@ div#extra {
     width: 200px;
     margin-left: -100%;
     padding-left: 10px;
-    /*background: #FF8539*/
+    /*background: #FF8539;*/
 }
 
 div#footer {
@@ -57,12 +71,10 @@ div#footer p {
 }
 
 #menu {
-    float: left;
+    float: right;
     display: block;
-    width: 100%;
     text-align: right;
-    padding-right: 100px;
-    margin-right: 100px;
+    padding-right: 10px;
 }
 
 #menu ul {
@@ -81,12 +93,19 @@ div#footer p {
 #menu li a {
     border: 1px solid transparent;
     display: inline-block;
-    font-size: 1.05em;
-    padding: 0.5em 0.15em;
+    font-size: 1.50em;
+    padding: 0.2em 0.15em;
+    border-bottom:1px solid #E9E9E9;
+    color:#000000;
+    text-decoration:none;
+    height:17px;
+    overflow:hidden;
+    font-family:Arial,'Helvetica Neue',Helvetica,sans-serif;
 }
 
+
 #menu li a:hover {
-    text-decoration: underline;
+    color:#2276BB;
 }
 
 #menu-dashed {
@@ -198,6 +217,15 @@ input {
     padding: 4px 2px;
 }
 
+
+button {
+    border: 1px solid #AAAAAA;
+    padding: 4px 2px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-topright: 5px;
+}
 
 .searchRistoInput {
     border-color: #B4B4B4 #CCCCCC #CCCCCC #B4B4B4;
