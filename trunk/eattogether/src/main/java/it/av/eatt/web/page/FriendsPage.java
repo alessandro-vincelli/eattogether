@@ -15,11 +15,11 @@
  */
 package it.av.eatt.web.page;
 
-import java.util.List;
-
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.EaterRelation;
 import it.av.eatt.service.UserRelationService;
+
+import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
