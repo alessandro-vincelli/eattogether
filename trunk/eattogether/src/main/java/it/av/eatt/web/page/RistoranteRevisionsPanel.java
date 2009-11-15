@@ -36,7 +36,6 @@ public class RistoranteRevisionsPanel extends Panel {
      */
     public RistoranteRevisionsPanel(String id, final FeedbackPanel feedbackPanel) {
         super(id);
-        this.setOutputMarkupId(true);
         this.feedbackPanel = feedbackPanel;
         productsVersionsList = new PropertyListView<RistoranteRevision>("versions", revisions) {
             private static final long serialVersionUID = 1L;

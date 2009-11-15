@@ -3,7 +3,7 @@
     <div id="wrapper">
     <div id="content">
       		
-        <form wicket:id="ristoranteForm" >
+        <form wicket:id="ristoranteForm">
            <fieldset>
              <table class="form-risto">
                 <tr>
@@ -52,7 +52,9 @@
                 </tr>
                 <tr>
                 <th><label for="description"><wicket:message key="description"/></label></th>
-                <td><input type="text" wicket:id="description"></input></td>
+                <td>
+                <textarea wicket:id="description" autocomplete="off" accesskey="u" name="description" rows="15" cols="60"></textarea>
+                </td>
                 </tr>
                 <tr class="submitarea">
                 <td colspan="2"><input type="submit" wicket:id="submitRestaurant" /> <button wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button></td>
@@ -61,5 +63,8 @@
             </fieldset>
          </form>
        </div>
+       </div>
+       <div id="navigation">
+       <p><input type="submit" wicket:id="submitRestaurantRight"></input></p>
        </div>
 </wicket:extend>

@@ -44,7 +44,6 @@ import org.springframework.orm.jpa.support.JpaDaoSupport;
 public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSupport implements ApplicationService<T> {
 
     /**
-     * 
      * @param entityManager
      */
     @PersistenceContext(type = PersistenceContextType.TRANSACTION)

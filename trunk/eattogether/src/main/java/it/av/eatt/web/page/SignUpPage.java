@@ -30,11 +30,11 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 public class SignUpPage extends BasePage {
 
     private static final long serialVersionUID = 1L;
-    @SpringBean(name="userService")
+    @SpringBean(name = "userService")
     private UserService userService;
-    @SpringBean(name="countryService")
+    @SpringBean(name = "countryService")
     private CountryService countryService;
-    
+
     /**
      * Constructor that is invoked when page is invoked without a session.
      * 

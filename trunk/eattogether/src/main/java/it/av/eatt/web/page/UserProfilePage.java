@@ -49,18 +49,16 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  * 
  * <ul>
  * <li>{@link Form} to edit and add {@link EaterProfile} with ajax buttons</li>
- * <li>{@link AjaxFallbackDefaultDataTable} to show and enable operations on the
- * {@link EaterProfile}</li>
+ * <li>{@link AjaxFallbackDefaultDataTable} to show and enable operations on the {@link EaterProfile}</li>
  * </ul>
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
 @AuthorizeInstantiation( { "USER", "ADMIN", "EDITOR" })
 public class UserProfilePage extends BasePage {
 
     private static final long serialVersionUID = 1L;
-    @SpringBean(name="userProfileService")
+    @SpringBean(name = "userProfileService")
     private UserProfileService userProfileService;
 
     private EaterProfile userProfile;
@@ -75,7 +73,7 @@ public class UserProfilePage extends BasePage {
      */
     public UserProfilePage() throws JackWicketException {
         userProfile = new EaterProfile();
-        
+
         form = new Form<EaterProfile>("userProfileForm", new CompoundPropertyModel<EaterProfile>(userProfile));
         form.setOutputMarkupId(true);
         form.add(new RequiredTextField<String>("name"));
@@ -92,16 +90,21 @@ public class UserProfilePage extends BasePage {
         add(form);
 
         List<IColumn<EaterProfile>> columns = new ArrayList<IColumn<EaterProfile>>();
-        columns.add(new AbstractColumn<EaterProfile>(new Model<String>(new StringResourceModel("datatableactionpanel.actions", this, null).getString())) {
-            public void populateItem(Item<ICellPopulator<EaterProfile>> cellItem, String componentId, IModel<EaterProfile> model) {
+        columns.add(new AbstractColumn<EaterProfile>(new Model<String>(new StringResourceModel(
+                "datatableactionpanel.actions", this, null).getString())) {
+            public void populateItem(Item<ICellPopulator<EaterProfile>> cellItem, String componentId,
+                    IModel<EaterProfile> model) {
                 cellItem.add(new UserProfileTableActionPanel(componentId, model));
             }
         });
-        columns.add(new PropertyColumn<EaterProfile>(new Model<String>(new StringResourceModel("name", this, null).getString()), "name"));
-        columns.add(new PropertyColumn<EaterProfile>(new Model<String>(new StringResourceModel("description", this, null).getString()), "description"));
+        columns.add(new PropertyColumn<EaterProfile>(new Model<String>(new StringResourceModel("name", this, null)
+                .getString()), "name"));
+        columns.add(new PropertyColumn<EaterProfile>(new Model<String>(new StringResourceModel("description", this,
+                null).getString()), "description"));
         dataProvider = new UserProfileSortableDataProvider(userProfileService);
         refreshDataTable();
-        usersProfileDataTable = new AjaxFallbackDefaultDataTable<EaterProfile>("usersDataTable", columns, dataProvider, 10);
+        usersProfileDataTable = new AjaxFallbackDefaultDataTable<EaterProfile>("usersDataTable", columns, dataProvider,
+                10);
         add(usersProfileDataTable);
 
     }
@@ -147,7 +150,8 @@ public class UserProfilePage extends BasePage {
 
     /**
      * Fill with fresh data the repetear
-     * @throws JackWicketException 
+     * 
+     * @throws JackWicketException
      */
     public final void refreshDataTable() throws JackWicketException {
         dataProvider.fetchResults();

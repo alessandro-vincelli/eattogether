@@ -38,21 +38,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 /**
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
 public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Ristorante> implements RistoranteService {
-    
+
     @Autowired
     private ActivityRistoranteService activityRistoranteService;
     @Autowired
     private RistoranteRevisionService ristoranteRevisionService;
     @Autowired
     private RateRistoranteService rateRistoranteService;
-    
-    /*
-     * (non-Javadoc)
-     * 
-     * @see it.av.eatt.service.RistoranteService#update(it.av.eatt.ocm.model.Ristorante, it.av.eatt.ocm.model.Eater)
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Ristorante update(Ristorante risto, Eater user) throws JackWicketException {
@@ -60,14 +57,13 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
         risto.setRevisionNumber(risto.getRevisionNumber() + 1);
         super.save(risto);
         risto.addRevision(ristoranteRevisionService.insert(new RistoranteRevision(risto)));
-        risto.addActivity(activityRistoranteService.save(new ActivityRistorante(DateUtil.getTimestamp(), user, risto, ActivityRistorante.TYPE_MODIFICATION)));
+        risto.addActivity(activityRistoranteService.save(new ActivityRistorante(DateUtil.getTimestamp(), user, risto,
+                ActivityRistorante.TYPE_MODIFICATION)));
         return save(risto);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see it.av.eatt.service.RistoranteService#insert(it.av.eatt.ocm.model.Ristorante, it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Ristorante insert(Ristorante risto, Eater user) throws JackWicketException {
@@ -76,43 +72,45 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
         risto.setRevisionNumber(1);
         super.save(risto);
         risto.addRevision(ristoranteRevisionService.insert(new RistoranteRevision(risto)));
-        risto.addActivity(activityRistoranteService.save(new ActivityRistorante(DateUtil.getTimestamp(), user, risto, ActivityRistorante.TYPE_ADDED)));
+        risto.addActivity(activityRistoranteService.save(new ActivityRistorante(DateUtil.getTimestamp(), user, risto,
+                ActivityRistorante.TYPE_ADDED)));
         return super.save(risto);
     }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see it.av.eatt.service.RistoranteService#addRate(it.av.eatt.ocm.model.Ristorante , it.av.eatt.ocm.model.Eater, java.lang.String)
-	 */
-	@Override
-	public Ristorante addRate(Ristorante risto, Eater user, int rate) throws JackWicketException {
-		if (user != null && risto != null && !(hasUsersAlreadyRated(risto, user))) {
-			if (rate >= 0 && rate <= 5) {
-				ActivityRistorante activity = activityRistoranteService.save(new ActivityRistorante(user, risto, ActivityRistorante.TYPE_VOTED));
-				risto.addARate(rateRistoranteService.insert(new RateOnRistorante(rate, activity)));
-				return save(risto);
-			} else {
-				throw new JackWicketRunTimeException("Rate non valid");
-			}
-		} else {
-			throw new JackWicketRunTimeException("Probably the given user has already voted on the given restaurant");
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Ristorante addRate(Ristorante risto, Eater user, int rate) throws JackWicketException {
+        if (user != null && risto != null && !(hasUsersAlreadyRated(risto, user))) {
+            if (rate >= 0 && rate <= 5) {
+                ActivityRistorante activity = activityRistoranteService.save(new ActivityRistorante(user, risto,
+                        ActivityRistorante.TYPE_VOTED));
+                risto.addARate(rateRistoranteService.insert(new RateOnRistorante(rate, activity)));
+                return save(risto);
+            } else {
+                throw new JackWicketRunTimeException("Rate non valid");
+            }
+        } else {
+            throw new JackWicketRunTimeException("Probably the given user has already voted on the given restaurant");
+        }
+    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean hasUsersAlreadyRated(Ristorante risto, Eater user) throws JackWicketException {
-        List<ActivityRistorante> results = activityRistoranteService.findByUserRistoType(user, risto, ActivityRistorante.TYPE_VOTED);
+        List<ActivityRistorante> results = activityRistoranteService.findByUserRistoType(user, risto,
+                ActivityRistorante.TYPE_VOTED);
         if (results.size() == 0) {
             return false;
         } else
             return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see it.av.eatt.service.RistoranteService#find(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Collection<Ristorante> find(String pattern) throws JackWicketException {
@@ -121,26 +119,24 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
         return results;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see it.av.eatt.service.impl.ApplicationServiceHibernate#remove(java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void remove(Ristorante object) throws JackWicketException {
-//        for (ActivityRistorante activityRistorante : object.getActivities()) {
-//            getJpaTemplate().remove(activityRistorante);
-//        }
-//        for (TagOnRistorante tag : object.getTags()) {
-//            getJpaTemplate().remove(tag);
-//        }
-//        for (RateOnRistorante rate : object.getRates()) {
-//            getJpaTemplate().remove(rate);
-//        }
-//        for(RistoranteRevision revision :object.getRevisions()){
-//            getJpaTemplate().remove(revision);
-//        }
-        //getJpaTemplate().flush();
+        // for (ActivityRistorante activityRistorante : object.getActivities()) {
+        // getJpaTemplate().remove(activityRistorante);
+        // }
+        // for (TagOnRistorante tag : object.getTags()) {
+        // getJpaTemplate().remove(tag);
+        // }
+        // for (RateOnRistorante rate : object.getRates()) {
+        // getJpaTemplate().remove(rate);
+        // }
+        // for(RistoranteRevision revision :object.getRevisions()){
+        // getJpaTemplate().remove(revision);
+        // }
+        // getJpaTemplate().flush();
         super.remove(object);
     }
 
@@ -150,5 +146,4 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
     public void setActivityRistoranteService(ActivityRistoranteService activityRistoranteService) {
         this.activityRistoranteService = activityRistoranteService;
     }
-
 }

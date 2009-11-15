@@ -15,6 +15,8 @@
  */
 package it.av.eatt.web.page;
 
+import java.util.List;
+
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.EaterRelation;
 import it.av.eatt.service.UserRelationService;
@@ -22,6 +24,7 @@ import it.av.eatt.service.UserRelationService;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
@@ -49,8 +52,17 @@ public class FriendsPage extends BasePage {
      * @throws JackWicketException
      */
     public FriendsPage() throws JackWicketException {
-        setOutputMarkupId(true);
-        friendsList = new PropertyListView<EaterRelation>("friendsList", userRelationService.getAllRelations(getLoggedInUser())) {
+       
+        final List<EaterRelation> allRelations = userRelationService.getAllRelations(getLoggedInUser());
+        Label noYetFriends = new Label("noYetFriends"){
+            @Override
+            protected void onRender(MarkupStream markupStream) {
+                super.onRender(markupStream);
+                setVisible(allRelations.size() == 0);
+            }  
+        };
+        add(noYetFriends);
+        friendsList = new PropertyListView<EaterRelation>("friendsList", allRelations) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -67,7 +79,7 @@ public class FriendsPage extends BasePage {
                     public void onClick(AjaxRequestTarget target) {
                         try {
                             ((FriendsPage) getPage()).userRelationService.remove(getModelObject());
-                            ((FriendsPage) target.getPage()).friendsList.setModelObject(userRelationService.getAllRelations(getLoggedInUser()));
+                            ((FriendsPage) target.getPage()).friendsList.setModelObject(allRelations);
                             target.addComponent((target.getPage()));
                             // info(new StringResourceModel("info.userRelationRemoved", this, null).getString());
                         } catch (JackWicketException e) {

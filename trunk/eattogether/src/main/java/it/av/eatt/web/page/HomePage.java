@@ -54,7 +54,6 @@ public class HomePage extends BasePage {
      * @throws JackWicketException
      */
     public HomePage() throws JackWicketException {
-        setOutputMarkupId(true);
         ristoranteSortableDataProvider = new RistoranteSortableDataProvider(ristoranteService);
 
         List<IColumn<Ristorante>> columns = new ArrayList<IColumn<Ristorante>>();

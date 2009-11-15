@@ -34,10 +34,8 @@ public class UserTableActionPanel extends Panel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @param id
-     *            component id
-     * @param model
-     *            model for contact
+     * @param id component id
+     * @param model model for contact
      */
     public UserTableActionPanel(String id, IModel<Eater> model) {
         super(id, model);

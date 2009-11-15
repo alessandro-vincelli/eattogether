@@ -35,10 +35,8 @@ public class UserProfileTableActionPanel extends Panel {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @param id
-     *            component id
-     * @param model
-     *            model for contact
+     * @param id component id
+     * @param model model for contact
      */
     public UserProfileTableActionPanel(String id, IModel<EaterProfile> model) {
         super(id, model);
@@ -51,7 +49,8 @@ public class UserProfileTableActionPanel extends Panel {
                 Form<EaterProfile> form = page.getForm();
                 form.setModelObject(getModelObject());
                 target.addComponent(form);
-                page.getFeedbackPanel().info("Profile \"" + getModelObject().getName() + "\" loaded and ready to be modified");
+                page.getFeedbackPanel().info(
+                        "Profile \"" + getModelObject().getName() + "\" loaded and ready to be modified");
                 target.addComponent(page.getFeedbackPanel());
             }
         });

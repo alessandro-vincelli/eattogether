@@ -81,11 +81,9 @@ public class SearchFriendPanel extends Panel {
     }
 
     /**
-     * 
      * Simple Bean to store the Form data
      * 
      * @author Alessandro Vincelli
-     * 
      */
     private static class SearchBean implements IClusterable {
         private static final long serialVersionUID = 1L;

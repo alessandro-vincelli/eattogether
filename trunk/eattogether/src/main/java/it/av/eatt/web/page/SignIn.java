@@ -29,7 +29,9 @@ import org.apache.wicket.markup.html.resources.CompressedResourceReference;
  * 
  */
 public class SignIn extends SignInPage {
-    private static final CompressedResourceReference STYLES_CSS = new CompressedResourceReference(BasePage.class, "resources/styles.css");
+    private static final CompressedResourceReference STYLES_CSS = new CompressedResourceReference(BasePage.class,
+            "resources/styles.css");
+
     /**
      * Constructor
      */

@@ -32,11 +32,10 @@ import org.hibernate.criterion.Restrictions;
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  * 
  */
-public class ActivityServiceHibernate extends ApplicationServiceHibernate<Activity> implements ActivityService{
-    
+public class ActivityServiceHibernate extends ApplicationServiceHibernate<Activity> implements ActivityService {
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ActivityService#findByDate(java.util.Date)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Collection<Activity> findByDate(Date date) throws JackWicketException {
@@ -44,14 +43,12 @@ public class ActivityServiceHibernate extends ApplicationServiceHibernate<Activi
         return findByCriteria(crit);
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ActivityService#findByUser(it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Collection<Activity> findByUser(Eater user) throws JackWicketException {
         Criterion crit = Restrictions.eq(Activity.USER, user);
         return findByCriteria(crit);
     }
-    
-    
 }

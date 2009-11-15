@@ -27,29 +27,28 @@ import org.hibernate.criterion.Restrictions;
 /**
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
-public class UserProfileServiceHibernate extends ApplicationServiceHibernate<EaterProfile> implements UserProfileService{
+public class UserProfileServiceHibernate extends ApplicationServiceHibernate<EaterProfile> implements
+        UserProfileService {
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserProfileService#getRegolarUserProfile()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public EaterProfile getRegolarUserProfile() throws JackWicketException {
         return getByName("USER");
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserProfileService#getByName(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public EaterProfile getByName(String name) {
         Criterion crit = Restrictions.eq(EaterProfile.NAME, name);
         List<EaterProfile> result = super.findByCriteria(crit);
-        if(result != null && result.size() > 0){
+        if (result != null && result.size() > 0) {
             return result.get(0);
-        }
-        else{
+        } else {
             return null;
         }
     }

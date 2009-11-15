@@ -4,29 +4,34 @@
     <div id="content">
         <form wicket:id="userForm" class="cmxform">
         	<fieldset>
-        	 <ol>
-    			<li>
-	        	<label for="password"><wicket:message key="password"/></label>
-	        	<input type="text" wicket:id="password"/>
-	        	</li>
-	        	<li>
-	        	<label for="firstname"><wicket:message key="firstname"/></label>
-	        	<input type="text" wicket:id="firstname"/>
-	        	<label for="lastname"><wicket:message key="lastname"/></label>
-	        	<input type="text" wicket:id="lastname"/>
-	        	</li>
-	        	<li>
-	        	<label for="email"><wicket:message key="email"/></label>
-	        	<input type="text" wicket:id="email"/>
-	        	<label for="userProfile"><wicket:message key="userProfile"/></label>
-	        	<select wicket:id="userProfile"/>
-	        	</li>
-	        	
-	        	<li>
-	        	<input type="submit" wicket:id="ajax-button" />
+        	 <table>
+    			<tr>
+                <th><label for="password"><wicket:message key="password"/></label></th>
+	        	<td><input type="text" wicket:id="password"/></td>
+	        	</tr>
+                <tr>
+	        	<th><label for="firstname"><wicket:message key="firstname"/></label></th>
+	        	<td><input type="text" wicket:id="firstname"/></td>
+                </tr>
+                <tr>
+	        	<th><label for="lastname"><wicket:message key="lastname"/></label></th>
+	        	<td><input type="text" wicket:id="lastname"/></td>
+	        	</tr>
+	        	<tr>
+	        	<th><label for="email"><wicket:message key="email"/></label></th>
+	        	<td><input type="text" wicket:id="email"/></td>
+                </tr>
+                <tr>
+	        	<th><label for="userProfile"><wicket:message key="userProfile"/></label></th>
+	        	<td><select wicket:id="userProfile"></select></td>
+	        	</tr>
+	        	<tr>
+	        	<td>
+                <input type="submit" wicket:id="ajax-button" />
 	        	<button wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button>
-	        	</li>
-	        </ol>
+	        	</td>
+                </tr>
+	        </table>
         	</fieldset>
         </form>
         <p>

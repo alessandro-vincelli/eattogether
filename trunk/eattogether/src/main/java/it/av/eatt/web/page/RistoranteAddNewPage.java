@@ -37,6 +37,7 @@ import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInst
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
@@ -62,6 +63,7 @@ public class RistoranteAddNewPage extends BasePage {
 
     private Ristorante ristorante;
     private Form<Ristorante> form;
+    private SubmitButton submitRestaurantRight;
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -120,7 +122,7 @@ public class RistoranteAddNewPage extends BasePage {
         form.add(new TextField<String>(Ristorante.PHONE_NUMBER).setOutputMarkupId(true));
         form.add(new TextField<String>(Ristorante.FAX_NUMBER).setOutputMarkupId(true));
         form.add(new TextField<String>(Ristorante.MOBILE_PHONE_NUMBER).setOutputMarkupId(true));
-        form.add(new TextField<String>(Ristorante.DESCRIPTION).setOutputMarkupId(true));
+        form.add(new TextArea<String>(Ristorante.DESCRIPTION).setOutputMarkupId(true));
         form.add(new TextField<String>(Ristorante.WWW).setOutputMarkupId(true));
         // form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new
         // UserProfilesList()).setOutputMarkupId(true));
@@ -136,6 +138,9 @@ public class RistoranteAddNewPage extends BasePage {
         form.add(buttonClearForm);
         
         form.add(new SubmitButton("submitRestaurant", form));
+        submitRestaurantRight = new SubmitButton("submitRestaurantRight", form);
+        submitRestaurantRight.setOutputMarkupId(true);
+        add(submitRestaurantRight);
         
         OnChangeAjaxBehavior onChangeAjaxBehavior = new OnChangeAjaxBehavior()
         {
@@ -184,6 +189,7 @@ public class RistoranteAddNewPage extends BasePage {
                 getFeedbackPanel().error("ERROR" + e.getMessage());
             }
             getForm().setEnabled(false);
+            submitRestaurantRight.setEnabled(false);
             setVisible(false);
             buttonClearForm.setVisible(false);
             if (target != null) {

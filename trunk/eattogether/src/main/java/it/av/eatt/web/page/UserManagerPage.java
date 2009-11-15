@@ -57,9 +57,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 public class UserManagerPage extends BasePage {
 
     private static final long serialVersionUID = 1L;
-    @SpringBean(name="userService")
+    @SpringBean(name = "userService")
     private UserService userService;
-    @SpringBean(name="userProfileService")
+    @SpringBean(name = "userProfileService")
     private UserProfileService userProfileService;
 
     private AjaxFallbackDefaultDataTable<Eater> usersDataTable;
@@ -73,14 +73,15 @@ public class UserManagerPage extends BasePage {
      * @throws JackWicketException
      */
     public UserManagerPage() throws JackWicketException {
-        
+
         form = new Form<Eater>("userForm", new CompoundPropertyModel<Eater>(new Eater()));
         form.setOutputMarkupId(true);
         form.add(new TextField<String>("password"));
         form.add(new TextField<String>("lastname"));
         form.add(new TextField<String>("firstname"));
         form.add(new TextField<String>("email"));
-        form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
+        form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService
+                .getAll()), new UserProfilesList()).setOutputMarkupId(true));
 
         form.add(new AjaxLink<Eater>("buttonClearForm", new Model<Eater>()) {
             @Override
@@ -93,16 +94,20 @@ public class UserManagerPage extends BasePage {
         add(form);
 
         List<IColumn<Eater>> columns = new ArrayList<IColumn<Eater>>();
-        columns.add(new AbstractColumn<Eater>(new Model<String>(new StringResourceModel("datatableactionpanel.actions", this, null).getString())) {
+        columns.add(new AbstractColumn<Eater>(new Model<String>(new StringResourceModel("datatableactionpanel.actions",
+                this, null).getString())) {
             public void populateItem(Item<ICellPopulator<Eater>> cellItem, String componentId, IModel<Eater> model) {
                 cellItem.add(new UserTableActionPanel(componentId, model));
             }
         });
-        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("password", this, null).getString()), "password"));
-        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("firstname", this, null).getString()), "firstname"));
-        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("lastname", this, null).getString()), "lastname"));
-        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("email", this, null).getString()), "email"));
-        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("userProfile", this, null).getString()), "userProfile.name"));
+        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("firstname", this, null)
+                .getString()), "firstname"));
+        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("lastname", this, null)
+                .getString()), "lastname"));
+        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("email", this, null)
+                .getString()), "email"));
+        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("userProfile", this, null)
+                .getString()), "userProfile.name"));
         dataProvider = new UserSortableDataProvider(userService);
         usersDataTable = new AjaxFallbackDefaultDataTable<Eater>("usersDataTable", columns, dataProvider, 10);
         add(usersDataTable);
@@ -131,11 +136,10 @@ public class UserManagerPage extends BasePage {
         protected void onSubmit(AjaxRequestTarget target, Form form) {
             try {
                 Eater userToSave = (Eater) form.getModelObject();
-                if(StringUtils.isNotBlank(userToSave.getId())){
+                if (StringUtils.isNotBlank(userToSave.getId())) {
                     userToSave = userService.update(userToSave);
                     getFeedbackPanel().info(new StringResourceModel("info.userupdated", this, null).getString());
-                }
-                else{
+                } else {
                     userToSave = userService.add(userToSave);
                     getFeedbackPanel().info(new StringResourceModel("info.useradded", this, null).getString());
                 }
@@ -155,16 +159,17 @@ public class UserManagerPage extends BasePage {
             target.addComponent(getFeedbackPanel());
         }
     }
-    
+
     /**
      * Fill with fresh data the repetear
-     * @throws JackWicketException 
+     * 
+     * @throws JackWicketException
      */
     public final void refreshDataTable() throws JackWicketException {
         dataProvider.fetchResults(searchPanel.getForm().getModelObject().getSearchData());
     }
 
-    public final  Form<Eater> getForm() {
+    public final Form<Eater> getForm() {
         return form;
     }
 
@@ -178,6 +183,7 @@ public class UserManagerPage extends BasePage {
 
     private class UserProfilesList implements IChoiceRenderer<EaterProfile> {
         private static final long serialVersionUID = 1L;
+
         @Override
         public Object getDisplayValue(EaterProfile object) {
             return object.getName();

@@ -28,13 +28,12 @@ import org.hibernate.criterion.Restrictions;
 /**
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
-public class UserRelationServiceHibernate extends ApplicationServiceHibernate<EaterRelation> implements UserRelationService{
-    
+public class UserRelationServiceHibernate extends ApplicationServiceHibernate<EaterRelation> implements
+        UserRelationService {
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserRelationService#addFollowUser(it.av.eatt.ocm.model.Eater, it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public EaterRelation addFollowUser(Eater fromUser, Eater toUser) throws JackWicketException {
@@ -42,8 +41,8 @@ public class UserRelationServiceHibernate extends ApplicationServiceHibernate<Ea
         return save(relation);
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserRelationService#addFriendRequest(it.av.eatt.ocm.model.Eater, it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public EaterRelation addFriendRequest(Eater fromUser, Eater toUser) throws JackWicketException {
@@ -51,36 +50,36 @@ public class UserRelationServiceHibernate extends ApplicationServiceHibernate<Ea
         return save(relation);
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserRelationService#performFriendRequestConfirm(it.av.eatt.ocm.model.EaterRelation)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public EaterRelation performFriendRequestConfirm(EaterRelation relation) throws JackWicketException {
-        if(relation != null && relation.getStatus().equals(EaterRelation.STATUS_PENDING) && relation.getType().equals(EaterRelation.TYPE_FRIEND)){
+        if (relation != null && relation.getStatus().equals(EaterRelation.STATUS_PENDING)
+                && relation.getType().equals(EaterRelation.TYPE_FRIEND)) {
             relation.setStatus(EaterRelation.STATUS_ACTIVE);
-            return save(relation);    
-        }
-        else{
+            return save(relation);
+        } else {
             throw new JackWicketException("Relation cannot be updated");
         }
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserRelationService#performFriendRequestIgnore(it.av.eatt.ocm.model.EaterRelation)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public EaterRelation performFriendRequestIgnore(EaterRelation relation) throws JackWicketException {
-        if(relation != null && relation.getStatus().equals(EaterRelation.STATUS_PENDING) && relation.getType().equals(EaterRelation.TYPE_FRIEND)){
+        if (relation != null && relation.getStatus().equals(EaterRelation.STATUS_PENDING)
+                && relation.getType().equals(EaterRelation.TYPE_FRIEND)) {
             relation.setStatus(EaterRelation.STATUS_IGNORED);
-            return save(relation);    
-        }
-        else{
+            return save(relation);
+        } else {
             throw new JackWicketException("Relation cannot be updated");
         }
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserRelationService#getAllFollowUsers(it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<EaterRelation> getAllFollowUsers(Eater ofUser) {
@@ -90,8 +89,8 @@ public class UserRelationServiceHibernate extends ApplicationServiceHibernate<Ea
         return findByCriteria(critUser, critType, critStatus);
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserRelationService#getAllFriendUsers(it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<EaterRelation> getAllFriendUsers(Eater ofUser) {
@@ -101,8 +100,8 @@ public class UserRelationServiceHibernate extends ApplicationServiceHibernate<Ea
         return findByCriteria(critUser, critType, critStatus);
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserRelationService#getAllRelatedUsers(it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<EaterRelation> getAllRelations(Eater ofUser) {
@@ -110,8 +109,8 @@ public class UserRelationServiceHibernate extends ApplicationServiceHibernate<Ea
         return findByCriteria(critUser);
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserRelationService#getAllActiveRelations(it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public List<EaterRelation> getAllActiveRelations(Eater ofUser) {

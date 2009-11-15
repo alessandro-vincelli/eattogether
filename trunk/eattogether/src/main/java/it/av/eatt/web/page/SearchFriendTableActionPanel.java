@@ -38,10 +38,8 @@ public class SearchFriendTableActionPanel extends Panel {
     private UserRelationService userRelationService;
 
     /**
-     * @param id
-     *            component id
-     * @param model
-     *            model for contact
+     * @param id component id
+     * @param model model for contact
      */
     public SearchFriendTableActionPanel(String id, IModel<Eater> model) {
         super(id, model);
