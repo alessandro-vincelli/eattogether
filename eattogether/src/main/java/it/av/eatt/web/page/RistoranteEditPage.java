@@ -116,7 +116,6 @@ public class RistoranteEditPage extends BasePage {
         });
         form.add(new TextField<String>(Ristorante.DESCRIPTION));
         //form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
-        form.add(new Label("version"));
 
         form.add(new AjaxFallbackButton("addTag", form) {
             private static final long serialVersionUID = 1L;

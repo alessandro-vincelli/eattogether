@@ -62,6 +62,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     private String path;
     @Field(uuid = true)
     private String uuid;
+    @Deprecated
     private String version;
     @Field
     private String name;
@@ -91,7 +92,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     private String mobilePhoneNumber;
     @Field
     private String faxNumber;
-    private Integer versionNumber;
+    private Integer revisionNumber;
     //@Collection(collectionConverter = MultiValueCollectionConverterImpl.class)
     @OneToMany(cascade = { CascadeType.ALL}, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
@@ -116,7 +117,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     @Fetch(FetchMode.SELECT)
     //@JoinTable
     //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
-    @OrderBy("ristoranteRevision.versionNumber DESC")
+    @OrderBy("ristoranteRevision.revisionNumber DESC")
     private List<RistoranteRevision> revisions;
 
     public Ristorante() {
@@ -142,11 +143,11 @@ public class Ristorante extends BasicEntity implements BasicNode{
     public final void setUuid(String uuid) {
         this.uuid = uuid;
     }
-
+    @Deprecated
     public String getVersion() {
         return this.version;
     }
-
+    @Deprecated
     public void setVersion(String version) {
         this.version = version;
     }
@@ -313,15 +314,15 @@ public class Ristorante extends BasicEntity implements BasicNode{
     /**
      * @return the versionNumber
      */
-    public Integer getVersionNumber() {
-        return versionNumber;
+    public Integer getRevisionNumber() {
+        return revisionNumber;
     }
 
     /**
      * @param versionNumber the versionNumber to set
      */
-    public void setVersionNumber(Integer versionNumber) {
-        this.versionNumber = versionNumber;
+    public void setRevisionNumber(Integer revisionNumber) {
+        this.revisionNumber = revisionNumber;
     }
 
     /**

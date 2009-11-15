@@ -49,6 +49,7 @@ div#navigation {
     width: 200px;
     margin-left: -200px;
     /*background: #B9CAFF;*/
+    text-align: center;
 }
 
 div#extra {
@@ -275,4 +276,40 @@ button {
 
 .submitarea input{
     width: auto;
+}
+
+div .friendsList{
+    text-align: left;
+    display:block;
+    height: 35px;
+    border-bottom: 1px solid #EEEEEE;
+    padding-top: 10px;
+}
+
+div .friendName{
+    width: 200px;
+    float: left;
+}
+
+div .friendType{
+    float: left;
+    width: 40px;
+    font-style: oblique;
+}
+
+div .friendCenterColumn{
+    width: 200px;
+    float: left;
+}
+
+div .friendStatus{
+    float: left;
+    width: 20px;
+    font-style: oblique;
+}
+
+div .friendRemoveButton{
+    float: right;
+    width: 20px;
+    font-style: oblique;
 }

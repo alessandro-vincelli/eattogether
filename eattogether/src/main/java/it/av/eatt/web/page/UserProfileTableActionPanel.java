@@ -42,17 +42,6 @@ public class UserProfileTableActionPanel extends Panel {
      */
     public UserProfileTableActionPanel(String id, IModel<EaterProfile> model) {
         super(id, model);
-        add(new AjaxLink<EaterProfile>("select", model) {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onClick(AjaxRequestTarget target) {
-                UserProfilePage page = ((UserProfilePage) getPage());
-                page.setUserProfile(getModelObject());
-                page.getFeedbackPanel().info("Profile \"" + getModelObject().getName() + "\" selected");
-                target.addComponent(page.getFeedbackPanel());
-            }
-        });
         add(new AjaxLink<EaterProfile>("edit", model) {
             private static final long serialVersionUID = 1L;
 
