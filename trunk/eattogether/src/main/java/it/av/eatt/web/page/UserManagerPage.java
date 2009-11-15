@@ -25,6 +25,7 @@ import it.av.eatt.web.data.UserSortableDataProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -119,7 +120,7 @@ public class UserManagerPage extends BasePage {
         @Override
         protected void onComponentTag(ComponentTag tag) {
             super.onComponentTag(tag);
-            if (form.getModelObject().getId() == 0) {
+            if (StringUtils.isBlank(form.getModelObject().getId())) {
                 tag.getAttributes().put("value", new StringResourceModel("button.create", this, null).getString());
             } else {
                 tag.getAttributes().put("value", new StringResourceModel("button.update", this, null).getString());
@@ -130,7 +131,7 @@ public class UserManagerPage extends BasePage {
         protected void onSubmit(AjaxRequestTarget target, Form form) {
             try {
                 Eater userToSave = (Eater) form.getModelObject();
-                if(userToSave.getId() != 0l){
+                if(StringUtils.isNotBlank(userToSave.getId())){
                     userToSave = userService.update(userToSave);
                     getFeedbackPanel().info(new StringResourceModel("info.userupdated", this, null).getString());
                 }

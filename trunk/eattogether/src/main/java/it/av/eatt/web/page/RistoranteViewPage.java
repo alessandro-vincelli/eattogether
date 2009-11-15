@@ -20,6 +20,7 @@ import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.Tag;
 import it.av.eatt.service.RistoranteService;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
@@ -59,8 +60,8 @@ public class RistoranteViewPage extends BasePage {
      * @throws JackWicketException
      */
     public RistoranteViewPage(PageParameters parameters) throws JackWicketException {
-        Long ristoranteId = parameters.getLong("ristoranteId", 0);
-        if (ristoranteId != 0) {
+        String ristoranteId = parameters.getString("ristoranteId", "");
+        if (StringUtils.isNotBlank(ristoranteId)) {
             this.ristorante = ristoranteService.getByID(ristoranteId);
         } else {
             

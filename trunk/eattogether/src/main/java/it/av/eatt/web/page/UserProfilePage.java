@@ -23,6 +23,7 @@ import it.av.eatt.web.data.UserProfileSortableDataProvider;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -115,7 +116,7 @@ public class UserProfilePage extends BasePage {
         @Override
         protected void onComponentTag(ComponentTag tag) {
             super.onComponentTag(tag);
-            if (form.getModelObject().getId() != 0) {
+            if (StringUtils.isNotBlank(form.getModelObject().getId())) {
                 tag.getAttributes().put("value", new StringResourceModel("button.create", this, null).getString());
             } else {
                 tag.getAttributes().put("value", new StringResourceModel("button.update", this, null).getString());

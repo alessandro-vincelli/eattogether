@@ -29,7 +29,7 @@ import org.apache.wicket.model.LoadableDetachableModel;
 public class RistoranteDetachableModel extends LoadableDetachableModel<Ristorante> {
 
     private static final long serialVersionUID = 1L;
-    private final Long id;
+    private final String id;
     private RistoranteService ristoranteService;
 
     /**
@@ -45,7 +45,7 @@ public class RistoranteDetachableModel extends LoadableDetachableModel<Ristorant
     /**
      * @param id
      */
-    public RistoranteDetachableModel(Long id) {
+    public RistoranteDetachableModel(String id) {
         if (id.equals("")) {
             throw new IllegalArgumentException();
         }

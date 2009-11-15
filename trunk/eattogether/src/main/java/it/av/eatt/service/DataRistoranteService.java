@@ -25,11 +25,12 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * Services on {@link DataRistorante}
- *  
+ * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
+ * 
  */
 @Service
 @Repository
@@ -42,9 +43,9 @@ public interface DataRistoranteService {
      * @return DataRistorante
      * @throws JackWicketException
      */
-	@Transactional
-	DataRistorante update(DataRistorante risto) throws JackWicketException;
-    
+    @Transactional
+    DataRistorante update(DataRistorante risto) throws JackWicketException;
+
     /**
      * Insert a new restaurant
      * 
@@ -62,7 +63,7 @@ public interface DataRistoranteService {
      */
     @Transactional(readOnly = true)
     Collection<DataRistorante> getAll() throws JackWicketException;
-    
+
     /**
      * Find the restaurant by the given pattern
      * 
@@ -71,7 +72,7 @@ public interface DataRistoranteService {
      */
     @Transactional(readOnly = true)
     Collection<DataRistorante> find(String pattern) throws JackWicketException;
-    
+
     /**
      * Find the restaurant by the given pattern, city, country
      * 
@@ -82,7 +83,7 @@ public interface DataRistoranteService {
      */
     @Transactional(readOnly = true)
     Collection<DataRistorante> find(String pattern, String city, String country) throws JackWicketException;
-    
+
     /**
      * Remove a restaurant from the repository
      * 
@@ -91,21 +92,22 @@ public interface DataRistoranteService {
      */
     @Transactional
     void remove(DataRistorante risto) throws JackWicketException;
-    
+
     /**
-     * Get a restaurant by ID 
+     * Get a restaurant by ID
      * 
      * @param id
      * @return DataRistorante
      * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    DataRistorante getByID(Long id) throws JackWicketException;
+    DataRistorante getByID(String id) throws JackWicketException;
 
-	public List<ProvIta> getAllProv() throws JackWicketException;
+    @Transactional(readOnly = true)
+    public List<ProvIta> getAllProv() throws JackWicketException;
 
     /**
-     * exact match search on  given parameters
+     * exact match search on given parameters
      * 
      * @param pattern
      * @param city
@@ -113,6 +115,7 @@ public interface DataRistoranteService {
      * @return found datRisto
      * @throws JackWicketException
      */
+    @Transactional(readOnly = true)
     Collection<DataRistorante> getBy(String pattern, String city, String country) throws JackWicketException;
 
 }

@@ -36,47 +36,44 @@ import org.springframework.dao.DataAccessException;
 
 /**
  * 
- * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
-public class UserServiceHibernate extends ApplicationServiceHibernate<Eater> implements UserService{
-    
+public class UserServiceHibernate extends ApplicationServiceHibernate<Eater> implements UserService {
+
     private StrongPasswordEncryptor passwordEncoder;
     private UserProfileService userProfileService;
     private UserRelationService userRelationService;
-    
-    
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserService#creteRegolarUser(it.av.eatt.ocm.model.Eater)
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Eater addRegolarUser(Eater object) throws JackWicketException {
         object.setUserProfile(userProfileService.getRegolarUserProfile());
         try {
-	        return add(object);
+            return add(object);
         } catch (ConstraintViolationException e) {
-	        throw new UserAlreadyExistsException(e.getMessage());
+            throw new UserAlreadyExistsException(e.getMessage());
         }
     }
-    
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserService#add(it.av.eatt.ocm.model.Eater)
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Eater add(Eater object) throws JackWicketException {
-        if(object == null || StringUtils.isBlank(object.getEmail())){
+        if (object == null || StringUtils.isBlank(object.getEmail())) {
             throw new JackWicketException("Eater is null or email is empty");
         }
         object.setPassword(passwordEncoder.encryptPassword(object.getPassword()));
-        if(object.getUserProfile() == null){
+        if (object.getUserProfile() == null) {
             object.setUserProfile(userProfileService.getRegolarUserProfile());
         }
         return super.save(object);
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserService#update(it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Eater update(Eater object) throws JackWicketException {
@@ -87,54 +84,57 @@ public class UserServiceHibernate extends ApplicationServiceHibernate<Eater> imp
         }
         return object;
     }
-    
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserService#getByEmail(java.lang.String)
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Eater getByEmail(String email) {
         Criterion crit = Restrictions.eq(Eater.EMAIL, email);
         List<Eater> result = super.findByCriteria(crit);
-        if(result != null && result.size() == 1){
+        if (result != null && result.size() == 1) {
             return result.get(0);
-        }
-        else{
+        } else {
             return null;
         }
     }
-    
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserService#findUserWithoutRelation(it.av.eatt.ocm.model.Eater)
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Collection<Eater> findUserWithoutRelation(Eater forUser, String pattern) throws JackWicketException {
-        //TODO can be improved with an outer join
+        // TODO can be improved with an outer join
         Collection<EaterRelation> relatedUser = userRelationService.getAllRelations(forUser);
-        ArrayList<Long> relatedUserId = new ArrayList<Long>(relatedUser.size());
+        ArrayList<String> relatedUserId = new ArrayList<String>(relatedUser.size());
         for (EaterRelation userRelation : relatedUser) {
             relatedUserId.add(userRelation.getToUser().getId());
         }
         List<Criterion> criterions = new ArrayList<Criterion>(3);
-        if(StringUtils.isNotBlank(pattern)){
-            criterions.add(Restrictions.or(Restrictions.ilike(Eater.FIRSTNAME, pattern), Restrictions.ilike(Eater.LASTNAME, pattern)));    
+        if (StringUtils.isNotBlank(pattern)) {
+            criterions.add(Restrictions.or(Restrictions.ilike(Eater.FIRSTNAME, pattern), Restrictions.ilike(
+                    Eater.LASTNAME, pattern)));
         }
-        if(relatedUserId.size() > 0){
-            criterions.add(Restrictions.not(Restrictions.in(Eater.ID, relatedUserId)));    
+        if (relatedUserId.size() > 0) {
+            criterions.add(Restrictions.not(Restrictions.in(Eater.ID, relatedUserId)));
         }
-        //escludes the forUser from the search
+        // escludes the forUser from the search
         criterions.add(Restrictions.not(Restrictions.idEq(forUser.getId())));
         List<Eater> results = super.findByCriteria(criterions.toArray(new Criterion[criterions.size()]));
         return results;
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.UserService#findUserWithoutRelation(it.av.eatt.ocm.model.Eater)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Collection<Eater> findUserWithoutRelation(Eater forUser) throws JackWicketException {
         return findUserWithoutRelation(forUser, null);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void remove(Eater user) throws JackWicketException {
         super.remove(user);
@@ -143,7 +143,7 @@ public class UserServiceHibernate extends ApplicationServiceHibernate<Eater> imp
     public void setPasswordEncoder(StrongPasswordEncryptor passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
-    
+
     public void setUserProfileService(UserProfileService userProfileService) {
         this.userProfileService = userProfileService;
     }
@@ -152,11 +152,13 @@ public class UserServiceHibernate extends ApplicationServiceHibernate<Eater> imp
         this.userRelationService = userRelationService;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Collection<Eater> find(String pattern) throws JackWicketException {
         Criterion critByName = Restrictions.ilike(Eater.LASTNAME, pattern);
         List<Eater> results = findByCriteria(critByName);
         return results;
     }
-
 }
