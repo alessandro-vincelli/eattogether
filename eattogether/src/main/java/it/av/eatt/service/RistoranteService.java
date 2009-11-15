@@ -85,12 +85,12 @@ public interface RistoranteService {
     /**
      * Get a restaurant by ID 
      * 
-     * @param id
-     * @return Ristorante
+     * @param id the id of the restaurant
+     * @return Ristorante ristorante
      * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Ristorante getByID(Long id) throws JackWicketException;
+    Ristorante getByID(String id) throws JackWicketException;
 
     
     /**

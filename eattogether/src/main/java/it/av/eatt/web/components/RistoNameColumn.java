@@ -30,7 +30,7 @@ public class RistoNameColumn extends Panel {
             @Override
             public void onClick() {
                 HashMap<String, String> parameterMap = new HashMap<String, String>();
-                parameterMap.put("ristoranteId", Long.toString(getModelObject().getId()));
+                parameterMap.put("ristoranteId", getModelObject().getId());
                 setResponsePage(RistoranteViewPage.class, new PageParameters(parameterMap));
             }
         };

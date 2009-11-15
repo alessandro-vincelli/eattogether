@@ -30,60 +30,61 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  * Implements the operation on {@link DataRistorante}
- *  
+ * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  * 
  */
-public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<DataRistorante> implements DataRistoranteService {
+public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<DataRistorante> implements
+        DataRistoranteService {
 
-	/* (non-Javadoc)
-	 * @see it.av.eatt.service.DataRistoranteService#update(it.av.eatt.ocm.model.DataRistorante)
-	 */
-	@Override
-	public DataRistorante update(DataRistorante risto) throws JackWicketException {
-		super.save(risto);
-		getJpaTemplate().flush();
-		return risto;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public DataRistorante update(DataRistorante risto) throws JackWicketException {
+        super.save(risto);
+        getJpaTemplate().flush();
+        return risto;
+    }
 
-	/* (non-Javadoc)
-	 * @see it.av.eatt.service.DataRistoranteService#insert(it.av.eatt.ocm.model.DataRistorante)
-	 */
-	@Override
-	public DataRistorante insert(DataRistorante risto) throws JackWicketException {
-		super.save(risto);
-		return risto;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public DataRistorante insert(DataRistorante risto) throws JackWicketException {
+        super.save(risto);
+        return risto;
+    }
 
-	/* (non-Javadoc)
-	 * @see it.av.eatt.service.DataRistoranteService#find(java.lang.String)
-	 */
-	@Override
-	public Collection<DataRistorante> find(String pattern) throws JackWicketException {
-		Criterion critByName = Restrictions.ilike(Ristorante.NAME, "%" + pattern + "%");
-		List<DataRistorante> results = findByCriteria(critByName);
-		return results;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Collection<DataRistorante> find(String pattern) throws JackWicketException {
+        Criterion critByName = Restrictions.ilike(Ristorante.NAME, "%" + pattern + "%");
+        List<DataRistorante> results = findByCriteria(critByName);
+        return results;
+    }
 
-	/* (non-Javadoc)
-	 * @see it.av.eatt.service.impl.ApplicationServiceHibernate#remove(it.av.eatt.ocm.model.BasicEntity)
-	 */
-	@Override
-	public void remove(DataRistorante object) throws JackWicketException {
-		super.remove(object);
-	}
-	
-	/* (non-Javadoc)
-	 * @see it.av.eatt.service.DataRistoranteService#getAllProv()
-	 */
-	@Override
-	public List<ProvIta> getAllProv() throws JackWicketException {
-		Criteria criteria = getHibernateSession().createCriteria(ProvIta.class);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void remove(DataRistorante object) throws JackWicketException {
+        super.remove(object);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ProvIta> getAllProv() throws JackWicketException {
+        Criteria criteria = getHibernateSession().createCriteria(ProvIta.class);
         return criteria.list();
-	}
+    }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.DataRistoranteService#find(java.lang.String, java.lang.String, java.lang.String)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Collection<DataRistorante> find(String pattern, String city, String country) throws JackWicketException {
@@ -93,7 +94,10 @@ public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<
         List<DataRistorante> results = findByCriteria(critByName, critByCity, critByCountry);
         return results;
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Collection<DataRistorante> getBy(String pattern, String city, String country) throws JackWicketException {
         Criterion critByName = Restrictions.eq(Ristorante.NAME, pattern);

@@ -20,11 +20,12 @@ import it.av.eatt.JackWicketException;
 import java.util.List;
 
 import org.hibernate.criterion.Criterion;
+
 /**
  * General operations
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
+ * 
  */
 public interface ApplicationService<T> {
     /**
@@ -63,14 +64,14 @@ public interface ApplicationService<T> {
     void remove(T item) throws JackWicketException;
 
     /**
-     * Get an item by ID 
+     * Get an item by ID
      * 
-     * @param path
+     * @param id
      * @return T item
      * @throws JackWicketException
      */
-    T getByID(Long id) throws JackWicketException;
+    T getByID(String id) throws JackWicketException;
 
     List<T> findByCriteria(Criterion... criterion);
- 
+
 }

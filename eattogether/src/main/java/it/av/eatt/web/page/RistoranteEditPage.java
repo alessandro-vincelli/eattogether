@@ -73,8 +73,8 @@ public class RistoranteEditPage extends BasePage {
      */
     public RistoranteEditPage(PageParameters parameters) throws JackWicketException {
         
-        Long ristoranteId = parameters.getLong("ristoranteId", 0);
-        if (ristoranteId != 0){
+        String ristoranteId = parameters.getString("ristoranteId", "");
+        if (StringUtils.isNotBlank(ristoranteId)){
             this.ristorante = ristoranteService.getByID(ristoranteId);
         }
         else{
@@ -172,7 +172,7 @@ public class RistoranteEditPage extends BasePage {
         @Override
         protected void onComponentTag(ComponentTag tag) {
             super.onComponentTag(tag);
-            if (form.getModelObject().getId() == 0) {
+            if (StringUtils.isBlank(form.getModelObject().getId())) {
                 tag.getAttributes().put("value", getString("button.create"));
             } else {
                 tag.getAttributes().put("value", getString("button.update"));
@@ -182,7 +182,7 @@ public class RistoranteEditPage extends BasePage {
         @Override
         protected void onSubmit(AjaxRequestTarget target, Form form) {
             try {
-                if(ristorante.getId() != 0){
+                if(StringUtils.isNotBlank(ristorante.getId())){
                     ristorante = ristoranteService.update(ristorante, getLoggedInUser());
                     getFeedbackPanel().info(getString("info.ristoranteupdated"));
                 }

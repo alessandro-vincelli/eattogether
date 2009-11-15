@@ -2,54 +2,44 @@ package it.av.eatt.ocm.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
+import org.hibernate.annotations.GenericGenerator;
 
 @MappedSuperclass
-@Node(isAbstract=true)
+@Node(isAbstract = true)
 public class BasicEntity implements Serializable {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE)
-	@Field
-	private long id;
+    @Id
+    @Field
+    @GenericGenerator(name = "generator", strategy = "uuid", parameters = {})
+    @GeneratedValue(generator = "generator")
+    @Column(updatable = false, length = 36)
+    private String id;
 
-	public long getId() {
-		return id;
-	}
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public BasicEntity() {
+    }
 
-	public BasicEntity() {
-	}
+    @Override
+    public boolean equals(Object arg0) {
+        return arg0 != null && getClass() == arg0.getClass() && getId() != null && !getId().isEmpty()
+                && getId().equals(((BasicEntity) arg0).getId());
+    }
 
-	@Override
-	public boolean equals(Object arg0) {
-		if (arg0 == null) {
-			return false;
-		}
-		if (arg0 instanceof BasicEntity) {
-			BasicEntity basicEntity = (BasicEntity) arg0;
-			if (this.id == basicEntity.getId() && this.id != 0) {
-				return true;
-			} else {
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-
-	@Override
-	public int hashCode() {
-		return (int) id;
-	}
-
+    @Override
+    public int hashCode() {
+        return getId() == null ? super.hashCode() : getId().hashCode();
+    }
 }

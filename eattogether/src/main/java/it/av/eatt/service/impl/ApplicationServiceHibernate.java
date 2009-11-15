@@ -32,8 +32,8 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.OptimisticLockingFailureException;
 import org.springframework.orm.jpa.support.JpaDaoSupport;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
@@ -42,7 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @param <T>
  */
 public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSupport implements ApplicationService<T> {
-    
+
     /**
      * 
      * @param entityManager
@@ -51,76 +51,77 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
     public void setInternalEntityManager(final EntityManager entityManager) {
         setEntityManager(entityManager);
     }
-    
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ApplicationService#save(java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public T save(T obj) throws JackWicketException {
         if (obj == null) {
             throw new JackWicketException("Object is null");
         }
-        try {
-            if (obj.getId() != 0) {
-                getJpaTemplate().merge(obj);
 
+        try {
+            if (obj.getId() != null && !obj.getId().isEmpty()) {
+                getJpaTemplate().merge(obj);
             } else {
                 getJpaTemplate().persist(obj);
             }
             return obj;
+        } catch (OptimisticLockingFailureException e) {
+            throw new JackWicketException(e);
         } catch (DataAccessException e) {
             throw new JackWicketException(e);
         }
     }
-    
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ApplicationService#getAll()
+    /**
+     * {@inheritDoc}
      */
-    @Transactional(readOnly=true)
+    @Override
     public List<T> getAll() throws JackWicketException {
         return findByCriteria();
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ApplicationService#find(java.lang.String)
+    /**
+     * {@inheritDoc}
      */
-    @Transactional(readOnly=true)
     @Deprecated
     public List<T> findFullText(String query) throws JackWicketException {
-/*        //DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
-        DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
-        //return getHibernateTemplate().findByCriteria(criteria, 0, -1);
-        //TODO implement a default search strategy
-        FullTextSession fullTextSession = Search.getFullTextSession(getSession(false));
-        org.apache.lucene.queryParser.QueryParser parser = new QueryParser("tag", new StopAnalyzer() );
+        /*        //DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
+                DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
+                //return getHibernateTemplate().findByCriteria(criteria, 0, -1);
+                //TODO implement a default search strategy
+                FullTextSession fullTextSession = Search.getFullTextSession(getSession(false));
+                org.apache.lucene.queryParser.QueryParser parser = new QueryParser("tag", new StopAnalyzer() );
 
-        org.apache.lucene.search.Query luceneQuery;
-        try {
-            String[] ddd = new String[1];
-            ddd[0] = "tag";
-            parser = new MultiFieldQueryParser( ddd, new StandardAnalyzer());
-            Term t = new Term("tag", "*tag1*");
-            TermQuery query2 = new TermQuery(t);
-            parser.setAllowLeadingWildcard( true );
-            Query queryinutile= parser.parse(query);
-            org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery( query2, getPersistentClass() );
-            
-            List<T> result = fullTextQuery.list();
-            return result;
-        } catch (ParseException e) {
-            throw new JackWicketException(e);
-        }*/
+                org.apache.lucene.search.Query luceneQuery;
+                try {
+                    String[] ddd = new String[1];
+                    ddd[0] = "tag";
+                    parser = new MultiFieldQueryParser( ddd, new StandardAnalyzer());
+                    Term t = new Term("tag", "*tag1*");
+                    TermQuery query2 = new TermQuery(t);
+                    parser.setAllowLeadingWildcard( true );
+                    Query queryinutile= parser.parse(query);
+                    org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery( query2, getPersistentClass() );
+                    
+                    List<T> result = fullTextQuery.list();
+                    return result;
+                } catch (ParseException e) {
+                    throw new JackWicketException(e);
+                }*/
         throw new JackWicketException("not implememted yet");
     }
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ApplicationService#remove(java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
+    @Override
     public void remove(T object) throws JackWicketException {
         try {
             getJpaTemplate().remove(object);
-            //getJpaTemplate().flush();
+            // getJpaTemplate().flush();
         } catch (DataAccessException e) {
             throw new JackWicketException(e);
         }
@@ -130,6 +131,10 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
         return (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public List<T> findByCriteria(Criterion... criterion) {
         return findByCriteria(getPersistentClass(), null, criterion);
     }
@@ -138,8 +143,8 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
         return findByCriteria(getPersistentClass(), order, criterion);
     }
 
-    public List<T> findByCriteria(Class actualClass, Order order, Criterion... criterion) {
-        //DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
+    protected List<T> findByCriteria(Class actualClass, Order order, Criterion... criterion) {
+        // DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
         Criteria criteria = getHibernateSession().createCriteria(getPersistentClass());
         if (order != null)
             criteria.addOrder(order);
@@ -158,12 +163,15 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
         return crit.list();*/
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public T getByID(Long id) throws JackWicketException {
+    public T getByID(String id) throws JackWicketException {
         Criterion crit = Restrictions.idEq(id);
         return findByCriteria(crit).iterator().next();
     }
-    
+
     protected Session getHibernateSession() {
         return (Session) getJpaTemplate().getEntityManager().getDelegate();
     }

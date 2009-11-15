@@ -24,6 +24,7 @@ import it.av.eatt.service.UserService;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource;
@@ -145,7 +146,7 @@ public class SignUpPanel extends Panel {
             SignUpPanel panel = (SignUpPanel)getParent().getParent();
             try {
                 Eater user = (Eater) form.getModelObject();
-                if (user.getId() != 0) {
+                if (StringUtils.isNotBlank(user.getId())) {
                     panel.getFeedbackPanel().info(new StringResourceModel("info.operationNotPermitted", this, null).getString());
                 } else {
                 	System.out.println(target.getPage().getRequest().getLocale());
