@@ -43,7 +43,7 @@ public class RistoranteRevisionsPanel extends Panel {
 
             @Override
             protected void populateItem(ListItem<RistoranteRevision> item) {
-                item.add(new Label("ristoranteRevision.versionNumber"));
+                item.add(new Label("ristoranteRevision.revisionNumber"));
                 item.add(new Label("ristoranteRevision.modificationTime"));
                 item.add(new Label("ristoranteRevision.name").setEscapeModelStrings(false));
                 item.add(new Label("ristoranteRevision.address").setEscapeModelStrings(false));

@@ -36,7 +36,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  * 
  */
 @AuthorizeInstantiation( { "USER", "ADMIN", "EDITOR" })
-public class FriendPage extends BasePage {
+public class FriendsPage extends BasePage {
 
     private static final long serialVersionUID = 1L;
     @SpringBean
@@ -48,7 +48,7 @@ public class FriendPage extends BasePage {
      * 
      * @throws JackWicketException
      */
-    public FriendPage() throws JackWicketException {
+    public FriendsPage() throws JackWicketException {
         setOutputMarkupId(true);
         friendsList = new PropertyListView<EaterRelation>("friendsList", userRelationService.getAllRelations(getLoggedInUser())) {
             private static final long serialVersionUID = 1L;
@@ -66,14 +66,14 @@ public class FriendPage extends BasePage {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
                         try {
-                            ((FriendPage) getPage()).userRelationService.remove(getModelObject());
-                            ((FriendPage) target.getPage()).friendsList.setModelObject(userRelationService.getAllRelations(getLoggedInUser()));
+                            ((FriendsPage) getPage()).userRelationService.remove(getModelObject());
+                            ((FriendsPage) target.getPage()).friendsList.setModelObject(userRelationService.getAllRelations(getLoggedInUser()));
                             target.addComponent((target.getPage()));
                             // info(new StringResourceModel("info.userRelationRemoved", this, null).getString());
                         } catch (JackWicketException e) {
                             error(new StringResourceModel("genericErrorMessage", this, null).getString());
                         }
-                        target.addComponent(((FriendPage) target.getPage()).getFeedbackPanel());
+                        target.addComponent(((FriendsPage) target.getPage()).getFeedbackPanel());
                     }
                 });
             }

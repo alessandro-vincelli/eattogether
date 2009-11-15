@@ -137,8 +137,8 @@ public class BasePage extends WebPage {
             private static final long serialVersionUID = 1L;
             @Override
             public void onClick(AjaxRequestTarget target) {
-                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(FriendPage.class)) {   
-                    setResponsePage(FriendPage.class);
+                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(FriendsPage.class)) {   
+                    setResponsePage(FriendsPage.class);
                 }
             }
             @Override
@@ -146,7 +146,7 @@ public class BasePage extends WebPage {
                 return new AjaxCallDecorator() {
                     private static final long serialVersionUID = 1L;
                     public CharSequence decorateScript(CharSequence script) {
-                        if (!(getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(FriendPage.class))) {
+                        if (!(getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(FriendsPage.class))) {
                             return "alert('" + new StringResourceModel("basePage.notLogged", getPage(), null).getString() + "'); " + script;
                         }
                         return script;

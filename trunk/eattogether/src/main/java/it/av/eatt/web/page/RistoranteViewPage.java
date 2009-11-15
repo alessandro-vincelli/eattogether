@@ -84,7 +84,7 @@ public class RistoranteViewPage extends BasePage {
         });
         form.add(new MultiLineLabel(Ristorante.DESCRIPTION));
         // form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
-        form.add(new Label("version"));
+        form.add(new Label("revisionNumber"));
           
         Form<Ristorante> formAddress = new Form<Ristorante>("ristoranteAddressForm", new CompoundPropertyModel<Ristorante>(ristorante));
         add(formAddress);
