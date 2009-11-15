@@ -27,7 +27,6 @@
 				<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
 				
 				<property name="hibernate.connection.driver_class" value="org.postgresql.Driver" />
-				<property name="hibernate.ejb.naming_strategy" value="org.hibernate.cfg.ImprovedNamingStrategy"/>
 				<property name="hibernate.connection.url"
 				value="jdbc:postgresql://localhost/eat" />
 				<property name="hibernate.connection.username" value="eat" />
