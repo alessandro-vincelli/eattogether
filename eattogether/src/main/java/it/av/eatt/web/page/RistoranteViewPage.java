@@ -68,8 +68,7 @@ public class RistoranteViewPage extends BasePage {
             setRedirect(true);
             setResponsePage(getApplication().getHomePage());
         }
-        setOutputMarkupId(true);
-
+        
         Form<Ristorante> form = new Form<Ristorante>("ristoranteForm", new CompoundPropertyModel<Ristorante>(ristorante));
         add(form);
         form.setOutputMarkupId(true);

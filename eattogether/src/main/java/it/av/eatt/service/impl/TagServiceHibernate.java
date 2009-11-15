@@ -27,12 +27,15 @@ import org.hibernate.criterion.Restrictions;
 /**
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
 public class TagServiceHibernate extends ApplicationServiceHibernate<Tag> implements TagService {
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Tag insert(String tag) throws JackWicketException {
-        Tag result = getByTagValue(tag); 
+        Tag result = getByTagValue(tag);
         if (result != null) {
             return result;
         } else {
@@ -40,6 +43,9 @@ public class TagServiceHibernate extends ApplicationServiceHibernate<Tag> implem
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<Tag> find(String query) throws JackWicketException {
         Criterion crit = Restrictions.ilike(Tag.TAG, query);
@@ -47,16 +53,17 @@ public class TagServiceHibernate extends ApplicationServiceHibernate<Tag> implem
         return results;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Tag getByTagValue(String tagValue) throws JackWicketException {
         Criterion crit = Restrictions.eq(Tag.TAG, tagValue);
         List<Tag> results = findByCriteria(crit);
-        if(results.size() == 1){
+        if (results.size() == 1) {
             return results.get(0);
-        }
-        else{
+        } else {
             return null;
         }
     }
-    
 }

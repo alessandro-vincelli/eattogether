@@ -32,6 +32,7 @@ import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
@@ -114,7 +115,7 @@ public class RistoranteEditPage extends BasePage {
             }
             
         });
-        form.add(new TextField<String>(Ristorante.DESCRIPTION));
+        form.add(new TextArea<String>(Ristorante.DESCRIPTION));
         //form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
 
         form.add(new AjaxFallbackButton("addTag", form) {
@@ -161,6 +162,7 @@ public class RistoranteEditPage extends BasePage {
         });
         form.add(new SubmitButton("submitRestaurant", form));
         add(form);
+        add(new SubmitButton("submitRestaurantRight", form));
     }
 
     private class SubmitButton extends AjaxFallbackButton {

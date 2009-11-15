@@ -40,20 +40,22 @@ public class UserExplorerPage extends BasePage {
     private static final long serialVersionUID = 1L;
     @SpringBean
     private ActivityRistoranteService activityRistoranteService;
-    
+
     public UserExplorerPage() {
 
         Collection<ActivityRistorante> activities;
         try {
-            //FIXME pass the correct user
+            // FIXME pass the correct user
             activities = activityRistoranteService.findByUser(null);
         } catch (JackWicketException e) {
             activities = new ArrayList<ActivityRistorante>();
             error(new StringResourceModel("error.errorGettingListActivities", this, null).getString());
         }
 
-        PropertyListView<ActivityRistorante> activitiesList = new PropertyListView<ActivityRistorante>("activitiesList", new ArrayList<ActivityRistorante>(activities)) {
+        PropertyListView<ActivityRistorante> activitiesList = new PropertyListView<ActivityRistorante>(
+                "activitiesList", new ArrayList<ActivityRistorante>(activities)) {
             private static final long serialVersionUID = 1L;
+
             @Override
             protected void populateItem(ListItem<ActivityRistorante> item) {
                 item.add(new Label("user.lastname"));

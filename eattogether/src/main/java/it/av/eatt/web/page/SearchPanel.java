@@ -68,7 +68,7 @@ public class SearchPanel extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form form) {
                 try {
-                    dataProvider.fetchResults(((SearchBean)getForm().getModelObject()).getSearchData());
+                    dataProvider.fetchResults(((SearchBean) getForm().getModelObject()).getSearchData());
                 } catch (JackWicketException e) {
                     feedbackPanel.error(e.getMessage());
                 }

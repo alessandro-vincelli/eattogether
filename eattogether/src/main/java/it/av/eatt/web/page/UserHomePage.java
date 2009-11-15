@@ -49,20 +49,18 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  * Personal user home page.
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
 @AuthorizeInstantiation( { "USER" })
 public class UserHomePage extends BasePage {
     private static final long serialVersionUID = 1L;
-    @SpringBean(name="activityRistoranteService")
+    @SpringBean(name = "activityRistoranteService")
     private ActivityRistoranteService activityRistoranteService;
-    @SpringBean(name="ristoranteService")
+    @SpringBean(name = "ristoranteService")
     private RistoranteService ristoranteService;
-    
-    public UserHomePage() {
 
-        setOutputMarkupId(true);
-        RistoranteSortableDataProvider ristoranteSortableDataProvider = new RistoranteSortableDataProvider(ristoranteService);
+    public UserHomePage() {
+        RistoranteSortableDataProvider ristoranteSortableDataProvider = new RistoranteSortableDataProvider(
+                ristoranteService);
         List<IColumn<Ristorante>> columns = new ArrayList<IColumn<Ristorante>>();
         columns.add(new AbstractColumn<Ristorante>(new Model<String>(new StringResourceModel(
                 "datatableactionpanel.actions", this, null).getString())) {
@@ -76,16 +74,19 @@ public class UserHomePage extends BasePage {
                 return "ristoName";
             }
         });
-        
-        columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("city", this, null).getString()), "city"));
 
-        AjaxFallbackDefaultDataTable<Ristorante> ristoranteDataTable = new AjaxFallbackDefaultDataTable<Ristorante>("ristoranteDataTable", columns, ristoranteSortableDataProvider, 10);
+        columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("city", this, null)
+                .getString()), "city"));
+
+        AjaxFallbackDefaultDataTable<Ristorante> ristoranteDataTable = new AjaxFallbackDefaultDataTable<Ristorante>(
+                "ristoranteDataTable", columns, ristoranteSortableDataProvider, 10);
         add(ristoranteDataTable);
-        
-        RistoranteSearchPanel ristoranteSearchPanel = new RistoranteSearchPanel("ristoranteSearchPanel", ristoranteSortableDataProvider, ristoranteDataTable, getFeedbackPanel());
+
+        RistoranteSearchPanel ristoranteSearchPanel = new RistoranteSearchPanel("ristoranteSearchPanel",
+                ristoranteSortableDataProvider, ristoranteDataTable, getFeedbackPanel());
         add(ristoranteSearchPanel);
-        
-        //My activities List
+
+        // My activities List
         Collection<ActivityRistorante> activities;
         try {
             activities = activityRistoranteService.findByUser(getLoggedInUser());
@@ -94,20 +95,24 @@ public class UserHomePage extends BasePage {
             error(new StringResourceModel("error.errorGettingListActivities", this, null).getString());
         }
 
-        PropertyListView<ActivityRistorante> activitiesList = new PropertyListView<ActivityRistorante>("activitiesList", new ArrayList<ActivityRistorante>(activities)) {
+        PropertyListView<ActivityRistorante> activitiesList = new PropertyListView<ActivityRistorante>(
+                "activitiesList", new ArrayList<ActivityRistorante>(activities)) {
             private static final long serialVersionUID = 1L;
+
             @Override
             protected void populateItem(ListItem<ActivityRistorante> item) {
                 item.add(new Label("type"));
                 item.add(new Label("date.time", DateUtil.getPeriod(item.getModelObject().getDate().getTime())));
-                BookmarkablePageLink<String> ristoLink = new BookmarkablePageLink<String>("ristorante.link", RistoranteViewPage.class, new PageParameters("ristoranteId=" + item.getModelObject().getRistorante().getId()));
+                BookmarkablePageLink<String> ristoLink = new BookmarkablePageLink<String>("ristorante.link",
+                        RistoranteViewPage.class, new PageParameters("ristoranteId="
+                                + item.getModelObject().getRistorante().getId()));
                 ristoLink.add(new Label("ristorante.name"));
                 item.add(ristoLink);
             }
         };
         add(activitiesList);
 
-        //My Friends activities List
+        // My Friends activities List
         Collection<ActivityRistorante> friendsActivities;
         try {
             friendsActivities = activityRistoranteService.findByUserFriend(getLoggedInUser());
@@ -116,14 +121,18 @@ public class UserHomePage extends BasePage {
             error(new StringResourceModel("error.errorGettingListActivities", this, null).getString());
         }
 
-        PropertyListView<ActivityRistorante> friendsActivitiesList = new PropertyListView<ActivityRistorante>("friendsActivitiesList", new ArrayList<ActivityRistorante>(friendsActivities)) {
+        PropertyListView<ActivityRistorante> friendsActivitiesList = new PropertyListView<ActivityRistorante>(
+                "friendsActivitiesList", new ArrayList<ActivityRistorante>(friendsActivities)) {
             private static final long serialVersionUID = 1L;
+
             @Override
             protected void populateItem(ListItem<ActivityRistorante> item) {
                 item.add(new Label("type"));
                 item.add(new Label("date.time", DateUtil.getPeriod(item.getModelObject().getDate().getTime())));
-                
-                BookmarkablePageLink<String> ristoLink = new BookmarkablePageLink<String>("ristorante.link", RistoranteViewPage.class, new PageParameters("ristoranteId=" + item.getModelObject().getRistorante().getId()));
+
+                BookmarkablePageLink<String> ristoLink = new BookmarkablePageLink<String>("ristorante.link",
+                        RistoranteViewPage.class, new PageParameters("ristoranteId="
+                                + item.getModelObject().getRistorante().getId()));
                 ristoLink.add(new Label("ristorante.name"));
                 item.add(ristoLink);
                 item.add(new Label("eater.lastname"));
