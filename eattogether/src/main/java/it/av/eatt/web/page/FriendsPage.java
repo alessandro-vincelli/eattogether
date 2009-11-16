@@ -52,14 +52,14 @@ public class FriendsPage extends BasePage {
      * @throws JackWicketException
      */
     public FriendsPage() throws JackWicketException {
-       
+       super();
         final List<EaterRelation> allRelations = userRelationService.getAllRelations(getLoggedInUser());
-        Label noYetFriends = new Label("noYetFriends"){
+        Label noYetFriends = new Label("noYetFriends", getString("noYetFriends")){
             @Override
-            protected void onRender(MarkupStream markupStream) {
-                super.onRender(markupStream);
+            protected void onBeforeRender() {
+                super.onBeforeRender();
                 setVisible(allRelations.size() == 0);
-            }  
+            }
         };
         add(noYetFriends);
         friendsList = new PropertyListView<EaterRelation>("friendsList", allRelations) {
