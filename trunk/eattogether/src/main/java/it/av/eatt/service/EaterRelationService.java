@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Operations to manage relations between users
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
+ * 
  */
 @Service
 @Transactional
@@ -44,7 +44,7 @@ public interface EaterRelationService {
      */
     @Transactional
     EaterRelation save(EaterRelation relation) throws JackWicketException;
-    
+
     /**
      * Remove a relation
      * 
@@ -113,7 +113,7 @@ public interface EaterRelationService {
      */
     @Transactional(readOnly = true)
     List<EaterRelation> getAllFollowUsers(Eater ofUser);
-    
+
     /**
      * Return all the relations of the passed user, are included also the pending relations
      * 
@@ -122,7 +122,7 @@ public interface EaterRelationService {
      */
     @Transactional(readOnly = true)
     List<EaterRelation> getAllRelations(Eater ofUser);
- 
+
     /**
      * Return all the active relations of the passed user
      * 
