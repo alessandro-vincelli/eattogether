@@ -25,7 +25,6 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.wicket.Request;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
 import org.apache.wicket.model.IModel;
 
@@ -53,8 +52,7 @@ public class SearchUserFriendSortableDataProvider extends SortableDataProvider<E
 
     /**
      * 
-     * @see org.apache.wicket.markup.repeater.data.IDataProvider#iterator(int,
-     *      int)
+     * @see org.apache.wicket.markup.repeater.data.IDataProvider#iterator(int, int)
      */
     @Override
     public final Iterator<Eater> iterator(int first, int count) {
@@ -91,11 +89,10 @@ public class SearchUserFriendSortableDataProvider extends SortableDataProvider<E
     /**
      * Performs the search
      * 
-     * @param request
-     * @throws JackWicketException 
+     * @param pattern the text to use in the search
+     * @throws JackWicketException
      */
-    public final void fetchResults(Request request) throws JackWicketException {
-        String pattern = request.getParameter("searchData");
+    public final void fetchResults(String pattern) throws JackWicketException {
         if (StringUtils.isNotBlank(pattern)) {
             results = usersService.findUserWithoutRelation(forUser, pattern);
         } else {

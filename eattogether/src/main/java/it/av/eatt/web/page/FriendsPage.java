@@ -99,7 +99,6 @@ public class FriendsPage extends BasePage {
                 });
             }
         };
-        friendsList.setOutputMarkupId(true);
         friendsListContainer.add(friendsList);
     }
 }

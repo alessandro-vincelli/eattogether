@@ -55,13 +55,14 @@ public class RistoranteSearchPanel extends Panel {
      * @param dataTable
      * @param feedbackPanel
      */
-    public RistoranteSearchPanel(String id, final RistoranteSortableDataProvider dataProvider, final AjaxFallbackDefaultDataTable dataTable, final FeedbackPanel feedbackPanel) {
+    public RistoranteSearchPanel(String id, final RistoranteSortableDataProvider dataProvider,
+            final AjaxFallbackDefaultDataTable dataTable, final FeedbackPanel feedbackPanel) {
         super(id);
         Form<String> form = new Form<String>("searchForm", new CompoundPropertyModel(searchBean));
         add(form);
         form.setOutputMarkupId(true);
         FormComponent<String> fc;
-        //fc = new TextField<String>("searchData");
+        // fc = new TextField<String>("searchData");
         fc = new searchBox("searchData", dataProvider.getRistoranteService());
         form.add(fc);
         // event and throttle it down to once per second
@@ -73,7 +74,8 @@ public class RistoranteSearchPanel extends Panel {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form form) {
                 try {
-                    dataProvider.fetchResults(this.getRequest());
+                    String pattern = getRequest().getParameter("searchData");
+                    dataProvider.fetchResults(pattern);
                 } catch (JackWicketException e) {
                     feedbackPanel.error(e.getMessage());
                 }
@@ -106,8 +108,7 @@ public class RistoranteSearchPanel extends Panel {
         }
 
         /**
-         * @param searchData
-         *            the searchData to set
+         * @param searchData the searchData to set
          */
         public final void setSearchData(String searchData) {
             this.searchData = searchData;
@@ -127,7 +128,7 @@ public class RistoranteSearchPanel extends Panel {
         protected Iterator<String> getChoices(String input) {
             Collection<String> choises = new ArrayList<String>();
             try {
-                for (Ristorante risto : ristoranteService.find(input+"%")) {
+                for (Ristorante risto : ristoranteService.find(input + "%")) {
                     choises.add(risto.getName());
                 }
             } catch (JackWicketException e) {

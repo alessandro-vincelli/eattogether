@@ -49,7 +49,8 @@ public class SearchFriendPanel extends Panel {
      * @param id
      * @param feedbackPanel
      */
-    public SearchFriendPanel(final SearchUserFriendSortableDataProvider dataProvider, final AjaxFallbackDefaultDataTable dataTable, String id, final FeedbackPanel feedbackPanel) {
+    public SearchFriendPanel(final SearchUserFriendSortableDataProvider dataProvider,
+            final AjaxFallbackDefaultDataTable dataTable, String id, final FeedbackPanel feedbackPanel) {
         super(id);
         Form<String> form = new Form<String>("searchForm", new CompoundPropertyModel(searchBean));
         add(form);
@@ -65,9 +66,10 @@ public class SearchFriendPanel extends Panel {
 
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form form) {
+                String pattern = getRequest().getParameter("searchData");
                 try {
-                    dataProvider.fetchResults(this.getRequest());
-                }catch (JackWicketException e) {
+                    dataProvider.fetchResults(pattern);
+                } catch (JackWicketException e) {
                     feedbackPanel.error(e.getMessage());
                 }
                 target.addComponent(dataTable);
@@ -85,7 +87,7 @@ public class SearchFriendPanel extends Panel {
      * 
      * @author Alessandro Vincelli
      */
-    private static class SearchBean implements IClusterable {
+    public static class SearchBean implements IClusterable {
         private static final long serialVersionUID = 1L;
         private String searchData;
 
@@ -97,11 +99,15 @@ public class SearchFriendPanel extends Panel {
         }
 
         /**
-         * @param searchData
-         *            the searchData to set
+         * @param searchData the searchData to set
          */
         public final void setSearchData(String searchData) {
             this.searchData = searchData;
         }
     }
+
+    public SearchBean getSearchBean() {
+        return searchBean;
+    }
+
 }

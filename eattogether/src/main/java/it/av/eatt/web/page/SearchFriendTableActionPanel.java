@@ -51,6 +51,8 @@ public class SearchFriendTableActionPanel extends Panel {
                 SearchFriendPage page = ((SearchFriendPage) getPage());
                 try {
                     userRelationService.addFriendRequest(page.getLoggedInUser(), getModelObject());
+                    page.refreshDataTable();
+                    target.addComponent(page.getSearchFriendsContainer());
                     info(new StringResourceModel("friendRequestSent", this, null).getString());
                 } catch (JackWicketException e) {
                     error(new StringResourceModel("genericErrorMessage", this, null).getString());
@@ -66,6 +68,8 @@ public class SearchFriendTableActionPanel extends Panel {
                 SearchFriendPage page = ((SearchFriendPage) getPage());
                 try {
                     userRelationService.addFollowUser(page.getLoggedInUser(), getModelObject());
+                    page.refreshDataTable();
+                    target.addComponent(page.getSearchFriendsContainer());
                     info(new StringResourceModel("followUserDone", this, null).getString());
                 } catch (JackWicketException e) {
                     error(new StringResourceModel("genericErrorMessage", this, null).getString());
