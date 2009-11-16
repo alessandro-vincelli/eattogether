@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-public interface UserRelationService {
+public interface EaterRelationService {
 
     /**
      * Save a realtion
@@ -51,7 +51,7 @@ public interface UserRelationService {
      * @param relation relation to remove
      * @throws JackWicketException
      */
-    @Transactional//(propagation=Propagation.MANDATORY)
+    @Transactional
     void remove(EaterRelation relation) throws JackWicketException;
 
     /**

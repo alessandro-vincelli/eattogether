@@ -26,10 +26,10 @@
 	
 	<bean id="userServiceFailing" parent="txProxyTemplate">
 		<property name="proxyInterfaces">
-			<value>it.av.eatt.service.UserService</value>
+			<value>it.av.eatt.service.EaterService</value>
 		</property>
 		<property name="target">
-			<bean class="it.av.eatt.service.impl.UserServiceHibernate">
+			<bean class="it.av.eatt.service.impl.EaterServiceHibernate">
 				<property name="hibernateTemplate" ref="hibernateTemplate"/>
 				<property name="sessionFactory" ref="sessionFactoryHibernate"/>
 				<property name="passwordEncoder" ref="strongPasswordEncryptor"/>

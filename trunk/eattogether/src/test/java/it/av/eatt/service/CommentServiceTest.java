@@ -38,7 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentServiceTest{
 	@Autowired
 	@Qualifier("userService")
-	private UserService userService;
+	private EaterService userService;
 	@Autowired
 	private RistoranteService ristoranteService;
 	@Autowired

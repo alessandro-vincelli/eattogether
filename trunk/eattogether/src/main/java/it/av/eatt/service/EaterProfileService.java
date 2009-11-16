@@ -29,7 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  */
 @Service
-public interface UserProfileService {
+public interface EaterProfileService {
     /**
      * Save a EaterProfile
      * 

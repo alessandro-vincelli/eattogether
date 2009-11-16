@@ -45,7 +45,7 @@ public class RistoranteServiceTest {
     private RistoranteService ristoranteService;
     @Autowired
     @Qualifier("userService")
-    private UserService userService;
+    private EaterService userService;
     
     private Eater user;
 

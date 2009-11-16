@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserProfileServiceTest {
 
     @Autowired
-    private UserProfileService userProfileService;
+    private EaterProfileService userProfileService;
 
     @Test
     public void testUsersBasic() throws JackWicketException {

@@ -18,7 +18,7 @@ package it.av.eatt.web.data;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterRelation;
-import it.av.eatt.service.UserRelationService;
+import it.av.eatt.service.EaterRelationService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,14 +36,14 @@ import org.apache.wicket.model.Model;
  */
 public class FriendsSortableDataProvider extends SortableDataProvider<EaterRelation> {
     private static final long serialVersionUID = 1L;
-    private UserRelationService userRelationService;
+    private EaterRelationService userRelationService;
     private Collection<EaterRelation> results;
 
     /**
      * @param usersService
      * @param user
      */
-    public FriendsSortableDataProvider(UserRelationService userRelationService, Eater ofUser) {
+    public FriendsSortableDataProvider(EaterRelationService userRelationService, Eater ofUser) {
         super();
         //this.user = user;
         this.userRelationService = userRelationService;

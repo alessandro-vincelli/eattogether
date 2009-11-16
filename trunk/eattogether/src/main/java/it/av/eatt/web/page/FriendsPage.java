@@ -17,7 +17,7 @@ package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.EaterRelation;
-import it.av.eatt.service.UserRelationService;
+import it.av.eatt.service.EaterRelationService;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class FriendsPage extends BasePage {
 
     private static final long serialVersionUID = 1L;
     @SpringBean
-    private UserRelationService userRelationService;
+    private EaterRelationService userRelationService;
     private PropertyListView<EaterRelation> friendsList;
     private List<EaterRelation> allRelations;
 

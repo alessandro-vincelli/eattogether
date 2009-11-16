@@ -17,7 +17,7 @@ package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.service.CountryService;
-import it.av.eatt.service.UserService;
+import it.av.eatt.service.EaterService;
 
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -31,7 +31,7 @@ public class SignUpPage extends BasePage {
 
     private static final long serialVersionUID = 1L;
     @SpringBean(name = "userService")
-    private UserService userService;
+    private EaterService userService;
     @SpringBean(name = "countryService")
     private CountryService countryService;
 

@@ -19,9 +19,9 @@ import it.av.eatt.JackWicketException;
 import it.av.eatt.UserAlreadyExistsException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterRelation;
-import it.av.eatt.service.UserProfileService;
-import it.av.eatt.service.UserRelationService;
-import it.av.eatt.service.UserService;
+import it.av.eatt.service.EaterProfileService;
+import it.av.eatt.service.EaterRelationService;
+import it.av.eatt.service.EaterService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,11 +38,11 @@ import org.springframework.dao.DataAccessException;
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  */
-public class UserServiceHibernate extends ApplicationServiceHibernate<Eater> implements UserService {
+public class EaterServiceHibernate extends ApplicationServiceHibernate<Eater> implements EaterService {
 
     private StrongPasswordEncryptor passwordEncoder;
-    private UserProfileService userProfileService;
-    private UserRelationService userRelationService;
+    private EaterProfileService userProfileService;
+    private EaterRelationService userRelationService;
 
     /**
      * {@inheritDoc}
@@ -144,11 +144,11 @@ public class UserServiceHibernate extends ApplicationServiceHibernate<Eater> imp
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void setUserProfileService(UserProfileService userProfileService) {
+    public void setUserProfileService(EaterProfileService userProfileService) {
         this.userProfileService = userProfileService;
     }
 
-    public void setUserRelationService(UserRelationService userRelationService) {
+    public void setUserRelationService(EaterRelationService userRelationService) {
         this.userRelationService = userRelationService;
     }
 

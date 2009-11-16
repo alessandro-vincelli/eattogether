@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  */
 @Service
-public interface UserService {
+public interface EaterService {
 
     /**
      * Update a user

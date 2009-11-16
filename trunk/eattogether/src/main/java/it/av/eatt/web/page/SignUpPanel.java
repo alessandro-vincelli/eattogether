@@ -20,7 +20,7 @@ import it.av.eatt.UserAlreadyExistsException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.data.Country;
 import it.av.eatt.service.CountryService;
-import it.av.eatt.service.UserService;
+import it.av.eatt.service.EaterService;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class SignUpPanel extends Panel {
     private static final long serialVersionUID = 1L;
     private Form<Eater> signUpForm;
     private FeedbackPanel feedbackPanel;
-    private UserService userService;
+    private EaterService userService;
     private CountryService countryService;
     private Link<String> goSignInAfterSignUp;
     private final CaptchaImageResource captchaImageResource;
@@ -71,7 +71,7 @@ public class SignUpPanel extends Panel {
      * @param userService
      * @throws JackWicketException 
      */
-    public SignUpPanel(String id, FeedbackPanel feedbackPanel, UserService userService, CountryService countryService) throws JackWicketException {
+    public SignUpPanel(String id, FeedbackPanel feedbackPanel, EaterService userService, CountryService countryService) throws JackWicketException {
         super(id);
         this.userService = userService;
         this.countryService = countryService;

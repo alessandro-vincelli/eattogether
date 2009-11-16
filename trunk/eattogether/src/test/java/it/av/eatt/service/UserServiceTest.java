@@ -45,9 +45,9 @@ public class UserServiceTest {
 
     @Autowired
     @Qualifier("userService")
-    private UserService userService;
+    private EaterService userService;
     @Autowired
-    private UserProfileService userProfileService;
+    private EaterProfileService userProfileService;
     private EaterProfile profile;
     
     @Before
