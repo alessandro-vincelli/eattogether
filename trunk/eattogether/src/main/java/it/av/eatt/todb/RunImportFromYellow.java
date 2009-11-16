@@ -42,7 +42,7 @@ public class RunImportFromYellow {
     public void tearDown() throws JackWicketException {
     }
 
-    @Test
+    //@Test
     public void similarToMain() {
     	ImportFromYellowThreadsProvinces provinces = new ImportFromYellowThreadsProvinces();
     	try {

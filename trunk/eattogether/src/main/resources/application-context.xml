@@ -36,8 +36,14 @@
 	-->
 	<tx:annotation-driven transaction-manager="transactionManager" />
 
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-		<property name="persistenceUnitName" value="blogPersistance" />
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="mainPersistance" />
+		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"></property>
+	</bean>
+	
+	<bean id="entityManagerFactoryStaticData" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="staticDataPersistance" />
+		<property name="persistenceXmlLocation" value="classpath:META-INF/persistenceStaticData.xml"></property>
 	</bean>
 
 	<!--
@@ -47,7 +53,7 @@
 	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
 
 	<!-- turn on @Required annotation checks -->
-	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor" />
+	<bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/>
 
 	<!--
 		PostProcessors to perform exception translation on @Repository classes (from native
