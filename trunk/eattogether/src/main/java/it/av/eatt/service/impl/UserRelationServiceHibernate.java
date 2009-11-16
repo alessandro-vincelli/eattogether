@@ -118,4 +118,13 @@ public class UserRelationServiceHibernate extends ApplicationServiceHibernate<Ea
         Criterion critRelationActive = Restrictions.eq(EaterRelation.STATUS, EaterRelation.STATUS_ACTIVE);
         return findByCriteria(critUser, critRelationActive);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void remove(EaterRelation relation) throws JackWicketException {
+        EaterRelation eaterRelation = getByID(relation.getId());
+        super.remove(eaterRelation);
+    }
 }

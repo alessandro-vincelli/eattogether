@@ -24,7 +24,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.markup.MarkupStream;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
@@ -45,6 +45,7 @@ public class FriendsPage extends BasePage {
     @SpringBean
     private UserRelationService userRelationService;
     private PropertyListView<EaterRelation> friendsList;
+    private List<EaterRelation> allRelations;
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -53,15 +54,20 @@ public class FriendsPage extends BasePage {
      */
     public FriendsPage() throws JackWicketException {
        super();
-        final List<EaterRelation> allRelations = userRelationService.getAllRelations(getLoggedInUser());
-        Label noYetFriends = new Label("noYetFriends", getString("noYetFriends")){
+        allRelations = userRelationService.getAllRelations(getLoggedInUser());
+        final Label noYetFriends = new Label("noYetFriends", getString("noYetFriends")){
             @Override
             protected void onBeforeRender() {
                 super.onBeforeRender();
                 setVisible(allRelations.size() == 0);
             }
         };
+        noYetFriends.setOutputMarkupId(true);
+        noYetFriends.setOutputMarkupPlaceholderTag(true);
         add(noYetFriends);
+        final WebMarkupContainer friendsListContainer = new WebMarkupContainer("friendsListContainer");
+        friendsListContainer.setOutputMarkupId(true);
+        add(friendsListContainer);
         friendsList = new PropertyListView<EaterRelation>("friendsList", allRelations) {
             private static final long serialVersionUID = 1L;
 
@@ -79,8 +85,11 @@ public class FriendsPage extends BasePage {
                     public void onClick(AjaxRequestTarget target) {
                         try {
                             ((FriendsPage) getPage()).userRelationService.remove(getModelObject());
+                            allRelations = userRelationService.getAllRelations(getLoggedInUser());
                             ((FriendsPage) target.getPage()).friendsList.setModelObject(allRelations);
-                            target.addComponent((target.getPage()));
+                            noYetFriends.setVisible(allRelations.size() == 0);
+                            target.addComponent((noYetFriends));
+                            target.addComponent((friendsListContainer));
                             // info(new StringResourceModel("info.userRelationRemoved", this, null).getString());
                         } catch (JackWicketException e) {
                             error(new StringResourceModel("genericErrorMessage", this, null).getString());
@@ -90,7 +99,7 @@ public class FriendsPage extends BasePage {
                 });
             }
         };
-        add(friendsList.setOutputMarkupId(true));
+        friendsList.setOutputMarkupId(true);
+        friendsListContainer.add(friendsList);
     }
-
 }
