@@ -17,7 +17,7 @@ package it.av.eatt.service.impl;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.EaterProfile;
-import it.av.eatt.service.UserProfileService;
+import it.av.eatt.service.EaterProfileService;
 
 import java.util.List;
 
@@ -28,8 +28,8 @@ import org.hibernate.criterion.Restrictions;
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  */
-public class UserProfileServiceHibernate extends ApplicationServiceHibernate<EaterProfile> implements
-        UserProfileService {
+public class EaterProfileServiceHibernate extends ApplicationServiceHibernate<EaterProfile> implements
+        EaterProfileService {
 
     /**
      * {@inheritDoc}

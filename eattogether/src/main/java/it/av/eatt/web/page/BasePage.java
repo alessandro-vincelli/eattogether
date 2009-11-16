@@ -19,15 +19,12 @@ import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.web.security.SecuritySession;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.IAjaxCallDecorator;
-import org.apache.wicket.ajax.calldecorator.AjaxCallDecorator;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.resources.CompressedResourceReference;
-import org.apache.wicket.model.StringResourceModel;
 
 /**
  * 
@@ -38,36 +35,49 @@ import org.apache.wicket.model.StringResourceModel;
 
 public class BasePage extends WebPage {
 
-    //private static final CompressedResourceReference BASEPAGE_JS = new CompressedResourceReference(BasePage.class, "BasePage.js");
-    private static final CompressedResourceReference STYLES_CSS = new CompressedResourceReference(BasePage.class, "resources/styles.css");
+    // private static final CompressedResourceReference BASEPAGE_JS = new CompressedResourceReference(BasePage.class,
+    // "BasePage.js");
+    private static final CompressedResourceReference STYLES_CSS = new CompressedResourceReference(BasePage.class,
+            "resources/styles.css");
     private FeedbackPanel feedbackPanel;
     private boolean isAuthenticated = false;
     private Eater loggedInUser = null;
-	/**
-	 * Construct.
-	 */
-	public BasePage() {
-        if(((SecuritySession)getSession()).getAuth() != null && ((SecuritySession)getSession()).getAuth().isAuthenticated()){
+
+    /**
+     * Construct.
+     */
+    public BasePage() {
+        if (((SecuritySession) getSession()).getAuth() != null
+                && ((SecuritySession) getSession()).getAuth().isAuthenticated()) {
             isAuthenticated = true;
         }
-        loggedInUser = ((SecuritySession)getSession()).getLoggedInUser();
-	    //add(JavascriptPackageResource.getHeaderContribution(BASEPAGE_JS));
-	    add(CSSPackageResource.getHeaderContribution(STYLES_CSS));
+        loggedInUser = ((SecuritySession) getSession()).getLoggedInUser();
+        // add(JavascriptPackageResource.getHeaderContribution(BASEPAGE_JS));
+        add(CSSPackageResource.getHeaderContribution(STYLES_CSS));
 
-	    feedbackPanel = new FeedbackPanel("feedBackPanel");
-	    feedbackPanel.setOutputMarkupId(true);
-	    add(feedbackPanel);
-        
-	    add(new AjaxLink<String>("goUserPage") {
+        feedbackPanel = new FeedbackPanel("feedBackPanel");
+        feedbackPanel.setOutputMarkupId(true);
+        add(feedbackPanel);
+
+        add(new AjaxLink<String>("goUserPage") {
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick(AjaxRequestTarget target) {
-                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(UserManagerPage.class)) {
+                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(
+                        UserManagerPage.class)) {
                     setResponsePage(UserManagerPage.class);
                 }
             }
+
             @Override
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                setVisible((getApplication().getSecuritySettings().getAuthorizationStrategy()
+                        .isInstantiationAuthorized(UserManagerPage.class)));
+            }
+            /*To Show a JS alert on protected area
+             * @Override
             protected IAjaxCallDecorator getAjaxCallDecorator() {
                 return new AjaxCallDecorator() {
                     private static final long serialVersionUID = 1L;
@@ -78,85 +88,107 @@ public class BasePage extends WebPage {
                         return script;
                     }
                 };
+            }*/
+        });
+
+        add(new AjaxLink<String>("goUserProfilePage") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(
+                        UserProfilePage.class)) {
+                    setResponsePage(UserProfilePage.class);
+                }
+            }
+
+            @Override
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                setVisible((getApplication().getSecuritySettings().getAuthorizationStrategy()
+                        .isInstantiationAuthorized(UserProfilePage.class)));
             }
         });
 
-        add(new Link<String>("goUserProfilePage") {
+        add(new AjaxLink<String>("goSearchRistorantePage") {
             private static final long serialVersionUID = 1L;
+
             @Override
-            public void onClick() {
-                setResponsePage(UserProfilePage.class);
+            public void onClick(AjaxRequestTarget target) {
+                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(
+                        UserHomePage.class)) {
+                    setResponsePage(UserHomePage.class);
+                }
+            }
+
+            @Override
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                setVisible((getApplication().getSecuritySettings().getAuthorizationStrategy()
+                        .isInstantiationAuthorized(UserHomePage.class)));
             }
         });
         
         add(new AjaxLink<String>("goRistoranteAddNewPage") {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void onClick(AjaxRequestTarget target) {
-                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(RistoranteAddNewPage.class)) {   
+                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(
+                        RistoranteAddNewPage.class)) {
                     setResponsePage(RistoranteAddNewPage.class);
                 }
             }
+
             @Override
-            protected IAjaxCallDecorator getAjaxCallDecorator() {
-                return new AjaxCallDecorator() {
-                    private static final long serialVersionUID = 1L;
-                    public CharSequence decorateScript(CharSequence script) {
-                        if (!(getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(RistoranteAddNewPage.class))) {
-                            return "alert('" + new StringResourceModel("basePage.notLogged", getPage(), null).getString() + "'); " + script;
-                        }
-                        return script;
-                    }
-                };
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                setVisible((getApplication().getSecuritySettings().getAuthorizationStrategy()
+                        .isInstantiationAuthorized(RistoranteAddNewPage.class)));
             }
         });
-        
+
         add(new AjaxLink<String>("goSearchFriendPage") {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void onClick(AjaxRequestTarget target) {
-                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(SearchFriendPage.class)) {   
+                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(
+                        SearchFriendPage.class)) {
                     setResponsePage(SearchFriendPage.class);
                 }
             }
+
             @Override
-            protected IAjaxCallDecorator getAjaxCallDecorator() {
-                return new AjaxCallDecorator() {
-                    private static final long serialVersionUID = 1L;
-                    public CharSequence decorateScript(CharSequence script) {
-                        if (!(getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(SearchFriendPage.class))) {
-                            return "alert('" + new StringResourceModel("basePage.notLogged", getPage(), null).getString() + "'); " + script;
-                        }
-                        return script;
-                    }
-                };
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                setVisible((getApplication().getSecuritySettings().getAuthorizationStrategy()
+                        .isInstantiationAuthorized(SearchFriendPage.class)));
             }
         });
-        
+
         add(new AjaxLink<String>("goFriendPage") {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void onClick(AjaxRequestTarget target) {
-                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(FriendsPage.class)) {   
+                if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(
+                        FriendsPage.class)) {
                     setResponsePage(FriendsPage.class);
                 }
             }
+
             @Override
-            protected IAjaxCallDecorator getAjaxCallDecorator() {
-                return new AjaxCallDecorator() {
-                    private static final long serialVersionUID = 1L;
-                    public CharSequence decorateScript(CharSequence script) {
-                        if (!(getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(FriendsPage.class))) {
-                            return "alert('" + new StringResourceModel("basePage.notLogged", getPage(), null).getString() + "'); " + script;
-                        }
-                        return script;
-                    }
-                };
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                setVisible((getApplication().getSecuritySettings().getAuthorizationStrategy()
+                        .isInstantiationAuthorized(FriendsPage.class)));
             }
         });
-        
+
         Link<String> goSignOut = new Link<String>("goSignOut") {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void onClick() {
                 setResponsePage(SignOut.class);
@@ -164,27 +196,27 @@ public class BasePage extends WebPage {
         };
         Link<String> goSignIn = new Link<String>("goSignIn") {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void onClick() {
                 setResponsePage(SignIn.class);
             }
         };
-        
+
         goSignIn.setOutputMarkupId(true);
         goSignOut.setOutputMarkupId(true);
-        
-        if(isAuthenticated){
+
+        if (isAuthenticated) {
             goSignIn.setVisible(false);
             goSignOut.setVisible(true);
-        }
-        else{
+        } else {
             goSignOut.setVisible(false);
             goSignIn.setVisible(true);
         }
         add(goSignOut);
-        add(goSignIn);   
-        
-	}
+        add(goSignIn);
+
+    }
 
     public final FeedbackPanel getFeedbackPanel() {
         return feedbackPanel;

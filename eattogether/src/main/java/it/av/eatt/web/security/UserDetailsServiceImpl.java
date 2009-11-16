@@ -16,7 +16,7 @@
 package it.av.eatt.web.security;
 
 import it.av.eatt.ocm.model.Eater;
-import it.av.eatt.service.UserService;
+import it.av.eatt.service.EaterService;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.userdetails.UserDetails;
@@ -28,7 +28,7 @@ import org.springframework.security.userdetails.UsernameNotFoundException;
  */
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    private UserService service;
+    private EaterService service;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException, DataAccessException {
@@ -43,7 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         
     }
 
-    public void setService(UserService service) {
+    public void setService(EaterService service) {
         this.service = service;
     }
 }

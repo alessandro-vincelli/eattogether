@@ -17,7 +17,7 @@ package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
-import it.av.eatt.service.UserRelationService;
+import it.av.eatt.service.EaterRelationService;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -35,7 +35,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 public class SearchFriendTableActionPanel extends Panel {
     private static final long serialVersionUID = 1L;
     @SpringBean
-    private UserRelationService userRelationService;
+    private EaterRelationService userRelationService;
 
     /**
      * @param id component id

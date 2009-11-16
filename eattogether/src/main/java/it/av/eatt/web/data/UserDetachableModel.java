@@ -16,7 +16,7 @@
 package it.av.eatt.web.data;
 
 import it.av.eatt.ocm.model.Eater;
-import it.av.eatt.service.UserService;
+import it.av.eatt.service.EaterService;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
@@ -29,14 +29,14 @@ public class UserDetachableModel extends LoadableDetachableModel<Eater> {
 
     private static final long serialVersionUID = 1L;
     private final String id;
-    private UserService userService;
+    private EaterService userService;
 
     /**
      * 
      * @param c
      * @param userService
      */
-    public UserDetachableModel(Eater c, UserService userService) {
+    public UserDetachableModel(Eater c, EaterService userService) {
         this(c.getEmail());
         this.userService = userService;
     }

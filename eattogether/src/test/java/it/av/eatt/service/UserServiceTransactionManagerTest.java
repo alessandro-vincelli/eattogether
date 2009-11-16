@@ -36,7 +36,7 @@ public class UserServiceTransactionManagerTest{
 	@Autowired
 	//@Qualifier("userServiceFailing")
 	@Qualifier("userService")
-	protected UserService userService;
+	protected EaterService userService;
 
 	 /**
      * Proves that the instance of {@link TransferService} that is retrieved

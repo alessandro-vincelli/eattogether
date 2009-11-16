@@ -36,10 +36,10 @@ public class ActivityRistoranteServiceTest {
     private ActivityRistoranteService activityRistoranteService;
     @Autowired
     @Qualifier("userService")
-    private UserService userService;
+    private EaterService userService;
     @Autowired
     @Qualifier("userRelationService")
-    private UserRelationService userRelationService;
+    private EaterRelationService userRelationService;
     @Autowired
     private RistoranteService ristoranteService;
     private Eater user;

@@ -16,7 +16,7 @@
 package it.av.eatt.web.data;
 
 import it.av.eatt.ocm.model.EaterProfile;
-import it.av.eatt.service.UserProfileService;
+import it.av.eatt.service.EaterProfileService;
 
 import org.apache.wicket.model.LoadableDetachableModel;
 
@@ -29,14 +29,14 @@ public class UserProfileDetachableModel extends LoadableDetachableModel<EaterPro
 
     private static final long serialVersionUID = 1L;
     private final String id;
-    private UserProfileService userProfileService;
+    private EaterProfileService userProfileService;
 
     /**
      * 
      * @param c
      * @param userProfileService
      */
-    public UserProfileDetachableModel(EaterProfile c, UserProfileService userProfileService) {
+    public UserProfileDetachableModel(EaterProfile c, EaterProfileService userProfileService) {
         this(c.getName());
         this.userProfileService = userProfileService;
     }

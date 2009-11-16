@@ -20,8 +20,8 @@ import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterProfile;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.RistoranteService;
-import it.av.eatt.service.UserProfileService;
-import it.av.eatt.service.UserService;
+import it.av.eatt.service.EaterProfileService;
+import it.av.eatt.service.EaterService;
 
 import javax.annotation.Resource;
 
@@ -33,9 +33,9 @@ import javax.annotation.Resource;
 public class RepositoryInitStructureImpl implements RepositoryInitStructure {
 
     @Resource(name="userProfileService")
-    private UserProfileService userProfileService;
+    private EaterProfileService userProfileService;
     @Resource(name="userService")
-    private UserService userService;
+    private EaterService userService;
     @Resource(name="ristoranteService")
     private RistoranteService ristoranteService;
 

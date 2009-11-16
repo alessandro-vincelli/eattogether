@@ -7,7 +7,7 @@ import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterRelation;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.ActivityRistoranteService;
-import it.av.eatt.service.UserRelationService;
+import it.av.eatt.service.EaterRelationService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import org.hibernate.criterion.Restrictions;
 
 public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibernate<ActivityRistorante> implements ActivityRistoranteService{
     
-    private UserRelationService userRelationService;
+    private EaterRelationService userRelationService;
     
     /**
      * {@inheritDoc}
@@ -72,7 +72,7 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
         return super.save(activityRistorante); 
     }
     
-    public void setUserRelationService(UserRelationService userRelationService) {
+    public void setUserRelationService(EaterRelationService userRelationService) {
         this.userRelationService = userRelationService;
     }
 }

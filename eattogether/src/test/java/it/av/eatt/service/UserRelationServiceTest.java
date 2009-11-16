@@ -43,11 +43,11 @@ public class UserRelationServiceTest {
 
     @Autowired
     @Qualifier("userService")
-    private UserService userService;
+    private EaterService userService;
     @Autowired
-    private UserProfileService userProfileService;
+    private EaterProfileService userProfileService;
     @Autowired
-    private UserRelationService userRelationService;
+    private EaterRelationService userRelationService;
     private EaterProfile profile;
     private Eater a;
     private Eater b;

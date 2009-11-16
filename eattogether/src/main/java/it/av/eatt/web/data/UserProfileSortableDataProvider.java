@@ -17,7 +17,7 @@ package it.av.eatt.web.data;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.EaterProfile;
-import it.av.eatt.service.UserProfileService;
+import it.av.eatt.service.EaterProfileService;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,14 +34,14 @@ import org.apache.wicket.model.IModel;
  */
 public class UserProfileSortableDataProvider extends SortableDataProvider<EaterProfile> {
     private static final long serialVersionUID = 1L;
-    private UserProfileService userProfileService;
+    private EaterProfileService userProfileService;
     private Collection<EaterProfile> results;
 
     /**
      * 
      * @param userProfileService
      */
-    public UserProfileSortableDataProvider(UserProfileService userProfileService) {
+    public UserProfileSortableDataProvider(EaterProfileService userProfileService) {
         super();
         this.userProfileService = userProfileService;
         // setSort(LightVac.SortedFieldNames.dateTime.value(), true);

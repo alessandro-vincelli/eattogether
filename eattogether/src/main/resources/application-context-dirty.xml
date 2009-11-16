@@ -280,7 +280,7 @@
 		<property name="configurationType" value="deployment" />
 	</bean>
 
-	<bean id="userService" class="it.av.eatt.service.impl.UserServiceHibernate" parent="hibernateDaoSupport">
+	<bean id="userService" class="it.av.eatt.service.impl.EaterServiceHibernate" parent="hibernateDaoSupport">
 		<property name="passwordEncoder" ref="strongPasswordEncryptor" />
 		<property name="userProfileService" ref="userProfileService" />
 		<property name="userRelationService" ref="userRelationService" />
@@ -289,7 +289,7 @@
 	<bean id="commentService" class="it.av.eatt.service.impl.CommentServiceHibernate" parent="hibernateDaoSupport">
 	</bean>
 
-	<bean id="userProfileService" class="it.av.eatt.service.impl.UserProfileServiceHibernate" parent="hibernateDaoSupport"></bean>
+	<bean id="userProfileService" class="it.av.eatt.service.impl.EaterProfileServiceHibernate" parent="hibernateDaoSupport"></bean>
 
 	<bean id="activityService" class="it.av.eatt.service.impl.ActivityServiceHibernate" parent="hibernateDaoSupport"></bean>
 
@@ -307,7 +307,7 @@
 		<property name="activityRistoranteService" ref="activityRistoranteService" />
 	</bean>-->
 
-	<bean id="userRelationService" class="it.av.eatt.service.impl.UserRelationServiceHibernate" parent="hibernateDaoSupport">
+	<bean id="userRelationService" class="it.av.eatt.service.impl.EaterRelationServiceHibernate" parent="hibernateDaoSupport">
 	</bean>
 
 	<bean id="repositoryInitStructure" class="it.av.eatt.repo.util.RepositoryInitStructureImpl">

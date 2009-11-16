@@ -18,8 +18,8 @@ package it.av.eatt.web.page;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterProfile;
-import it.av.eatt.service.UserProfileService;
-import it.av.eatt.service.UserService;
+import it.av.eatt.service.EaterProfileService;
+import it.av.eatt.service.EaterService;
 import it.av.eatt.web.data.UserSortableDataProvider;
 
 import java.util.ArrayList;
@@ -53,14 +53,14 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  * 
  */
-@AuthorizeInstantiation( { "USER", "ADMIN", "EDITOR" })
+@AuthorizeInstantiation( {"ADMIN"})
 public class UserManagerPage extends BasePage {
 
     private static final long serialVersionUID = 1L;
     @SpringBean(name = "userService")
-    private UserService userService;
+    private EaterService userService;
     @SpringBean(name = "userProfileService")
-    private UserProfileService userProfileService;
+    private EaterProfileService userProfileService;
 
     private AjaxFallbackDefaultDataTable<Eater> usersDataTable;
     private UserSortableDataProvider dataProvider;
@@ -173,7 +173,7 @@ public class UserManagerPage extends BasePage {
         return form;
     }
 
-    public final UserService getUsersServices() {
+    public final EaterService getUsersServices() {
         return userService;
     }
 

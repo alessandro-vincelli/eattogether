@@ -106,7 +106,7 @@
 		<property name="configurationType" value="deployment" />
 	</bean>
 
-	<bean id="userService" class="it.av.eatt.service.impl.UserServiceHibernate" parent="jpaDaoSupport" >
+	<bean id="userService" class="it.av.eatt.service.impl.EaterServiceHibernate" parent="jpaDaoSupport" >
 		<property name="passwordEncoder" ref="strongPasswordEncryptor" />
 		<property name="userProfileService" ref="userProfileService" />
 		<property name="userRelationService" ref="userRelationService" />
@@ -114,7 +114,7 @@
 
 	<bean id="commentService" class="it.av.eatt.service.impl.CommentServiceHibernate" parent="jpaDaoSupport" />
 
-	<bean id="userProfileService" class="it.av.eatt.service.impl.UserProfileServiceHibernate" parent="jpaDaoSupport" />
+	<bean id="userProfileService" class="it.av.eatt.service.impl.EaterProfileServiceHibernate" parent="jpaDaoSupport" />
 
 	<bean id="activityService" class="it.av.eatt.service.impl.ActivityServiceHibernate" parent="jpaDaoSupport" />
 
@@ -136,7 +136,7 @@
 		<property name="basePath" value="/ristoranti" />
 	</bean>-->
 	
-	<bean id="userRelationService" class="it.av.eatt.service.impl.UserRelationServiceHibernate" parent="jpaDaoSupport" />
+	<bean id="userRelationService" class="it.av.eatt.service.impl.EaterRelationServiceHibernate" parent="jpaDaoSupport" />
 	
 	<bean id="dataRistoranteService" class="it.av.eatt.service.impl.DataRistoranteServiceHibernate" parent="jpaDaoSupport"/>
 	
