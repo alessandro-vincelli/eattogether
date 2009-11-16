@@ -29,7 +29,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulato
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
-import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -49,9 +49,9 @@ public class SearchFriendPage extends BasePage {
     @SpringBean(name = "userService")
     private UserService userService;
 
-    private AjaxFallbackDefaultDataTable<Eater> searchFriendsDataTable;
     private SearchUserFriendSortableDataProvider searchFriendsDataProvider;
-    private Form<Eater> form;
+    private final WebMarkupContainer searchFriendsContainer;
+    private final SearchFriendPanel searchFriendPanel;
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -59,37 +59,40 @@ public class SearchFriendPage extends BasePage {
      * @throws JackWicketException
      */
     public SearchFriendPage() throws JackWicketException {
-
+        searchFriendsContainer = new WebMarkupContainer("searchFriendsContainer");
+        searchFriendsContainer.setOutputMarkupId(true);
+        add(searchFriendsContainer);
         List<IColumn<Eater>> columns = new ArrayList<IColumn<Eater>>();
-        columns.add(new AbstractColumn<Eater>(new Model<String>(new StringResourceModel("datatableactionpanel.actions", this, null).getString())) {
+        columns.add(new AbstractColumn<Eater>(new Model<String>(new StringResourceModel("datatableactionpanel.actions",
+                this, null).getString())) {
             public void populateItem(Item<ICellPopulator<Eater>> cellItem, String componentId, IModel<Eater> model) {
                 cellItem.add(new SearchFriendTableActionPanel(componentId, model));
             }
         });
-        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("firstname", this, null).getString()), "firstname"));
-        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("lastname", this, null).getString()), "lastname"));
+        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("firstname", this, null)
+                .getString()), "firstname"));
+        columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("lastname", this, null)
+                .getString()), "lastname"));
         searchFriendsDataProvider = new SearchUserFriendSortableDataProvider(userService, getLoggedInUser());
-        searchFriendsDataTable = new AjaxFallbackDefaultDataTable<Eater>("searchFriendsDataTable", columns, searchFriendsDataProvider, 20);
-        add(searchFriendsDataTable);
-        add(new SearchFriendPanel(searchFriendsDataProvider, searchFriendsDataTable, "searchPanel", getFeedbackPanel()));
-
+        AjaxFallbackDefaultDataTable<Eater> searchFriendsDataTable = new AjaxFallbackDefaultDataTable<Eater>(
+                "searchFriendsDataTable", columns, searchFriendsDataProvider, 20);
+        searchFriendsContainer.add(searchFriendsDataTable);
+        searchFriendPanel = new SearchFriendPanel(searchFriendsDataProvider, searchFriendsDataTable, "searchPanel",
+                getFeedbackPanel());
+        add(searchFriendPanel);
     }
-    
+
     /**
-     * Fill with fresh data the repetear
+     * Fill with fresh data the repeater
      * 
      * @throws JackWicketException
      */
     public final void refreshDataTable() throws JackWicketException {
-        searchFriendsDataProvider.fetchResults(this.getRequest());
+        String pattern = searchFriendPanel.getSearchBean().getSearchData();
+        searchFriendsDataProvider.fetchResults(pattern);
     }
 
-    public final Form<Eater> getForm() {
-        return form;
+    public WebMarkupContainer getSearchFriendsContainer() {
+        return searchFriendsContainer;
     }
-
-    public final UserService getUsersServices() {
-        return userService;
-    }
-
 }
