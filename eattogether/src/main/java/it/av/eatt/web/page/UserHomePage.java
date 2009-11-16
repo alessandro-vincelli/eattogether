@@ -22,6 +22,7 @@ import it.av.eatt.ocm.util.DateUtil;
 import it.av.eatt.service.ActivityRistoranteService;
 import it.av.eatt.service.RistoranteService;
 import it.av.eatt.web.components.RistoNameColumn;
+import it.av.eatt.web.components.RistoranteDataTable;
 import it.av.eatt.web.data.RistoranteSortableDataProvider;
 
 import java.util.ArrayList;
@@ -30,7 +31,6 @@ import java.util.List;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
@@ -78,7 +78,7 @@ public class UserHomePage extends BasePage {
         columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("city", this, null)
                 .getString()), "city"));
 
-        AjaxFallbackDefaultDataTable<Ristorante> ristoranteDataTable = new AjaxFallbackDefaultDataTable<Ristorante>(
+        RistoranteDataTable<Ristorante> ristoranteDataTable = new RistoranteDataTable<Ristorante>(
                 "ristoranteDataTable", columns, ristoranteSortableDataProvider, 10);
         add(ristoranteDataTable);
 

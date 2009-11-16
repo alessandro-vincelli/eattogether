@@ -18,6 +18,7 @@ package it.av.eatt.web.page;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.RistoranteService;
+import it.av.eatt.web.components.RistoranteDataTable;
 import it.av.eatt.web.data.RistoranteSortableDataProvider;
 
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
-import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -56,7 +56,7 @@ public class RistoranteSearchPanel extends Panel {
      * @param feedbackPanel
      */
     public RistoranteSearchPanel(String id, final RistoranteSortableDataProvider dataProvider,
-            final AjaxFallbackDefaultDataTable dataTable, final FeedbackPanel feedbackPanel) {
+            final RistoranteDataTable<Ristorante> dataTable, final FeedbackPanel feedbackPanel) {
         super(id);
         Form<String> form = new Form<String>("searchForm", new CompoundPropertyModel(searchBean));
         add(form);

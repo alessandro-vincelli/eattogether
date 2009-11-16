@@ -19,6 +19,7 @@ import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.RistoranteService;
 import it.av.eatt.web.components.RistoNameColumn;
+import it.av.eatt.web.components.RistoranteDataTable;
 import it.av.eatt.web.data.RistoranteSortableDataProvider;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class HomePage extends BasePage {
         columns.add(new PropertyColumn<Ristorante>(new Model<String>(new StringResourceModel("city", this, null)
                 .getString()), "city"));
 
-        AjaxFallbackDefaultDataTable<Ristorante> ristoranteDataTable = new AjaxFallbackDefaultDataTable<Ristorante>(
+        RistoranteDataTable<Ristorante> ristoranteDataTable = new RistoranteDataTable<Ristorante>(
                 "ristoranteDataTable", columns, ristoranteSortableDataProvider, 10);
         add(ristoranteDataTable);
 
