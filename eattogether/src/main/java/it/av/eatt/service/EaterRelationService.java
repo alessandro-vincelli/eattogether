@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 
- * Operations to manage releations between users
+ * Operations to manage relations between users
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  *
@@ -36,7 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface EaterRelationService {
 
     /**
-     * Save a realtion
+     * Save a relation
      * 
      * @param relation
      * @return EaterRelation just saved
@@ -55,7 +55,7 @@ public interface EaterRelationService {
     void remove(EaterRelation relation) throws JackWicketException;
 
     /**
-     * Create a follow realation
+     * Create a following relation
      * 
      * @param fromUser
      * @param toUser
@@ -66,7 +66,7 @@ public interface EaterRelationService {
     EaterRelation addFollowUser(Eater fromUser, Eater toUser) throws JackWicketException;
 
     /**
-     * Create a friend realation with {@link EaterRelation} with STATUS_PENDING
+     * Create a friend relation with {@link EaterRelation} with STATUS_PENDING
      * 
      * @param fromUser
      * @param toUser
@@ -100,7 +100,7 @@ public interface EaterRelationService {
      * Return all the friends relations of the passed user
      * 
      * @param ofUser
-     * @return list of all al frieds realations
+     * @return list of all friends relations
      */
     @Transactional(readOnly = true)
     List<EaterRelation> getAllFriendUsers(Eater ofUser);
@@ -109,7 +109,7 @@ public interface EaterRelationService {
      * Return all the follow relations of the passed user
      * 
      * @param ofUser
-     * @return list of all al frieds realations
+     * @return list of all friends relations
      */
     @Transactional(readOnly = true)
     List<EaterRelation> getAllFollowUsers(Eater ofUser);
@@ -118,7 +118,7 @@ public interface EaterRelationService {
      * Return all the relations of the passed user, are included also the pending relations
      * 
      * @param ofUser
-     * @return list of all al frieds realations
+     * @return list of all friends relations
      */
     @Transactional(readOnly = true)
     List<EaterRelation> getAllRelations(Eater ofUser);
@@ -127,7 +127,7 @@ public interface EaterRelationService {
      * Return all the active relations of the passed user
      * 
      * @param ofUser
-     * @return list of all al frieds realations
+     * @return list of all friends relations
      */
     @Transactional(readOnly = true)
     List<EaterRelation> getAllActiveRelations(Eater ofUser);
