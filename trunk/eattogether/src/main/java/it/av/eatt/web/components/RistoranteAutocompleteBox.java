@@ -11,6 +11,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteSettings;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 
 /**
@@ -26,10 +27,11 @@ public class RistoranteAutocompleteBox extends AutoCompleteTextField<DataRistora
 
     /**
      * @param id
+     * @param autoCompleteSettings
      * @param dataRistoranteService
      */
-    public RistoranteAutocompleteBox(String id, DataRistoranteService dataRistoranteService) {
-        super(id);
+    public RistoranteAutocompleteBox(String id, AutoCompleteSettings autoCompleteSettings, DataRistoranteService dataRistoranteService) {
+        super(id, autoCompleteSettings);
         this.dataRistoranteService = dataRistoranteService;
     }
 

@@ -34,6 +34,7 @@ import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteSettings;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -108,7 +109,10 @@ public class RistoranteAddNewPage extends BasePage {
             }
         };
         form.setOutputMarkupId(true);
-        final RistoranteAutocompleteBox ristoName = new RistoranteAutocompleteBox(Ristorante.NAME, dataRistoranteService);
+        AutoCompleteSettings autoCompleteSettings = new AutoCompleteSettings();
+        autoCompleteSettings.setCssClassName("autocomplete-risto");
+        autoCompleteSettings.setAdjustInputWidth(false);
+        final RistoranteAutocompleteBox ristoName = new RistoranteAutocompleteBox(Ristorante.NAME, autoCompleteSettings, dataRistoranteService);
         ristoName.setRequired(true).setOutputMarkupId(true);
         ristoName.add(updatingBehavior);
         form.add(ristoName);

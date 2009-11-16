@@ -29,6 +29,7 @@ import org.apache.wicket.IClusterable;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteSettings;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -63,7 +64,10 @@ public class RistoranteSearchPanel extends Panel {
         form.setOutputMarkupId(true);
         FormComponent<String> fc;
         // fc = new TextField<String>("searchData");
-        fc = new searchBox("searchData", dataProvider.getRistoranteService());
+        AutoCompleteSettings autoCompleteSettings = new AutoCompleteSettings();
+        autoCompleteSettings.setCssClassName("autocomplete-risto");
+        autoCompleteSettings.setAdjustInputWidth(false);
+        fc = new searchBox("searchData", autoCompleteSettings, dataProvider.getRistoranteService());
         form.add(fc);
         // event and throttle it down to once per second
         AjaxFormValidatingBehavior.addToAllFormComponents(form, "onkeyup", Duration.ONE_SECOND);
@@ -115,12 +119,12 @@ public class RistoranteSearchPanel extends Panel {
         }
     }
 
-    public static class searchBox extends AutoCompleteTextField<String> {
+    private static class searchBox extends AutoCompleteTextField<String> {
         private static final long serialVersionUID = 1L;
         private RistoranteService ristoranteService;
 
-        public searchBox(String id, RistoranteService ristoranteService) {
-            super(id);
+        public searchBox(String id, AutoCompleteSettings autoCompleteSettings, RistoranteService ristoranteService) {
+            super(id, autoCompleteSettings);
             this.ristoranteService = ristoranteService;
         }
 

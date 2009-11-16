@@ -313,3 +313,19 @@ div .friendRemoveButton{
     width: 20px;
     font-style: oblique;
 }
+
+.autocomplete-risto ul{
+    list-style-position: outside;
+    list-style-type: none;
+    list-style-image:none;
+    list-style-position:outside;
+    padding-left: 3px;
+    padding-top: 0px;
+    border-left: 1px solid gray;
+    width: 250px;
+}
+
+.autocomplete-risto .selected{
+    color: FFF;
+    background: #3366CC;
+}
