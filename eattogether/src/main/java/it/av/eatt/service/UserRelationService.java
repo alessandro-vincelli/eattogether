@@ -47,13 +47,13 @@ public interface UserRelationService {
     EaterRelation save(EaterRelation relation) throws JackWicketException;
     
     /**
-     * Remove a realation
+     * Remove a relation
      * 
-     * @param object
+     * @param relation relation to remove
      * @throws JackWicketException
      */
-    @Transactional(propagation=Propagation.MANDATORY)
-    void remove(EaterRelation object) throws JackWicketException;
+    @Transactional//(propagation=Propagation.MANDATORY)
+    void remove(EaterRelation relation) throws JackWicketException;
 
     /**
      * Create a follow realation
