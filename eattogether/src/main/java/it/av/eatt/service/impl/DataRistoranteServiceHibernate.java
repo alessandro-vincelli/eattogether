@@ -24,9 +24,14 @@ import it.av.eatt.service.DataRistoranteService;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.orm.jpa.EntityManagerFactoryInfo;
 
 /**
  * Implements the operation on {@link DataRistorante}
@@ -36,6 +41,15 @@ import org.hibernate.criterion.Restrictions;
  */
 public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<DataRistorante> implements
         DataRistoranteService {
+
+    /**
+     * @param entityManager
+     */
+    @PersistenceContext(type = PersistenceContextType.TRANSACTION, unitName="staticDataPersistance")
+    @Override
+    public void setInternalEntityManager(final EntityManager entityManager) {
+        super.setInternalEntityManager(entityManager);
+    }
 
     /**
      * {@inheritDoc}
