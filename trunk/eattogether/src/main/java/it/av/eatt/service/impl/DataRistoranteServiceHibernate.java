@@ -19,6 +19,7 @@ import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.DataRistorante;
 import it.av.eatt.ocm.model.ProvIta;
 import it.av.eatt.ocm.model.Ristorante;
+import it.av.eatt.ocm.model.data.Country;
 import it.av.eatt.service.DataRistoranteService;
 
 import java.util.Collection;
@@ -30,6 +31,7 @@ import javax.persistence.PersistenceContextType;
 
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.orm.jpa.EntityManagerFactoryInfo;
 
@@ -74,10 +76,10 @@ public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<
      * {@inheritDoc}
      */
     @Override
-    public Collection<DataRistorante> find(String pattern) throws JackWicketException {
+    public Collection<DataRistorante> find(String pattern, int maxResults) throws JackWicketException {
         Criterion critByName = Restrictions.ilike(Ristorante.NAME, "%" + pattern + "%");
-        List<DataRistorante> results = findByCriteria(critByName);
-        return results;
+        Order orderByName = Order.asc(DataRistorante.NAME);
+        return findByCriteria(orderByName, 0, maxResults, critByName);        
     }
 
     /**
@@ -101,24 +103,23 @@ public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<
      * {@inheritDoc}
      */
     @Override
-    public Collection<DataRistorante> find(String pattern, String city, String country) throws JackWicketException {
+    public Collection<DataRistorante> find(String pattern, String city, Country country, int maxResults) throws JackWicketException {
         Criterion critByName = Restrictions.ilike(Ristorante.NAME, "%" + pattern + "%");
         Criterion critByCity = Restrictions.eq(Ristorante.CITY, city);
-        Criterion critByCountry = Restrictions.eq(Ristorante.COUNTRY, country);
-        List<DataRistorante> results = findByCriteria(critByName, critByCity, critByCountry);
-        return results;
+        Criterion critByCountry = Restrictions.eq(Ristorante.COUNTRY, country.getIso2());
+        Order orderByName = Order.asc(DataRistorante.NAME);
+        return findByCriteria(orderByName, 0, maxResults, critByName, critByCity, critByCountry);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Collection<DataRistorante> getBy(String pattern, String city, String country) throws JackWicketException {
+    public Collection<DataRistorante> getBy(String pattern, String city, Country country) throws JackWicketException {
         Criterion critByName = Restrictions.eq(Ristorante.NAME, pattern);
         Criterion critByCity = Restrictions.eq(Ristorante.CITY, city);
-        Criterion critByCountry = Restrictions.eq(Ristorante.COUNTRY, country);
+        Criterion critByCountry = Restrictions.eq(Ristorante.COUNTRY, country.getIso2());
         List<DataRistorante> results = findByCriteria(critByName, critByCity, critByCountry);
         return results;
     }
-
 }

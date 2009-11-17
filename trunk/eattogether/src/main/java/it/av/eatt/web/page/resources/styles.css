@@ -212,6 +212,12 @@ tr.headers {
     width: 22em;
 }
 
+fieldset input[type="text"],fieldset input[type="password"],fieldset textarea,fieldset select,fieldset checkbox
+    {
+    border: 1px solid #AAAAAA;
+    padding: 4px 2px;
+}
+
 input {
     border: 1px solid #AAAAAA;
     padding: 4px 2px;
@@ -256,69 +262,70 @@ button {
     line-height: 1.2;
 }
 
-.form-risto{
+.form-risto {
     text-align: left;
     float: left;
     display: block;
 }
 
-.form-risto th{
+.form-risto th {
     text-align: right;
 }
 
-.form-risto td{
+.form-risto td {
     text-align: left;
 }
-.form-risto input{
+
+.form-risto input {
     width: 300px;
     text-align: left;
 }
 
-.submitarea input{
+.submitarea input {
     width: auto;
 }
 
-div .friendsList{
+div .friendsList {
     text-align: left;
-    display:block;
+    display: block;
     height: 35px;
     border-bottom: 1px solid #EEEEEE;
     padding-top: 10px;
 }
 
-div .friendName{
+div .friendName {
     width: 200px;
     float: left;
 }
 
-div .friendType{
+div .friendType {
     float: left;
     width: 40px;
     font-style: oblique;
 }
 
-div .friendCenterColumn{
+div .friendCenterColumn {
     width: 200px;
     float: left;
 }
 
-div .friendStatus{
+div .friendStatus {
     float: left;
     width: 20px;
     font-style: oblique;
 }
 
-div .friendRemoveButton{
+div .friendRemoveButton {
     float: right;
     width: 20px;
     font-style: oblique;
 }
 
-.autocomplete-risto ul{
+.autocomplete-risto ul {
     list-style-position: outside;
     list-style-type: none;
-    list-style-image:none;
-    list-style-position:outside;
+    list-style-image: none;
+    list-style-position: outside;
     padding-left: 3px;
     padding-top: 0px;
     border-left: 1px solid gray;
@@ -326,7 +333,7 @@ div .friendRemoveButton{
     background-color: white;
 }
 
-.autocomplete-risto .selected{
+.autocomplete-risto .selected {
     color: FFF;
     background: #3366CC;
 }

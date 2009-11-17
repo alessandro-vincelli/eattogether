@@ -20,6 +20,8 @@ import it.av.eatt.JackWicketException;
 import java.util.List;
 
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * General operations
@@ -35,6 +37,7 @@ public interface ApplicationService<T> {
      * @return just saved T item
      * @throws JackWicketException
      */
+    @Transactional
     T save(T item) throws JackWicketException;
 
     /**
@@ -43,6 +46,7 @@ public interface ApplicationService<T> {
      * @return all T item
      * @throws JackWicketException
      */
+    @Transactional(readOnly=true)
     List<T> getAll() throws JackWicketException;
 
     /**
@@ -61,6 +65,7 @@ public interface ApplicationService<T> {
      * @param item
      * @throws JackWicketException
      */
+    @Transactional
     void remove(T item) throws JackWicketException;
 
     /**
@@ -70,8 +75,12 @@ public interface ApplicationService<T> {
      * @return T item
      * @throws JackWicketException
      */
+    @Transactional(readOnly=true)
     T getByID(String id) throws JackWicketException;
-
+    
+    @Transactional(readOnly=true)
     List<T> findByCriteria(Criterion... criterion);
-
+    
+    @Transactional(readOnly=true)
+    List<T> findByCriteria(Order order, int firstResult, int maxResults, Criterion[] criterion);
 }

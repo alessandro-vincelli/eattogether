@@ -15,15 +15,41 @@
  */
 package it.av.eatt.service.impl;
 
+import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.data.Country;
 import it.av.eatt.service.CountryService;
 
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
+
+import org.hibernate.criterion.Order;
+
 /**
  * Implements the operation on {@link Country}
- *  
+ * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  * 
  */
 public class CountryServiceHibernate extends ApplicationServiceHibernate<Country> implements CountryService {
+    
+    /**
+     * @param entityManager
+     */
+    @PersistenceContext(type = PersistenceContextType.TRANSACTION, unitName = "staticDataPersistance")
+    @Override
+    public void setInternalEntityManager(final EntityManager entityManager) {
+        super.setInternalEntityManager(entityManager);
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Country> getAll() throws JackWicketException {
+        Order orderBYName = Order.asc(Country.NAME);
+        return super.findByCriteria(orderBYName);
+    }
 }

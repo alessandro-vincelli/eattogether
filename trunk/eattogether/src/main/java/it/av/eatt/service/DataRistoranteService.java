@@ -18,6 +18,7 @@ package it.av.eatt.service;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.DataRistorante;
 import it.av.eatt.ocm.model.ProvIta;
+import it.av.eatt.ocm.model.data.Country;
 
 import java.util.Collection;
 import java.util.List;
@@ -68,10 +69,11 @@ public interface DataRistoranteService {
      * Find the restaurant by the given pattern
      * 
      * @param pattern
+     * @param maxResults the max number of results, 0 for unlimited 
      * @return Collection<DataRistorante>
      */
     @Transactional(readOnly = true)
-    Collection<DataRistorante> find(String pattern) throws JackWicketException;
+    Collection<DataRistorante> find(String pattern, int maxResults) throws JackWicketException;
 
     /**
      * Find the restaurant by the given pattern, city, country
@@ -79,10 +81,11 @@ public interface DataRistoranteService {
      * @param pattern
      * @param city
      * @param country
+     * @param maxResults the max number of results, 0 for unlimited
      * @return Collection<DataRistorante>
      */
     @Transactional(readOnly = true)
-    Collection<DataRistorante> find(String pattern, String city, String country) throws JackWicketException;
+    Collection<DataRistorante> find(String pattern, String city, Country country, int maxResults) throws JackWicketException;
 
     /**
      * Remove a restaurant from the repository
@@ -116,6 +119,6 @@ public interface DataRistoranteService {
      * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Collection<DataRistorante> getBy(String pattern, String city, String country) throws JackWicketException;
+    Collection<DataRistorante> getBy(String pattern, String city, Country country) throws JackWicketException;
 
 }

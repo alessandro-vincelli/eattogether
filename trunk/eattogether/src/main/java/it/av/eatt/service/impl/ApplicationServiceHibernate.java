@@ -135,32 +135,34 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
      */
     @Override
     public List<T> findByCriteria(Criterion... criterion) {
-        return findByCriteria(getPersistentClass(), null, criterion);
+        return findByCriteria(getPersistentClass(), null, 0, 0, criterion);
     }
 
+    @Override
+    public List<T> findByCriteria(Order order, int firstResult, int maxResults, Criterion... criterion) {
+        return findByCriteria(getPersistentClass(), order, firstResult, maxResults, criterion);
+    }
+    
     protected List<T> findByCriteria(Order order, Criterion... criterion) {
-        return findByCriteria(getPersistentClass(), order, criterion);
+        return findByCriteria(getPersistentClass(), order, 0, 0, criterion);
     }
 
-    protected List<T> findByCriteria(Class actualClass, Order order, Criterion... criterion) {
-        // DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
+    protected List<T> findByCriteria(Class<T> actualClass, Order order, int firstResult, int maxResults, Criterion... criterion) {
         Criteria criteria = getHibernateSession().createCriteria(getPersistentClass());
-        if (order != null)
+        if (order != null){
             criteria.addOrder(order);
-
+        }
         for (Criterion c : criterion) {
             criteria.add(c);
         }
-        return criteria.list();
-        /*Criteria crit = getSession().createCriteria(actualClass);
-        if (order != null)
-            crit.addOrder(order);
-
-        for (Criterion c : criterion) {
-            crit.add(c);
+        if(firstResult > 0){
+            criteria.setFirstResult(firstResult);
         }
-        return crit.list();*/
-    }
+        if(maxResults > 0){
+            criteria.setMaxResults(maxResults);
+        }
+        return criteria.list();
+     }
 
     /**
      * {@inheritDoc}
