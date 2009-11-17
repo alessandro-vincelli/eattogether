@@ -15,6 +15,8 @@ import org.hibernate.search.annotations.Indexed;
 @Indexed
 public class Country extends BasicEntity{
     
+    public static final String NAME = "name";
+    
     private String iso2;
     private String iso3;
     private String name;

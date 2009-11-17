@@ -85,7 +85,7 @@ public class RepositoryInitStructureImpl implements RepositoryInitStructure {
             risto.setName("Default Risto");
             risto.setAddress("via roma");
             risto.setCity("Terni");
-            risto.setCountry("Italy");
+            //risto.setCountry("Italy");
             risto.setDescription("very short descrption");
             risto.setPostalCode("05100");
             risto.setProvince("TR");

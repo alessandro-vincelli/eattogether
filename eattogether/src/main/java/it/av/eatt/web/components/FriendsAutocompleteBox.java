@@ -16,9 +16,7 @@ import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTe
 /**
  * Useful on adding new restaurant.
  * 
- * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
 public class FriendsAutocompleteBox extends AutoCompleteTextField<DataRistorante> {
     private static final long serialVersionUID = 1L;
@@ -33,27 +31,30 @@ public class FriendsAutocompleteBox extends AutoCompleteTextField<DataRistorante
         this.dataRistoranteService = dataRistoranteService;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField#getChoices(java.lang.String)
+    /**
+     * TODO
+     * {@inheritDoc}
      */
     @Override
     protected Iterator<DataRistorante> getChoices(String input) {
         Collection<DataRistorante> choises = new ArrayList<DataRistorante>();
-        try {
-            String city =  getForm().get(Ristorante.CITY).getDefaultModelObjectAsString();
-            String country = getForm().get(Ristorante.COUNTRY).getDefaultModelObjectAsString();
-            List<DataRistorante> lists = new ArrayList<DataRistorante>();
-            if(!city.isEmpty() &&  !country.isEmpty() ){
-                lists.addAll(dataRistoranteService.find(input + "%", city, country));
-            }
-            else{
-                lists.addAll(dataRistoranteService.find(input + "%"));
-            }
-            choises.addAll(lists);
-        } catch (JackWicketException e) {
-            throw new JackWicketRunTimeException(e);
-        }
-        return choises.iterator();
+//        try {
+//            String city =  getForm().get(Ristorante.CITY).getDefaultModelObjectAsString();
+//            String country = getForm().get(Ristorante.COUNTRY).getDefaultModelObjectAsString();
+//            List<DataRistorante> lists = new ArrayList<DataRistorante>();
+//            if(!city.isEmpty() &&  !country.isEmpty() ){
+//                //
+//                //lists.addAll(dataRistoranteService.find(input + "%", city, country));
+//            }
+//            else{
+//                //lists.addAll(dataRistoranteService.find(input + "%"));
+//            }
+//            choises.addAll(lists);
+//        } catch (JackWicketException e) {
+//            throw new JackWicketRunTimeException(e);
+//        }
+//        return choises.iterator();
+        throw new RuntimeException("not yet implemented");
     }
 
 }

@@ -15,6 +15,8 @@
  */
 package it.av.eatt.ocm.model;
 
+import it.av.eatt.ocm.model.data.Country;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 
@@ -71,7 +74,8 @@ public class Ristorante extends BasicEntity implements BasicNode{
     @Field
     private String postalCode;
     @Field
-    private String country;
+    @ManyToOne
+    private Country country;
     @Field
     private String province;
     @Field
@@ -176,11 +180,11 @@ public class Ristorante extends BasicEntity implements BasicNode{
         this.postalCode = postalCode;
     }
 
-    public final String getCountry() {
+    public final Country getCountry() {
         return country;
     }
 
-    public final void setCountry(String country) {
+    public final void setCountry(Country country) {
         this.country = country;
     }
 

@@ -20,10 +20,11 @@ import it.av.eatt.service.CountryRegionService;
 
 /**
  * Implements the operation on {@link CountryRegion}
- *  
+ * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  * 
  */
-public class CountryRegionServiceHibernate extends ApplicationServiceHibernate<CountryRegion> implements CountryRegionService {
+public class CountryRegionServiceHibernate extends ApplicationServiceHibernate<CountryRegion> implements
+        CountryRegionService {
 
 }

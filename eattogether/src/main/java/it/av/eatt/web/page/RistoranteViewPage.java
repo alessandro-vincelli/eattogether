@@ -26,6 +26,7 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.markup.html.basic.SmartLinkLabel;
 import org.apache.wicket.extensions.rating.RatingPanel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
@@ -74,7 +75,7 @@ public class RistoranteViewPage extends BasePage {
         form.setOutputMarkupId(true);
         form.add(new Label(Ristorante.NAME));
         form.add(new Label(Ristorante.TYPE));
-        form.add(new Label(Ristorante.WWW));
+        form.add(new SmartLinkLabel(Ristorante.WWW));
         form.add(new ListView<Tag>(Ristorante.TAGS){
             private static final long serialVersionUID = 1L;
             @Override
