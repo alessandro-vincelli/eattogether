@@ -15,6 +15,7 @@
  */
 package it.av.eatt.ocm.model;
 
+import it.av.eatt.ocm.model.data.City;
 import it.av.eatt.ocm.model.data.Country;
 
 import java.sql.Timestamp;
@@ -79,7 +80,8 @@ public class Ristorante extends BasicEntity implements BasicNode{
     @Field
     private String province;
     @Field
-    private String city;
+    @ManyToOne
+    private City city;
     @Field
     private String type;
     @Field
@@ -196,11 +198,11 @@ public class Ristorante extends BasicEntity implements BasicNode{
         this.province = province;
     }
 
-    public final String getCity() {
+    public final City getCity() {
         return city;
     }
 
-    public final void setCity(String city) {
+    public final void setCity(City city) {
         this.city = city;
     }
 

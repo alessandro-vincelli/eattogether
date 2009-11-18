@@ -33,13 +33,11 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.orm.jpa.EntityManagerFactoryInfo;
 
 /**
  * Implements the operation on {@link DataRistorante}
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
 public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<DataRistorante> implements
         DataRistoranteService {

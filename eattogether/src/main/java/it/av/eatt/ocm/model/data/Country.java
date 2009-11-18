@@ -4,6 +4,7 @@ import it.av.eatt.ocm.model.BasicEntity;
 
 import javax.persistence.Entity;
 
+import org.hibernate.annotations.Index;
 import org.hibernate.search.annotations.Indexed;
 
 /**
@@ -12,13 +13,14 @@ import org.hibernate.search.annotations.Indexed;
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  */
 @Entity
-@Indexed
 public class Country extends BasicEntity{
     
     public static final String NAME = "name";
     
+    @Index(name="iso2name")
     private String iso2;
     private String iso3;
+    @Index(name="countryname")
     private String name;
     /**
      * @return the iso2
@@ -55,5 +57,10 @@ public class Country extends BasicEntity{
      */
     public void setName(String name) {
         this.name = name;
+    }
+    
+    @Override
+    public String toString() {
+        return getName();
     }
 }
