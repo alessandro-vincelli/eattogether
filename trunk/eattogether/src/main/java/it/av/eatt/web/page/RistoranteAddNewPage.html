@@ -11,8 +11,9 @@
                 <td><select wicket:id="country"></select></td>
                 </tr>
                 <tr>
-                <th><label for="city"><wicket:message key="city"/></label></th>
-                <td><input type="text" wicket:id="city"></input></td>
+                <th><label for="city-autocomplete"><wicket:message key="city"/></label></th>
+                <td><input type="text" wicket:id="city-autocomplete"></input>
+                </td>
                 </tr>
                 <tr>
                 <th><label for="name"><wicket:message key="name"/></label></th>
@@ -57,7 +58,7 @@
                 </td>
                 </tr>
                 <tr class="submitarea">
-                <td colspan="2"><input type="submit" wicket:id="submitRestaurant" /> <button wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button></td>
+                <td colspan="2"><input type="submit" wicket:message="value:button.create" wicket:id="submitRestaurant"></input> <button wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button></td>
                 </tr>
             </table>
             </fieldset>
@@ -65,6 +66,6 @@
        </div>
        </div>
        <div id="navigation">
-       <p><input type="submit" wicket:id="submitRestaurantRight"></input></p>
+       <p><input type="submit" wicket:id="submitRestaurantRight" wicket:message="value:button.create"></input></p>
        </div>
 </wicket:extend>

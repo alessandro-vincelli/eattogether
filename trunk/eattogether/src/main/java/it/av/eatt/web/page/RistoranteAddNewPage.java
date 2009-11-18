@@ -19,10 +19,14 @@ import it.av.eatt.JackWicketException;
 import it.av.eatt.JackWicketRunTimeException;
 import it.av.eatt.ocm.model.DataRistorante;
 import it.av.eatt.ocm.model.Ristorante;
+import it.av.eatt.ocm.model.data.City;
 import it.av.eatt.ocm.model.data.Country;
+import it.av.eatt.service.CityService;
 import it.av.eatt.service.CountryService;
 import it.av.eatt.service.DataRistoranteService;
 import it.av.eatt.service.RistoranteService;
+import it.av.eatt.web.commons.AutocompleteUtils;
+import it.av.eatt.web.components.CityAutocompleteBox;
 import it.av.eatt.web.components.RistoranteAutocompleteBox;
 import it.av.eatt.web.security.SecuritySession;
 
@@ -36,7 +40,6 @@ import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteSettings;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -48,6 +51,8 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidator;
 
 /**
  * To add a new {@link Ristorante}.
@@ -65,12 +70,15 @@ public class RistoranteAddNewPage extends BasePage {
     private DataRistoranteService dataRistoranteService;
     @SpringBean(name = "countryService")
     private CountryService countryService;
+    @SpringBean
+    private CityService cityService;
 
     private final AjaxFallbackLink<Ristorante> buttonClearForm;
 
     private Ristorante ristorante;
     private Form<Ristorante> form;
     private SubmitButton submitRestaurantRight;
+    private String cityName = "";
 
     /**
      * Constructor that is invoked when page is invoked without a session.
@@ -80,7 +88,7 @@ public class RistoranteAddNewPage extends BasePage {
     public RistoranteAddNewPage() throws JackWicketException {
         ristorante = new Ristorante();
         form = new Form<Ristorante>("ristoranteForm", new CompoundPropertyModel<Ristorante>(ristorante));
-
+        add(getFeedbackPanel());
         AjaxFormComponentUpdatingBehavior updatingBehavior = new AjaxFormComponentUpdatingBehavior("onchange") {
             private static final long serialVersionUID = 1L;
 
@@ -88,11 +96,9 @@ public class RistoranteAddNewPage extends BasePage {
             protected void onUpdate(AjaxRequestTarget arg0) {
                 try {
                     String ristoName = form.get(Ristorante.NAME).getDefaultModelObjectAsString();
-                    String ristoCity = form.get(Ristorante.CITY).getDefaultModelObjectAsString();
                     Country ristoCountry = ((DropDownChoice<Country>) form.get(Ristorante.COUNTRY)).getModelObject();
-
                     List<DataRistorante> ristosFound = new ArrayList<DataRistorante>(dataRistoranteService.getBy(
-                            ristoName, ristoCity, ristoCountry));
+                            ristoName, cityName, ristoCountry));
                     if (!(ristosFound.isEmpty())) {
                         DataRistorante dataRistorante = ristosFound.get(0);
                         form.get(Ristorante.ADDRESS).setDefaultModelObject(dataRistorante.getAddress());
@@ -113,16 +119,33 @@ public class RistoranteAddNewPage extends BasePage {
             }
         };
         form.setOutputMarkupId(true);
-        AutoCompleteSettings autoCompleteSettings = new AutoCompleteSettings();
-        autoCompleteSettings.setCssClassName("autocomplete-risto");
-        autoCompleteSettings.setAdjustInputWidth(false);
-        final RistoranteAutocompleteBox ristoName = new RistoranteAutocompleteBox(Ristorante.NAME,
-                autoCompleteSettings, dataRistoranteService);
+        final RistoranteAutocompleteBox ristoName = new RistoranteAutocompleteBox(Ristorante.NAME, AutocompleteUtils
+                .getAutoCompleteSettings());
         ristoName.setRequired(true);
         ristoName.add(updatingBehavior);
         form.add(ristoName);
         form.add(new RequiredTextField<String>(Ristorante.ADDRESS));
-        RequiredTextField<String> city = new RequiredTextField<String>(Ristorante.CITY);
+        CityAutocompleteBox city = new CityAutocompleteBox("city-autocomplete", AutocompleteUtils
+                .getAutoCompleteSettings(), new Model<String>(cityName) {
+            @Override
+            public String getObject() {
+                return cityName;
+            }
+
+            @Override
+            public void setObject(String object) {
+                cityName = (String) object;
+            }
+        });
+        city.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                // TODO Auto-generated method stub
+                
+            }
+        });
+        city.add(new CityValidator());
         form.add(city);
         form.add(new RequiredTextField<String>(Ristorante.PROVINCE));
         form.add(new RequiredTextField<String>(Ristorante.POSTALCODE));
@@ -130,9 +153,7 @@ public class RistoranteAddNewPage extends BasePage {
                 .add(new OnChangeAjaxBehavior() {
                     @Override
                     protected void onUpdate(AjaxRequestTarget target) {
-                        // TODO Auto-generated method stub
                     }
-
                 }));
         form.add(new RequiredTextField<String>(Ristorante.TYPE));
         form.add(new TextField<String>(Ristorante.PHONE_NUMBER));
@@ -159,14 +180,14 @@ public class RistoranteAddNewPage extends BasePage {
         submitRestaurantRight.setOutputMarkupId(true);
         add(submitRestaurantRight);
 
-        OnChangeAjaxBehavior onChangeAjaxBehavior = new OnChangeAjaxBehavior() {
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                // label.setModelObject(getValue(city.getModelObjectAsString()));
-                // target.addComponent(label);
-            }
-        };
-        city.add(onChangeAjaxBehavior);
+        // OnChangeAjaxBehavior onChangeAjaxBehavior = new OnChangeAjaxBehavior() {
+        // @Override
+        // protected void onUpdate(AjaxRequestTarget target) {
+        // // label.setModelObject(getValue(city.getModelObjectAsString()));
+        // // target.addComponent(label);
+        // }
+        // };
+        // city.add(onChangeAjaxBehavior);
 
         add(form);
     }
@@ -179,28 +200,12 @@ public class RistoranteAddNewPage extends BasePage {
         }
 
         @Override
-        protected void onComponentTag(ComponentTag tag) {
-            super.onComponentTag(tag);
-            if (StringUtils.isEmpty(form.getModelObject().getPath())) {
-                tag.getAttributes().put("value", new StringResourceModel("button.create", this, null).getString());
-            } else {
-                tag.getAttributes().put("value", new StringResourceModel("button.update", this, null).getString());
-            }
-        }
-
-        @Override
         protected void onSubmit(AjaxRequestTarget target, Form form) {
             try {
                 Ristorante ristorante = (Ristorante) form.getModelObject();
-                if (ristorante.getPath() != null) {
-                    ristorante = ristoranteService.update(ristorante, ((SecuritySession) getSession())
-                            .getLoggedInUser());
-                    getFeedbackPanel().info(new StringResourceModel("info.ristoranteupdated", this, null).getString());
-                } else {
-                    ristorante = ristoranteService.insert(ristorante, ((SecuritySession) getSession())
-                            .getLoggedInUser());
-                    getFeedbackPanel().info(new StringResourceModel("info.ristoranteadded", this, null).getString());
-                }
+                ristorante.setCity(cityService.getByNameAndCountry(cityName, ristorante.getCountry()));
+                ristorante = ristoranteService.insert(ristorante, ((SecuritySession) getSession()).getLoggedInUser());
+                getFeedbackPanel().info(new StringResourceModel("info.ristoranteadded", this, null).getString());
                 form.setModelObject(ristorante);
             } catch (JackWicketException e) {
                 getFeedbackPanel().error("ERROR" + e.getMessage());
@@ -282,5 +287,26 @@ public class RistoranteAddNewPage extends BasePage {
             return object.getId();
         }
 
+    }
+
+    private class CityValidator implements IValidator<String> {
+
+        @Override
+        public void validate(IValidatable<String> validatable) {
+            try {
+                City cityValue = cityService.getByNameAndCountry(validatable.getValue(), form.getModel().getObject()
+                        .getCountry());
+                if (cityValue == null) {
+                    error("the city doesn't exists");
+                }
+            } catch (JackWicketException e) {
+                error("Error validating the city");
+            }
+
+        }
+    }
+
+    public String getCityName() {
+        return cityName;
     }
 }

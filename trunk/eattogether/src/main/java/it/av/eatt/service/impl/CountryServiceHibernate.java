@@ -21,10 +21,6 @@ import it.av.eatt.service.CountryService;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
-
 import org.hibernate.criterion.Order;
 
 /**
@@ -35,15 +31,6 @@ import org.hibernate.criterion.Order;
  */
 public class CountryServiceHibernate extends ApplicationServiceHibernate<Country> implements CountryService {
     
-    /**
-     * @param entityManager
-     */
-    @PersistenceContext(type = PersistenceContextType.TRANSACTION, unitName = "staticDataPersistance")
-    @Override
-    public void setInternalEntityManager(final EntityManager entityManager) {
-        super.setInternalEntityManager(entityManager);
-    }
-
     /**
      * {@inheritDoc}
      */
