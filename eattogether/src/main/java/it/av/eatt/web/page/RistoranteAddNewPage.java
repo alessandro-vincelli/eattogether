@@ -41,6 +41,7 @@ import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
@@ -137,6 +138,7 @@ public class RistoranteAddNewPage extends BasePage {
                 cityName = (String) object;
             }
         });
+        //With this component the city model is updated correctly after every change
         city.add(new AjaxFormComponentUpdatingBehavior("onchange") {
             
             @Override
@@ -145,7 +147,7 @@ public class RistoranteAddNewPage extends BasePage {
                 
             }
         });
-        city.add(new CityValidator());
+        //city.add(new CityValidator());
         form.add(city);
         form.add(new RequiredTextField<String>(Ristorante.PROVINCE));
         form.add(new RequiredTextField<String>(Ristorante.POSTALCODE));
@@ -155,12 +157,14 @@ public class RistoranteAddNewPage extends BasePage {
                     protected void onUpdate(AjaxRequestTarget target) {
                     }
                 }));
-        form.add(new RequiredTextField<String>(Ristorante.TYPE));
         form.add(new TextField<String>(Ristorante.PHONE_NUMBER));
         form.add(new TextField<String>(Ristorante.FAX_NUMBER));
         form.add(new TextField<String>(Ristorante.MOBILE_PHONE_NUMBER));
         form.add(new TextArea<String>(Ristorante.DESCRIPTION));
         form.add(new TextField<String>(Ristorante.WWW));
+        form.add(new CheckBox("types.ristorante"));
+        form.add(new CheckBox("types.pizzeria"));
+        form.add(new CheckBox("types.bar"));
         // form.add(new DropDownChoice<EaterProfile>("userProfile", new
         // ArrayList<EaterProfile>(userProfileService.getAll()), new
         // UserProfilesList()).setOutputMarkupId(true));
@@ -203,7 +207,12 @@ public class RistoranteAddNewPage extends BasePage {
         protected void onSubmit(AjaxRequestTarget target, Form form) {
             try {
                 Ristorante ristorante = (Ristorante) form.getModelObject();
-                ristorante.setCity(cityService.getByNameAndCountry(cityName, ristorante.getCountry()));
+                City city = cityService.getByNameAndCountry(cityName, ristorante.getCountry());
+                if(city == null){
+                    error("The city doesn't exist");
+                    invalid();
+                }
+                ristorante.setCity(city);
                 ristorante = ristoranteService.insert(ristorante, ((SecuritySession) getSession()).getLoggedInUser());
                 getFeedbackPanel().info(new StringResourceModel("info.ristoranteadded", this, null).getString());
                 form.setModelObject(ristorante);
@@ -261,7 +270,6 @@ public class RistoranteAddNewPage extends BasePage {
                     target.addComponent(getFeedbackPanel());
                 }
             }
-
         }
 
         @Override

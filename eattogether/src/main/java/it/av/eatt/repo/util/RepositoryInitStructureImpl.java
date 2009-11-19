@@ -19,9 +19,9 @@ import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterProfile;
 import it.av.eatt.ocm.model.Ristorante;
-import it.av.eatt.service.RistoranteService;
 import it.av.eatt.service.EaterProfileService;
 import it.av.eatt.service.EaterService;
+import it.av.eatt.service.RistoranteService;
 
 import javax.annotation.Resource;
 

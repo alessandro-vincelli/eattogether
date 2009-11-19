@@ -1,15 +1,11 @@
 package it.av.eatt.web.components;
 
-import it.av.eatt.JackWicketException;
-import it.av.eatt.JackWicketRunTimeException;
 import it.av.eatt.ocm.model.DataRistorante;
-import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.DataRistoranteService;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 

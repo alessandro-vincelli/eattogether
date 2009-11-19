@@ -9,7 +9,11 @@
                 <td><span wicket:id="name"></span></td>
             </tr>
             <tr>
-                <td><span wicket:id="type"></span></td>
+                <td>
+                    <span wicket:id="typeRistoranteLabel"></span>
+                    <span wicket:id="typePizzeriaLabel"></span> 
+                    <span wicket:id="typeBarLabel"></span>
+                </td>
             </tr>
             <tr>
                 <td><span type="text" wicket:id="www"></span></td>
@@ -85,6 +89,9 @@
     </p>
     <p>
     <button wicket:id="editRistorante"><wicket:message key="button.editRistorante" /></button>
+    </p>
+    <p>
+    <button wicket:id="editDataRistorante"><wicket:message key="button.editRistorante" /></button>
     </p>
     </div>
 </wicket:extend>

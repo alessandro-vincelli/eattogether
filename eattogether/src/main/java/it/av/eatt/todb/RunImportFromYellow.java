@@ -13,32 +13,19 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.xpath.XPathExpressionException;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import org.xml.sax.SAXException;
 
-@ContextConfiguration(locations = "classpath:application-context.xml")
-@RunWith(SpringJUnit4ClassRunner.class)
-@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
-@Transactional
 public class RunImportFromYellow {
 
-    @Autowired
+    
     //@Qualifier("jpaDaoSupport")
     private DataRistoranteService dataRistoranteService;
     
-    @Before
+    
     public void setUp() throws JackWicketException {
     }
 
-    @After
+
     public void tearDown() throws JackWicketException {
     }
 
