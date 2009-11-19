@@ -18,9 +18,7 @@ package it.av.eatt.web.page;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.Tag;
-import it.av.eatt.ocm.model.data.City;
 import it.av.eatt.ocm.model.data.Country;
-import it.av.eatt.service.CountryService;
 import it.av.eatt.service.RistoranteService;
 import it.av.eatt.service.TagService;
 import it.av.eatt.web.components.TagBox;
@@ -28,14 +26,12 @@ import it.av.eatt.web.components.TagBox;
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.RequiredTextField;
@@ -54,127 +50,115 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  * 
  */
 @AuthorizeInstantiation( { "USER", "ADMIN", "EDITOR" })
-public class RistoranteEditPage extends BasePage {
+public class RistoranteEditDataPage extends BasePage {
 
     private static final long serialVersionUID = 1L;
-    @SpringBean(name="ristoranteService")
+    @SpringBean(name = "ristoranteService")
     private RistoranteService ristoranteService;
     @SpringBean
     private TagService tagService;
-    @SpringBean(name = "countryService")
-    private CountryService countryService;
-    
+
     private Ristorante ristorante;
     private Form<Ristorante> form;
-    
+
     /**
      * 
      * @param ristorante
      * @throws JackWicketException
      */
-    public RistoranteEditPage(Ristorante ristorante) throws JackWicketException {
-        this(new PageParameters("ristoranteId="+ristorante.getId()));
+    public RistoranteEditDataPage(Ristorante ristorante) throws JackWicketException {
+        this(new PageParameters("ristoranteId=" + ristorante.getId()));
     }
-    
+
     /**
      * 
      * @param parameters
      * @throws JackWicketException
      */
-    public RistoranteEditPage(PageParameters parameters) throws JackWicketException {
-        
+    public RistoranteEditDataPage(PageParameters parameters) throws JackWicketException {
+
         String ristoranteId = parameters.getString("ristoranteId", "");
-        if (StringUtils.isNotBlank(ristoranteId)){
+        if (StringUtils.isNotBlank(ristoranteId)) {
             this.ristorante = ristoranteService.getByID(ristoranteId);
-        }
-        else{
+        } else {
             setRedirect(true);
             setResponsePage(getApplication().getHomePage());
         }
-        
+
         form = new Form<Ristorante>("ristoranteForm", new CompoundPropertyModel<Ristorante>(ristorante));
         form.setOutputMarkupId(true);
         form.add(new RequiredTextField<String>(Ristorante.NAME));
-        form.add(new RequiredTextField<String>(Ristorante.ADDRESS));
-        form.add(new RequiredTextField<City>(Ristorante.CITY));
-        form.add(new RequiredTextField<String>(Ristorante.PROVINCE));
-        form.add(new RequiredTextField<String>(Ristorante.POSTALCODE));
-        form.add(new DropDownChoice<Country>(Ristorante.COUNTRY, countryService.getAll(), new CountryChoiceRenderer())
-                .add(new OnChangeAjaxBehavior() {
-                    @Override
-                    protected void onUpdate(AjaxRequestTarget target) {
-                    }
-                }));
-        form.add(new RequiredTextField<String>(Ristorante.PHONE_NUMBER));
-        form.add(new TextField<String>(Ristorante.MOBILE_PHONE_NUMBER));
-        form.add(new TextField<String>(Ristorante.FAX_NUMBER).setOutputMarkupId(true));
+
         form.add(new TextField<String>(Ristorante.WWW).setOutputMarkupId(true));
         form.add(new TagBox(new Model<String>(""), "tagBox", ristorante));
-        
+
         form.add(new CheckBox("types.ristorante"));
         form.add(new CheckBox("types.pizzeria"));
         form.add(new CheckBox("types.bar"));
-        
-        
-        form.add(new ListView<Tag>(Ristorante.TAGS){
+
+        form.add(new ListView<Tag>(Ristorante.TAGS) {
             private static final long serialVersionUID = 1L;
+
             @Override
             protected void populateItem(ListItem<Tag> item) {
                 item.add(new Label("tagItem", item.getModelObject().getTag()));
-                item.add(new AjaxFallbackLink<String>("buttonTagItemRemove"){
+                item.add(new AjaxFallbackLink<String>("buttonTagItemRemove") {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
                         getList().remove(getParent().getDefaultModelObject());
-                        if(target != null){
+                        if (target != null) {
                             target.addComponent(form);
                         }
                     }
                 });
             }
-            
         });
         form.add(new TextArea<String>(Ristorante.DESCRIPTION));
-        //form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
+        // form.add(new DropDownChoice<EaterProfile>("userProfile", new
+        // ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
 
         form.add(new AjaxFallbackButton("addTag", form) {
             private static final long serialVersionUID = 1L;
+
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form form) {
-                String tagValue = ((TagBox)form.get("tagBox")).getModelObject();
-                if (StringUtils.isNotBlank(tagValue)){
-                    Ristorante risto = ((Ristorante)form.getModelObject());
-                    try {    
+                String tagValue = ((TagBox) form.get("tagBox")).getModelObject();
+                if (StringUtils.isNotBlank(tagValue)) {
+                    Ristorante risto = ((Ristorante) form.getModelObject());
+                    try {
                         risto.getTags().add(tagService.insert(tagValue));
                         form.setModelObject(risto);
-                        if(target != null){
+                        if (target != null) {
                             target.addComponent(form);
                         }
                     } catch (JackWicketException e) {
                         error("ERROR: " + e.getMessage());
-                        if(target != null){
+                        if (target != null) {
                             target.addComponent(getFeedbackPanel());
                         }
                     }
                 }
-                //after clean up the tagBox
-                ((TagBox)form.get("tagBox")).setModelObject(null);
+                // after clean up the tagBox
+                ((TagBox) form.get("tagBox")).setModelObject(null);
             }
+
             @Override
             protected void onError(AjaxRequestTarget target, Form<?> form) {
-	            super.onError(target, form);
-	            if(target != null){
+                super.onError(target, form);
+                if (target != null) {
                     target.addComponent(getFeedbackPanel());
                 }
             }
         });
-        
+
         form.add(new AjaxFallbackLink<Ristorante>("buttonClearForm", new Model<Ristorante>(ristorante)) {
             private static final long serialVersionUID = 1L;
+
             @Override
             public void onClick(AjaxRequestTarget target) {
                 form.setModelObject(new Ristorante());
-                if(target != null){
-                    target.addComponent(form);    
+                if (target != null) {
+                    target.addComponent(form);
                 }
             }
         });
@@ -185,6 +169,7 @@ public class RistoranteEditPage extends BasePage {
 
     private class SubmitButton extends AjaxFallbackButton {
         private static final long serialVersionUID = 1L;
+
         public SubmitButton(String id, Form<Ristorante> form) {
             super(id, form);
         }
@@ -192,31 +177,26 @@ public class RistoranteEditPage extends BasePage {
         @Override
         protected void onComponentTag(ComponentTag tag) {
             super.onComponentTag(tag);
-            if (StringUtils.isBlank(form.getModelObject().getId())) {
-                tag.getAttributes().put("value", getString("button.create"));
-            } else {
-                tag.getAttributes().put("value", getString("button.update"));
-            }
+            tag.getAttributes().put("value", getString("button.update"));
         }
 
         @Override
         protected void onSubmit(AjaxRequestTarget target, Form form) {
             try {
-                if(StringUtils.isNotBlank(ristorante.getId())){
+                if (StringUtils.isNotBlank(ristorante.getId())) {
                     ristorante = ristoranteService.update(ristorante, getLoggedInUser());
                     getFeedbackPanel().info(getString("info.ristoranteupdated"));
-                }
-                else{
+                } else {
                     getFeedbackPanel().error(getString("error.onUpdate"));
                 }
                 form.setModelObject(ristorante);
             } catch (JackWicketException e) {
                 getFeedbackPanel().error("ERROR" + e.getMessage());
             }
-            if(target != null){
+            if (target != null) {
                 target.addComponent(form);
-                target.addComponent(getFeedbackPanel());    
-            }            
+                target.addComponent(getFeedbackPanel());
+            }
         }
 
         @Override
@@ -225,11 +205,11 @@ public class RistoranteEditPage extends BasePage {
             target.addComponent(getFeedbackPanel());
         }
     }
-    
-    public final  Form<Ristorante> getForm() {
+
+    public final Form<Ristorante> getForm() {
         return form;
     }
-    
+
     private class CountryChoiceRenderer implements IChoiceRenderer<Country> {
 
         @Override

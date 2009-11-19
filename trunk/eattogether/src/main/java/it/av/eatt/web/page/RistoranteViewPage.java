@@ -74,7 +74,17 @@ public class RistoranteViewPage extends BasePage {
         add(form);
         form.setOutputMarkupId(true);
         form.add(new Label(Ristorante.NAME));
-        form.add(new Label(Ristorante.TYPE));
+        
+        Label typeRistoranteLabel = new Label("typeRistoranteLabel", getString("type.Ristorante"));
+        typeRistoranteLabel.setVisible(ristorante.getTypes().isRistorante());
+        form.add(typeRistoranteLabel);
+        Label typePizzeriaLabel = new Label("typePizzeriaLabel", getString("type.Pizzeria"));
+        typePizzeriaLabel.setVisible(ristorante.getTypes().isPizzeria());
+        form.add(typePizzeriaLabel);
+        Label typeBarLabel = new Label("typeBarLabel", getString("type.Bar"));
+        typeBarLabel.setVisible(ristorante.getTypes().isBar());
+        form.add(typeBarLabel);
+        
         form.add(new SmartLinkLabel(Ristorante.WWW));
         form.add(new ListView<Tag>(Ristorante.TAGS){
             private static final long serialVersionUID = 1L;
@@ -134,6 +144,27 @@ public class RistoranteViewPage extends BasePage {
             editRistorante.setVisible(false);
         }
         add(editRistorante);
+        
+        AjaxFallbackLink<String> editDataRistorante = new AjaxFallbackLink<String>("editDataRistorante") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                try {
+                    setResponsePage(new RistoranteEditDataPage(getRistorante()));
+                } catch (JackWicketException e) {
+                    error(new StringResourceModel("genericErrorMessage", this, null).getString());
+                }
+            }
+        };
+        editDataRistorante.setOutputMarkupId(true);
+        if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(RistoranteEditDataPage.class)) {
+            editDataRistorante.setVisible(true);
+        } else {
+            editDataRistorante.setVisible(false);
+        }
+        add(editDataRistorante);
+
 
         add(revisionsPanel = new ModalWindow("revisionsPanel"));
         revisionsPanel.setWidthUnit("%");

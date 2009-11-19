@@ -30,6 +30,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
@@ -125,12 +126,15 @@ public class Ristorante extends BasicEntity implements BasicNode{
     //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     @OrderBy("ristoranteRevision.revisionNumber DESC")
     private List<RistoranteRevision> revisions;
-
+    @OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    private RistoranteTypes types;
+    
     public Ristorante() {
         rates = new ArrayList<RateOnRistorante>();
         tags = new ArrayList<Tag>();
         activities = new ArrayList<ActivityRistorante>();
         revisions = new ArrayList<RistoranteRevision>();
+        types = new RistoranteTypes();
     }
 
     public final String getPath() {
@@ -360,6 +364,22 @@ public class Ristorante extends BasicEntity implements BasicNode{
     }
 
 	/**
+	 * @return the types of the restaurant
+	 */
+	public RistoranteTypes getTypes() {
+        return types;
+    }
+
+    /**
+     * Set the type of the restaurant
+     * 
+     * @param types
+     */
+    public void setTypes(RistoranteTypes types) {
+        this.types = types;
+    }
+
+    /**
      * 
      * @return the average rate, 0 if no rate presents
      */

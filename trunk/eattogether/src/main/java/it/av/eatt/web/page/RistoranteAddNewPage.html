@@ -33,7 +33,11 @@
                 </tr>
                 <tr>
                 <th><label for="type"><wicket:message key="type"/></label></th>
-                <td><input type="text" wicket:id="type"></input></td>
+                <td>
+                    <label for="type"><wicket:message key="type" /></label><input type="checkbox" wicket:id="types.ristorante"></input>
+                    <label for="type"><wicket:message key="type" /></label><input type="checkbox" wicket:id="types.pizzeria"></input> 
+                    <label for="type"><wicket:message key="type" /></label><input type="checkbox" wicket:id="types.bar"></input>
+                </td>
                 </tr>
                 <tr>
                 <th><label for="phoneNumber"><wicket:message key="phoneNumber"/></label></th>

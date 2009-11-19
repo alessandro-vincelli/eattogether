@@ -25,22 +25,20 @@ import javax.persistence.Entity;
 
 import org.apache.commons.beanutils.BeanUtils;
 
-
 /**
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
  */
 @Entity
-public class RistoranteRevision extends BasicEntity implements Cloneable{
+public class RistoranteRevision extends BasicEntity implements Cloneable {
 
-	public static final String VERSION = "version";
+    public static final String VERSION = "version";
     public static final String ID_RISTORANTE = "ristorante_id";
-    
+
     @Embedded
-    //@Column(updatable = false, nullable = false)
-    //@AttributeOverrides( { @AttributeOverride(name = "id", column = @Column(name = "id_risto", nullable=true))})
+    // @Column(updatable = false, nullable = false)
+    // @AttributeOverrides( { @AttributeOverride(name = "id", column = @Column(name = "id_risto", nullable=true))})
     private Ristorante ristoranteRevision;
-    
+
     public RistoranteRevision() {
     }
 
@@ -53,14 +51,13 @@ public class RistoranteRevision extends BasicEntity implements Cloneable{
             this.ristoranteRevision.setRates(null);
             this.ristoranteRevision.setTags(null);
             this.ristoranteRevision.setRevisions(null);
+            this.ristoranteRevision.setTypes(null);
         } catch (IllegalAccessException e) {
-           throw new JackWicketException(e);
+            throw new JackWicketException(e);
         } catch (InvocationTargetException e) {
             throw new JackWicketException(e);
         }
     }
-    
-
 
     /**
      * @return the ristoranteRevision
@@ -78,10 +75,10 @@ public class RistoranteRevision extends BasicEntity implements Cloneable{
 
     @Override
     public RistoranteRevision clone() {
-	    try {
-	        return (RistoranteRevision) new RistoranteRevision(getRistoranteRevision());
+        try {
+            return (RistoranteRevision) new RistoranteRevision(getRistoranteRevision());
         } catch (JackWicketException e) {
-        	throw new JackWicketRunTimeException();
+            throw new JackWicketRunTimeException();
         }
     }
 

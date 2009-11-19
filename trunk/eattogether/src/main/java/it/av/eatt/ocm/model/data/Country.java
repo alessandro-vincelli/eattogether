@@ -5,7 +5,6 @@ import it.av.eatt.ocm.model.BasicEntity;
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
 
 /**
  * countries

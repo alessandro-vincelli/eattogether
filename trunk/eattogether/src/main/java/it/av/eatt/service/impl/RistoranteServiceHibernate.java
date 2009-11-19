@@ -55,7 +55,7 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
     public Ristorante update(Ristorante risto, Eater user) throws JackWicketException {
         risto.setModificationTime(DateUtil.getTimestamp());
         risto.setRevisionNumber(risto.getRevisionNumber() + 1);
-        super.save(risto);
+        save(risto);
         risto.addRevision(ristoranteRevisionService.insert(new RistoranteRevision(risto)));
         risto.addActivity(activityRistoranteService.save(new ActivityRistorante(DateUtil.getTimestamp(), user, risto,
                 ActivityRistorante.TYPE_MODIFICATION)));
@@ -70,11 +70,11 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
         risto.setCreationTime(DateUtil.getTimestamp());
         risto.setModificationTime(DateUtil.getTimestamp());
         risto.setRevisionNumber(1);
-        super.save(risto);
+        save(risto);
         risto.addRevision(ristoranteRevisionService.insert(new RistoranteRevision(risto)));
         risto.addActivity(activityRistoranteService.save(new ActivityRistorante(DateUtil.getTimestamp(), user, risto,
                 ActivityRistorante.TYPE_ADDED)));
-        return super.save(risto);
+        return save(risto);
     }
 
     /**
