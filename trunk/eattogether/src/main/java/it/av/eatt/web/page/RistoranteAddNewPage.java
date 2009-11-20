@@ -138,16 +138,15 @@ public class RistoranteAddNewPage extends BasePage {
                 cityName = (String) object;
             }
         });
-        //With this component the city model is updated correctly after every change
+        // With this component the city model is updated correctly after every change
         city.add(new AjaxFormComponentUpdatingBehavior("onchange") {
-            
+
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 // TODO Auto-generated method stub
-                
             }
         });
-        //city.add(new CityValidator());
+        // city.add(new CityValidator());
         form.add(city);
         form.add(new RequiredTextField<String>(Ristorante.PROVINCE));
         form.add(new RequiredTextField<String>(Ristorante.POSTALCODE));
@@ -208,7 +207,7 @@ public class RistoranteAddNewPage extends BasePage {
             try {
                 Ristorante ristorante = (Ristorante) form.getModelObject();
                 City city = cityService.getByNameAndCountry(cityName, ristorante.getCountry());
-                if(city == null){
+                if (city == null) {
                     error("The city doesn't exist");
                     invalid();
                 }
@@ -310,7 +309,6 @@ public class RistoranteAddNewPage extends BasePage {
             } catch (JackWicketException e) {
                 error("Error validating the city");
             }
-
         }
     }
 
