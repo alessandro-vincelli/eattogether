@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -86,6 +87,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     @Field
     private String type;
     @Field
+    @Column(length=10000)
     private String description;
     @Field
     private String www;

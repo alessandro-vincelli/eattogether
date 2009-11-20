@@ -17,7 +17,7 @@ package it.av.eatt.web;
 
 import it.av.eatt.web.page.FriendsPage;
 import it.av.eatt.web.page.HomePage;
-import it.av.eatt.web.page.RistoranteEditPage;
+import it.av.eatt.web.page.RistoranteEditAddressPage;
 import it.av.eatt.web.page.RistoranteViewPage;
 import it.av.eatt.web.page.SearchFriendPage;
 import it.av.eatt.web.page.SignIn;
@@ -77,7 +77,7 @@ public class WicketApplication extends AuthenticatedWebApplication {
         mount(new HybridUrlCodingStrategy("/userProfile", UserProfilePage.class));
         mount(new HybridUrlCodingStrategy("/userPage", UserManagerPage.class));
         //mount(new HybridUrlCodingStrategy("/ristorante", RistoranteAddNewPage.class));
-        mount(new HybridUrlCodingStrategy("/ristoranteEdit", RistoranteEditPage.class));
+        mount(new HybridUrlCodingStrategy("/ristoranteEdit", RistoranteEditAddressPage.class));
         mount(new HybridUrlCodingStrategy("/ristoranteView", RistoranteViewPage.class));
         mount(new HybridUrlCodingStrategy("/searchFriends", SearchFriendPage.class));
         mount(new HybridUrlCodingStrategy("/friends", FriendsPage.class)); 

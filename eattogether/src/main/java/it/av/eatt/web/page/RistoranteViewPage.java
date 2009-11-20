@@ -131,14 +131,14 @@ public class RistoranteViewPage extends BasePage {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 try {
-                    setResponsePage(new RistoranteEditPage(getRistorante()));
+                    setResponsePage(new RistoranteEditAddressPage(getRistorante()));
                 } catch (JackWicketException e) {
                     error(new StringResourceModel("genericErrorMessage", this, null).getString());
                 }
             }
         };
         editRistorante.setOutputMarkupId(true);
-        if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(RistoranteEditPage.class)) {
+        if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(RistoranteEditAddressPage.class)) {
             editRistorante.setVisible(true);
         } else {
             editRistorante.setVisible(false);
