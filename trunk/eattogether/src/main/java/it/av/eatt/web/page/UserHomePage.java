@@ -30,12 +30,15 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.PageParameters;
+import org.apache.wicket.ResourceReference;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
@@ -100,8 +103,8 @@ public class UserHomePage extends BasePage {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(ListItem<ActivityRistorante> item) {
-                item.add(new Label("type"));
+            protected void populateItem(final ListItem<ActivityRistorante> item) {
+                item.add(createActivityIcon(item));
                 item.add(new Label("date.time", DateUtil.getPeriod(item.getModelObject().getDate().getTime())));
                 BookmarkablePageLink<String> ristoLink = new BookmarkablePageLink<String>("ristorante.link",
                         RistoranteViewPage.class, new PageParameters("ristoranteId="
@@ -127,7 +130,7 @@ public class UserHomePage extends BasePage {
 
             @Override
             protected void populateItem(ListItem<ActivityRistorante> item) {
-                item.add(new Label("type"));
+                item.add(createActivityIcon(item));
                 item.add(new Label("date.time", DateUtil.getPeriod(item.getModelObject().getDate().getTime())));
 
                 BookmarkablePageLink<String> ristoLink = new BookmarkablePageLink<String>("ristorante.link",
@@ -141,4 +144,21 @@ public class UserHomePage extends BasePage {
         add(friendsActivitiesList);
     }
 
+    private Image createActivityIcon(final ListItem<ActivityRistorante> item) {
+        // default activity icon is plus
+        ResourceReference img = new ResourceReference(this.getClass(), "resources/images/plus_64.png");
+        if (item.getModelObject().getType().equals(ActivityRistorante.TYPE_MODIFICATION)) {
+            img = new ResourceReference(this.getClass(), "resources/images/pencil_64.png");
+        } else if (item.getModelObject().getType().equals(ActivityRistorante.TYPE_VOTED)) {
+            img = new ResourceReference(this.getClass(), "resources/images/tick_64.png");
+        }
+        return new Image("type", img) {
+            @Override
+            protected void onComponentTag(ComponentTag tag) {
+                super.onComponentTag(tag);
+                tag.getAttributes().put("alt", item.getModelObject().getType());
+                tag.getAttributes().put("title", item.getModelObject().getType());
+            }
+        };
+    }
 }
