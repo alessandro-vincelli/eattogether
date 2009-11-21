@@ -42,6 +42,9 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.validation.ValidationError;
 
 /**
  * Edit address and contacts of {@link Ristorante}.
@@ -112,15 +115,19 @@ public class RistoranteEditAddressPage extends BasePage {
                 // TODO Auto-generated method stub
             }
         });
+        city.add(new CityValidator());
         form.add(city);
         form.add(new RequiredTextField<String>(Ristorante.PROVINCE));
         form.add(new RequiredTextField<String>(Ristorante.POSTALCODE));
-        form.add(new DropDownChoice<Country>(Ristorante.COUNTRY, countryService.getAll(), new CountryChoiceRenderer())
-                .add(new OnChangeAjaxBehavior() {
-                    @Override
-                    protected void onUpdate(AjaxRequestTarget target) {
-                    }
-                }));
+        DropDownChoice<Country> country = new DropDownChoice<Country>(Ristorante.COUNTRY, countryService.getAll(),
+                new CountryChoiceRenderer());
+        country.add(new OnChangeAjaxBehavior() {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+            }
+        });
+        country.setRequired(true);
+        form.add(country);
         form.add(new RequiredTextField<String>(Ristorante.PHONE_NUMBER));
         form.add(new TextField<String>(Ristorante.MOBILE_PHONE_NUMBER));
         form.add(new TextField<String>(Ristorante.FAX_NUMBER));
@@ -191,7 +198,6 @@ public class RistoranteEditAddressPage extends BasePage {
     }
 
     private class CountryChoiceRenderer implements IChoiceRenderer<Country> {
-
         @Override
         public Object getDisplayValue(Country object) {
             return object.getName();
@@ -201,7 +207,23 @@ public class RistoranteEditAddressPage extends BasePage {
         public String getIdValue(Country object, int index) {
             return object.getId();
         }
+    }
 
+    private class CityValidator implements IValidator<String> {
+        @Override
+        public void validate(IValidatable<String> validatable) {
+            Country country = form.getModel().getObject().getCountry();
+            if (country != null) {
+                try {
+                    City cityValue = cityService.getByNameAndCountry(validatable.getValue(), country);
+                    if (cityValue == null) {
+                        validatable.error(new ValidationError().addMessageKey("validatioError.city"));
+                    }
+                } catch (JackWicketException e) {
+                    validatable.error(new ValidationError().addMessageKey("validatioError.city.error"));
+                }
+            }
+        }
     }
 
 }

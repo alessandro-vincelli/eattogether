@@ -32,11 +32,11 @@
                 <td><input type="text" wicket:id="postalCode"></input></td>
                 </tr>
                 <tr>
-                <th><label for="type"><wicket:message key="type"/></label></th>
-                <td>
-                    <label for="type"><wicket:message key="type" /></label><input type="checkbox" wicket:id="types.ristorante"></input>
-                    <label for="type"><wicket:message key="type" /></label><input type="checkbox" wicket:id="types.pizzeria"></input> 
-                    <label for="type"><wicket:message key="type" /></label><input type="checkbox" wicket:id="types.bar"></input>
+                <th></th>
+                <td class="risoTypeBox">
+                    <label for="type"><wicket:message key="type.Ristorante" /></label><input type="checkbox" wicket:id="types.ristorante"></input>
+                    <label for="type"><wicket:message key="type.Pizzeria" /></label><input type="checkbox" wicket:id="types.pizzeria"></input> 
+                    <label for="type"><wicket:message key="type.Bar" /></label><input type="checkbox" wicket:id="types.bar"></input>
                 </td>
                 </tr>
                 <tr>
@@ -62,7 +62,7 @@
                 </td>
                 </tr>
                 <tr class="submitarea">
-                <td colspan="2"><input type="submit" wicket:message="value:button.create" wicket:id="submitRestaurant"></input> <button wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button></td>
+                <td colspan="2"><input class="submitButton" type="submit" wicket:message="value:button.create" wicket:id="submitRestaurant"></input> <button wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button></td>
                 </tr>
             </table>
             </fieldset>
@@ -70,6 +70,6 @@
        </div>
        </div>
        <div id="navigation">
-       <p><input type="submit" wicket:id="submitRestaurantRight" wicket:message="value:button.create"></input></p>
+       <p><input class="submitButton" type="submit" wicket:id="submitRestaurantRight" wicket:message="value:button.create"></input></p>
        </div>
 </wicket:extend>

@@ -8,20 +8,23 @@
     </div>
     </div>
     <div id="extra">
-    <label><wicket:message key="userHomePage.myRistoActivities" /></label>
+    <span class="titleMyActivities"><wicket:message key="userHomePage.myRistoActivities" /></span>
     <ul class="activitiesList">
         <li wicket:id="activitiesList">
-            <span wicket:id="type"></span>
-            <span wicket:id="date.time"></span> 
-            <a href="#" wicket:id="ristorante.link" style="padding: 10px;"><span wicket:id="ristorante.name"></span></a>
+            <img wicket:id="type" class="iconActivities"></img>
+            <a href="#" wicket:id="ristorante.link"><span wicket:id="ristorante.name"></span></a>
+            <span wicket:id="date.time" class="dateActivities"></span>
         </li>
     </ul>
+    </div>
+    <div id="navigation">
     <label><wicket:message key="userHomePage.myFriendRistoActivities" /></label>
     <ul class="activitiesList">
-        <li wicket:id="friendsActivitiesList"><span wicket:id="eater.lastname"></span> 
-        <span wicket:id="type"></span> 
-        <span wicket:id="date.time" style="padding: 10px;"></span> 
-        <a href="#" wicket:id="ristorante.link" style="padding: 10px;"><span wicket:id="ristorante.name"></span></a>
+        <li wicket:id="friendsActivitiesList"> 
+        <img wicket:id="type" class="iconActivities"></img>
+        <a href="#" wicket:id="ristorante.link"><span wicket:id="ristorante.name"></span></a>
+        <span wicket:id="eater.lastname"></span> 
+        <span wicket:id="date.time" class="dateActivities"></span> 
         </li>
     </ul>
     </div>

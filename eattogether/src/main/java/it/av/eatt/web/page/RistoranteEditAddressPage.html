@@ -43,7 +43,10 @@
 	        	<td><input type="text" wicket:id="faxNumber"></input></td>
 	        	</tr>
 	        	<tr class="submitarea">
-	        	<td colspan="2"><input type="submit" wicket:id="submitRestaurant"/> <button class="submit" wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button></td>
+	        	<td colspan="2">
+                 <input type="submit" wicket:id="submitRestaurant" class="submitButton"/>
+                 <button class="submit" wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button>
+                </td>
 	        	</tr>
 	        </table>
         	</fieldset>
@@ -52,7 +55,7 @@
        </div>
     <div id="navigation">
     <p>
-    <input type="submit" wicket:id="submitRestaurantRight"></input>
+    <input type="submit" wicket:id="submitRestaurantRight" class="submitButton"></input>
     </p>
     </div>
 </wicket:extend>

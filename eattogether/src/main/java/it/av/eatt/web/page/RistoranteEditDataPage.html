@@ -11,11 +11,11 @@
 	        	<td><input type="text" wicket:id="name"></input></td>
 	        	</tr>
                 <tr>
-                <th><label for="type"><wicket:message key="type"/></label></th>
-                <td>
-                    <label for="type"><wicket:message key="type" /></label><input type="checkbox" wicket:id="types.ristorante"></input>
-                    <label for="type"><wicket:message key="type" /></label><input type="checkbox" wicket:id="types.pizzeria"></input> 
-                    <label for="type"><wicket:message key="type" /></label><input type="checkbox" wicket:id="types.bar"></input>
+                <th></th>
+                <td class="risoTypeBox">
+                    <label for="type"><wicket:message key="type.Ristorante" /></label><input type="checkbox" wicket:id="types.ristorante"></input>
+                    <label for="type"><wicket:message key="type.Pizzeria" /></label><input type="checkbox" wicket:id="types.pizzeria"></input> 
+                    <label for="type"><wicket:message key="type.Bar" /></label><input type="checkbox" wicket:id="types.bar"></input>
                 </td>
 	        	</tr>
 	        	<tr>
@@ -23,13 +23,20 @@
 	        	<td><input type="text" wicket:id="www"></input></td>
 	        	</tr>
 	        	<tr>
-	        	<th><label for="tags"><wicket:message key="tags"/></label></th>
+	        	<th><label for="tagBox"><wicket:message key="addNewTag"/></label></th>
 	        	<td><input type="text" wicket:id="tagBox"></input>
 	        	<button wicket:id="addTag"><wicket:message key="button.addTag"/></button>
-	        	<table>
+                </td>
+	        	</tr>
+                <tr>
+                <th><label for="tags"><wicket:message key="tags"/></label></th>
+                <td>
+                <table>
 				  <tr wicket:id="tags">
-				    <td><span wicket:id="tagItem"></span></td>
-				    <button wicket:id="buttonTagItemRemove"><wicket:message key="button.remove"/></button>
+				    <td>
+                    <span wicket:id="tagItem"></span>
+                    <input class="deleteButton" type="submit" wicket:id="buttonTagItemRemove" title="remove" value=""></input>
+                    </td>
 				  </tr>
 				</table>
                 </td>
@@ -41,7 +48,7 @@
                 </td>
                 </tr>
 	        	<tr class="submitarea">
-	        	<td colspan="2"><input type="submit" wicket:id="submitRestaurant"/> <button class="submit" wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button></td>
+	        	<td colspan="2"><input type="submit" wicket:id="submitRestaurant" class="submitButton"/> <button class="submit" wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button></td>
 	        	</tr>
 	        </table>
         	</fieldset>
@@ -50,7 +57,7 @@
        </div>
     <div id="navigation">
     <p>
-    <input type="submit" wicket:id="submitRestaurantRight"></input>
+    <input type="submit" wicket:id="submitRestaurantRight" class="submitButton"></input>
     </p>
     </div>
 </wicket:extend>

@@ -18,10 +18,12 @@ package it.av.eatt.web.page;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.web.security.SecuritySession;
 
+import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.resources.CompressedResourceReference;
@@ -58,7 +60,8 @@ public class BasePage extends WebPage {
         feedbackPanel = new FeedbackPanel("feedBackPanel");
         feedbackPanel.setOutputMarkupId(true);
         add(feedbackPanel);
-
+        ResourceReference img = new ResourceReference(this.getClass(), "resources/images/logo-mela.png");
+        add(new Image("logo", img));
         add(new AjaxLink<String>("goUserPage") {
             private static final long serialVersionUID = 1L;
 
