@@ -130,6 +130,9 @@ public class Ristorante extends BasicEntity implements BasicNode{
     private List<RistoranteRevision> revisions;
     @OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     private RistoranteTypes types;
+    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    private List<RistoranteDescriptionI18n> descriptions;
+    
     
     public Ristorante() {
         rates = new ArrayList<RateOnRistorante>();
@@ -137,6 +140,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
         activities = new ArrayList<ActivityRistorante>();
         revisions = new ArrayList<RistoranteRevision>();
         types = new RistoranteTypes();
+        descriptions = new ArrayList<RistoranteDescriptionI18n>();
     }
 
     public final String getPath() {
@@ -379,6 +383,29 @@ public class Ristorante extends BasicEntity implements BasicNode{
      */
     public void setTypes(RistoranteTypes types) {
         this.types = types;
+    }
+
+    /**
+     * @return the descriptions
+     */
+    public List<RistoranteDescriptionI18n> getDescriptions() {
+        return descriptions;
+    }
+
+    /**
+     * @param descriptions the descriptions to set
+     */
+    public void setDescriptions(List<RistoranteDescriptionI18n> descriptions) {
+        this.descriptions = descriptions;
+    }
+    
+    /**
+     * add a new description
+     * 
+     * @param description
+     */
+    public void addDescriptions(RistoranteDescriptionI18n description){
+        this.descriptions.add(description);
     }
 
     /**

@@ -19,6 +19,8 @@ import it.av.eatt.JackWicketException;
 import it.av.eatt.JackWicketRunTimeException;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -52,6 +54,14 @@ public class RistoranteRevision extends BasicEntity implements Cloneable {
             this.ristoranteRevision.setTags(null);
             this.ristoranteRevision.setRevisions(null);
             this.ristoranteRevision.setTypes(null);
+            List<RistoranteDescriptionI18n> copiedDescriptionI18ns = new ArrayList<RistoranteDescriptionI18n>(risto
+                    .getDescriptions().size());
+            for (RistoranteDescriptionI18n descriptionI18n : risto.getDescriptions()) {
+                RistoranteDescriptionI18n descriptionI18nNew = new RistoranteDescriptionI18n();
+                BeanUtils.copyProperties(descriptionI18n, descriptionI18nNew);
+                copiedDescriptionI18ns.add(descriptionI18nNew);
+            }
+            this.ristoranteRevision.setDescriptions(copiedDescriptionI18ns);
         } catch (IllegalAccessException e) {
             throw new JackWicketException(e);
         } catch (InvocationTargetException e) {
