@@ -18,9 +18,11 @@ package it.av.eatt.repo.util;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterProfile;
+import it.av.eatt.ocm.model.Language;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.EaterProfileService;
 import it.av.eatt.service.EaterService;
+import it.av.eatt.service.LanguageService;
 import it.av.eatt.service.RistoranteService;
 
 import javax.annotation.Resource;
@@ -38,10 +40,20 @@ public class RepositoryInitStructureImpl implements RepositoryInitStructure {
     private EaterService userService;
     @Resource(name="ristoranteService")
     private RistoranteService ristoranteService;
+    @Resource(name="languageService")
+    private LanguageService languageService;
 
 
     @Override
     public void checkBaseData() throws JackWicketException {
+        if(languageService.getAll().size() == 0){
+            Language it = new Language("it_IT", "IT");
+            Language en = new Language("en_GB", "GB");
+            Language nl = new Language("nl_NL", "NL");
+            languageService.save(it);
+            languageService.save(en);
+            languageService.save(nl);
+        }
         if (userProfileService.getAll().size() == 0){
             EaterProfile profileADMIN = new EaterProfile();
             profileADMIN.setName("ADMIN");

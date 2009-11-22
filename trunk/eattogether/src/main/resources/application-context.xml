@@ -150,7 +150,9 @@
 	
 	<bean id="countryService" class="it.av.eatt.service.impl.CountryServiceHibernate" parent="jpaDaoSupport"/>
 	
-		<bean id="cityService" class="it.av.eatt.service.impl.CityServiceHibernate" parent="jpaDaoSupport"/>
+	<bean id="cityService" class="it.av.eatt.service.impl.CityServiceHibernate" parent="jpaDaoSupport"/>
+	
+	<bean id="languageService" class="it.av.eatt.service.impl.LanguageServiceHibernate" parent="jpaDaoSupport"/>
 
 	<bean id="repositoryInitStructure" class="it.av.eatt.repo.util.RepositoryInitStructureImpl">
 	</bean>
