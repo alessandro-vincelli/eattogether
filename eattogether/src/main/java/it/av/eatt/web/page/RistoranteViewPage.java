@@ -16,19 +16,28 @@
 package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
+import it.av.eatt.ocm.model.Language;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.RistoranteDescriptionI18n;
 import it.av.eatt.ocm.model.Tag;
+import it.av.eatt.service.LanguageService;
 import it.av.eatt.service.RistoranteService;
+import it.av.eatt.web.Locales;
+
+import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.markup.html.basic.SmartLinkLabel;
 import org.apache.wicket.extensions.rating.RatingPanel;
+import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Form;
@@ -39,6 +48,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.util.Assert;
 
 /**
  * The page shows all the {@link Ristorante} informations.
@@ -51,17 +61,26 @@ public class RistoranteViewPage extends BasePage {
     private static final long serialVersionUID = 1L;
     @SpringBean(name = "ristoranteService")
     private RistoranteService ristoranteService;
-
+    @SpringBean
+    private LanguageService languageService;
+    
     private Ristorante ristorante = new Ristorante();;
     
     private ModalWindow revisionsPanel;
     private boolean hasVoted = Boolean.FALSE;
+    private Language actualDescriptionLanguage;
+    private ListView<RistoranteDescriptionI18n> descriptions;
+    private WebMarkupContainer descriptionsContainer;
+    private Form<Ristorante> form;
+    private WebMarkupContainer descriptionLinksContainer;
+    
     /**
      * Constructor that is invoked when page is invoked without a session.
      * 
      * @throws JackWicketException
      */
     public RistoranteViewPage(PageParameters parameters) throws JackWicketException {
+        actualDescriptionLanguage = getInitialLanguage();
         String ristoranteId = parameters.getString("ristoranteId", "");
         if (StringUtils.isNotBlank(ristoranteId)) {
             this.ristorante = ristoranteService.getByID(ristoranteId);
@@ -71,7 +90,7 @@ public class RistoranteViewPage extends BasePage {
             setResponsePage(getApplication().getHomePage());
         }
         
-        Form<Ristorante> form = new Form<Ristorante>("ristoranteForm", new CompoundPropertyModel<Ristorante>(ristorante));
+        form = new Form<Ristorante>("ristoranteForm", new CompoundPropertyModel<Ristorante>(ristorante));
         add(form);
         form.setOutputMarkupId(true);
         form.add(new Label(Ristorante.NAME));
@@ -94,14 +113,57 @@ public class RistoranteViewPage extends BasePage {
                 item.add(new Label("tagItem", item.getModelObject().getTag()));
             } 
         });
-        ListView<RistoranteDescriptionI18n> descriptions = new ListView<RistoranteDescriptionI18n>("descriptions") {
+        descriptionLinksContainer = new WebMarkupContainer("descriptionLinksContainer");
+        descriptionLinksContainer.setOutputMarkupId(true);
+        form.add(descriptionLinksContainer);
+        ListView<Language> descriptionsLinks = new ListView<Language>("descriptionLinks", languageService.getAll()) {
             @Override
-            protected void populateItem(ListItem<RistoranteDescriptionI18n> item) {
-                item.add(new Label(RistoranteDescriptionI18n.LANGUAGE, item.getModelObject().getLanguage().getLanguage()));
-                item.add(new MultiLineLabel(RistoranteDescriptionI18n.DESCRIPTION, new PropertyModel<String>(item.getModelObject(), RistoranteDescriptionI18n.DESCRIPTION)));
+            protected void populateItem(final ListItem<Language> item) {
+                item.add(new AjaxFallbackButton("descriptionLink", form) {
+                    
+                    @Override
+                    protected void onComponentTag(ComponentTag tag) {
+                        super.onComponentTag(tag);
+                        if(actualDescriptionLanguage.getCountry().equals(item.getModelObject().getCountry())){
+                            tag.getAttributes().put("class", "descriptionLink descriptionLinkActive");    
+                        }
+                    }
+
+                    @Override
+                    protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                        List<RistoranteDescriptionI18n> descs = ristorante.getDescriptions();
+                        boolean langpresent = false;
+                        for (RistoranteDescriptionI18n ristoranteDescriptionI18n : descs) {
+                            if (ristoranteDescriptionI18n.getLanguage().equals(item.getModelObject())) {
+                                langpresent = true;
+                            }
+                        }
+                        if (!(langpresent)) {
+                            ristorante.addDescriptions(new RistoranteDescriptionI18n(item.getModelObject()));
+                        }
+                        actualDescriptionLanguage = item.getModelObject();
+                        descriptions.removeAll();
+                        if (target != null) {
+                            target.addComponent(descriptionsContainer);
+                            target.addComponent(descriptionLinksContainer);
+                        }
+                    }
+                }.add(new Label("linkName", getString(item.getModelObject().getCountry()))));
             }
         };
-        form.add(descriptions);
+        descriptionLinksContainer.add(descriptionsLinks);
+        descriptionsContainer = new WebMarkupContainer("descriptionsContainer");
+        descriptionsContainer.setOutputMarkupId(true);
+        form.add(descriptionsContainer);
+        descriptions = new ListView<RistoranteDescriptionI18n>("descriptions") {
+            @Override
+            protected void populateItem(ListItem<RistoranteDescriptionI18n> item) {
+                boolean visible = actualDescriptionLanguage.equals(item.getModelObject().getLanguage());
+                item.add(new MultiLineLabel(RistoranteDescriptionI18n.DESCRIPTION, new PropertyModel<String>(item
+                        .getModelObject(), RistoranteDescriptionI18n.DESCRIPTION)).setVisible(visible));
+            }
+        };
+        descriptionsContainer.add(descriptions);
         // form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
         form.add(new Label("revisionNumber"));
           
@@ -233,4 +295,17 @@ public class RistoranteViewPage extends BasePage {
         this.hasVoted = hasVoted;
     }
 
+    private Language getInitialLanguage() throws JackWicketException {
+        Locale locale = Locales.getSupportedLocale(getLocale());
+        // TODO create a getByLanguage or Country
+        List<Language> langs = languageService.getAll();
+        Language lang = null;
+        for (Language language : langs) {
+            if (language.getCountry().equals(locale.getCountry())) {
+                lang = language;
+            }
+        }
+        Assert.notNull(lang);
+        return lang;
+    }
 }

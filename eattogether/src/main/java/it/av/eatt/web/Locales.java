@@ -9,24 +9,24 @@ public final class Locales {
     /**
      * Useful constant for language.
      */
-    public static final Locale ENGLISH = new Locale("en", "US");
+    public static final Locale ENGLISH = new Locale("en_US", "US");
 
     /**
      * Useful constant for language.
      */
-    public static final Locale DUTCH = new Locale("nl", "NL");
+    public static final Locale DUTCH = new Locale("nl_NL", "NL");
 
     /**
      * Useful constant for language.
      */
-    public static final Locale ITALIAN = new Locale("it", "IT");
+    public static final Locale ITALIAN = new Locale("it_IT", "IT");
 
     /**
      * The default locale, used when no or unsupported locale is requested.
      */
     private static final Locale DEFAULT_LOCALE = ENGLISH;
 
-    private static final List<Locale> SUPPORTED_LOCALES = Arrays.asList(DUTCH, ENGLISH);
+    private static final List<Locale> SUPPORTED_LOCALES = Arrays.asList(DUTCH, ENGLISH, ITALIAN);
 
     /**
      * Tries to find a supported locale that best matches the requested locale.

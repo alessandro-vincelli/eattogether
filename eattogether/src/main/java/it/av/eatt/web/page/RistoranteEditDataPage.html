@@ -41,12 +41,21 @@
 				</table>
                 </td>
 				</tr>
+                <tr>
+                <th></th>
+                <td class="descriptionLinks">
+                    <ul wicket:id="descriptionLinksContainer">
+                    <li wicket:id="descriptionLinks"><button class="descriptionLink" href="#" wicket:id="descriptionLink"><span wicket:id="linkName"></span></button></li>
+                    </ul>
+                </td>
+                </tr>
 	        	<tr>
                 <th><label for="description"><wicket:message key="description"/></label></th>
                 <td>
+                <span wicket:id="descriptionsContainer">
                 <span wicket:id="descriptions">
-                    <span wicket:id="language"></span>
                     <textarea wicket:id="description" autocomplete="off" accesskey="u" name="description" rows="15" cols="60"></textarea>
+                </span>
                 </span>
                 </td>
                 </tr>
