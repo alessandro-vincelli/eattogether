@@ -16,13 +16,19 @@
 package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
+import it.av.eatt.ocm.model.Language;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.RistoranteDescriptionI18n;
 import it.av.eatt.ocm.model.Tag;
 import it.av.eatt.ocm.model.data.Country;
+import it.av.eatt.service.LanguageService;
 import it.av.eatt.service.RistoranteService;
 import it.av.eatt.service.TagService;
+import it.av.eatt.web.Locales;
 import it.av.eatt.web.components.TagBox;
+
+import java.util.List;
+import java.util.Locale;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.PageParameters;
@@ -31,6 +37,7 @@ import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
@@ -44,6 +51,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.util.Assert;
 
 /**
  * Edit a {@link Ristorante}.
@@ -59,9 +67,15 @@ public class RistoranteEditDataPage extends BasePage {
     private RistoranteService ristoranteService;
     @SpringBean
     private TagService tagService;
+    @SpringBean
+    private LanguageService languageService;
 
     private Ristorante ristorante;
     private Form<Ristorante> form;
+    private final ListView<RistoranteDescriptionI18n> descriptions;
+    private Language actualDescriptionLanguage;
+    private WebMarkupContainer descriptionsContainer;
+    private WebMarkupContainer descriptionLinksContainer;
 
     /**
      * 
@@ -86,7 +100,7 @@ public class RistoranteEditDataPage extends BasePage {
             setRedirect(true);
             setResponsePage(getApplication().getHomePage());
         }
-
+        actualDescriptionLanguage = getInitialLanguage();
         form = new Form<Ristorante>("ristoranteForm", new CompoundPropertyModel<Ristorante>(ristorante));
         form.setOutputMarkupId(true);
         form.add(new RequiredTextField<String>(Ristorante.NAME));
@@ -115,15 +129,59 @@ public class RistoranteEditDataPage extends BasePage {
                 });
             }
         });
-        ListView<RistoranteDescriptionI18n> descriptions = new ListView<RistoranteDescriptionI18n>("descriptions") {
+        descriptionLinksContainer = new WebMarkupContainer("descriptionLinksContainer");
+        descriptionLinksContainer.setOutputMarkupId(true);
+        form.add(descriptionLinksContainer);
+        ListView<Language> descriptionsLinks = new ListView<Language>("descriptionLinks", languageService.getAll()) {
+            @Override
+            protected void populateItem(final ListItem<Language> item) {
+                item.add(new AjaxFallbackButton("descriptionLink", form) {
+                    
+                    @Override
+                    protected void onComponentTag(ComponentTag tag) {
+                        super.onComponentTag(tag);
+                        if(actualDescriptionLanguage.getCountry().equals(item.getModelObject().getCountry())){
+                            tag.getAttributes().put("class", "descriptionLink descriptionLinkActive");    
+                        }
+                    }
+
+                    @Override
+                    protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                        List<RistoranteDescriptionI18n> descs = ristorante.getDescriptions();
+                        boolean langpresent = false;
+                        for (RistoranteDescriptionI18n ristoranteDescriptionI18n : descs) {
+                            if (ristoranteDescriptionI18n.getLanguage().equals(item.getModelObject())) {
+                                langpresent = true;
+                            }
+                        }
+                        if (!(langpresent)) {
+                            ristorante.addDescriptions(new RistoranteDescriptionI18n(item.getModelObject()));
+                        }
+                        actualDescriptionLanguage = item.getModelObject();
+                        descriptions.removeAll();
+                        if (target != null) {
+                            target.addComponent(descriptionsContainer);
+                            target.addComponent(descriptionLinksContainer);
+                        }
+                    }
+                }.add(new Label("linkName", getString(item.getModelObject().getCountry()))));
+            }
+        };
+        descriptionLinksContainer.add(descriptionsLinks);
+        descriptionsContainer = new WebMarkupContainer("descriptionsContainer");
+        descriptionsContainer.setOutputMarkupId(true);
+        form.add(descriptionsContainer);
+        descriptions = new ListView<RistoranteDescriptionI18n>("descriptions") {
             @Override
             protected void populateItem(ListItem<RistoranteDescriptionI18n> item) {
-                item.add(new Label(RistoranteDescriptionI18n.LANGUAGE, item.getModelObject().getLanguage().getLanguage()));
-                item.add(new TextArea<String>(RistoranteDescriptionI18n.DESCRIPTION, new PropertyModel<String>(item.getModelObject(), RistoranteDescriptionI18n.DESCRIPTION)));
+                boolean visible = actualDescriptionLanguage.equals(item.getModelObject().getLanguage());
+                item.add(new TextArea<String>(RistoranteDescriptionI18n.DESCRIPTION, new PropertyModel<String>(item
+                        .getModelObject(), RistoranteDescriptionI18n.DESCRIPTION)).setVisible(visible));
             }
         };
         descriptions.setReuseItems(true);
-        form.add(descriptions);
+        descriptions.setOutputMarkupId(true);
+        descriptionsContainer.add(descriptions);
         // form.add(new DropDownChoice<EaterProfile>("userProfile", new
         // ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
 
@@ -232,6 +290,20 @@ public class RistoranteEditDataPage extends BasePage {
             return object.getId();
         }
 
+    }
+
+    private Language getInitialLanguage() throws JackWicketException {
+        Locale locale = Locales.getSupportedLocale(getLocale());
+        // TODO create a getByLanguage or Country
+        List<Language> langs = languageService.getAll();
+        Language lang = null;
+        for (Language language : langs) {
+            if (language.getCountry().equals(locale.getCountry())) {
+                lang = language;
+            }
+        }
+        Assert.notNull(lang);
+        return lang;
     }
 
 }
