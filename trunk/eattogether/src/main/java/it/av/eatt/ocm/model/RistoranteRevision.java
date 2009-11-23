@@ -58,7 +58,7 @@ public class RistoranteRevision extends BasicEntity implements Cloneable {
                     .getDescriptions().size());
             for (RistoranteDescriptionI18n descriptionI18n : risto.getDescriptions()) {
                 RistoranteDescriptionI18n descriptionI18nNew = new RistoranteDescriptionI18n();
-                BeanUtils.copyProperties(descriptionI18n, descriptionI18nNew);
+                BeanUtils.copyProperties(descriptionI18nNew, descriptionI18n);
                 copiedDescriptionI18ns.add(descriptionI18nNew);
             }
             this.ristoranteRevision.setDescriptions(copiedDescriptionI18ns);

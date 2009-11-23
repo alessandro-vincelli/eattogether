@@ -17,6 +17,7 @@ package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
+import it.av.eatt.ocm.model.RistoranteDescriptionI18n;
 import it.av.eatt.ocm.model.Tag;
 import it.av.eatt.ocm.model.data.Country;
 import it.av.eatt.service.RistoranteService;
@@ -41,6 +42,7 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
@@ -113,7 +115,15 @@ public class RistoranteEditDataPage extends BasePage {
                 });
             }
         });
-        form.add(new TextArea<String>(Ristorante.DESCRIPTION));
+        ListView<RistoranteDescriptionI18n> descriptions = new ListView<RistoranteDescriptionI18n>("descriptions") {
+            @Override
+            protected void populateItem(ListItem<RistoranteDescriptionI18n> item) {
+                item.add(new Label(RistoranteDescriptionI18n.LANGUAGE, item.getModelObject().getLanguage().getLanguage()));
+                item.add(new TextArea<String>(RistoranteDescriptionI18n.DESCRIPTION, new PropertyModel<String>(item.getModelObject(), RistoranteDescriptionI18n.DESCRIPTION)));
+            }
+        };
+        descriptions.setReuseItems(true);
+        form.add(descriptions);
         // form.add(new DropDownChoice<EaterProfile>("userProfile", new
         // ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
 

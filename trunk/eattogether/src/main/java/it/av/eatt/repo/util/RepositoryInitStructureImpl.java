@@ -24,6 +24,7 @@ import it.av.eatt.service.EaterProfileService;
 import it.av.eatt.service.EaterService;
 import it.av.eatt.service.LanguageService;
 import it.av.eatt.service.RistoranteService;
+import it.av.eatt.web.Locales;
 
 import javax.annotation.Resource;
 
@@ -47,9 +48,9 @@ public class RepositoryInitStructureImpl implements RepositoryInitStructure {
     @Override
     public void checkBaseData() throws JackWicketException {
         if(languageService.getAll().size() == 0){
-            Language it = new Language("it_IT", "IT");
-            Language en = new Language("en_GB", "GB");
-            Language nl = new Language("nl_NL", "NL");
+            Language it = new Language(Locales.ITALIAN.getLanguage(), Locales.ITALIAN.getCountry());
+            Language en = new Language(Locales.ENGLISH.getLanguage(), Locales.ENGLISH.getCountry());
+            Language nl = new Language(Locales.DUTCH.getDisplayLanguage(), Locales.DUTCH.getCountry());
             languageService.save(it);
             languageService.save(en);
             languageService.save(nl);

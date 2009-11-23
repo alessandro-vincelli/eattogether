@@ -41,12 +41,12 @@ import org.hibernate.annotations.FetchMode;
 
 /**
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
+ * 
  */
-@Node(jcrType = "nt:unstructured", jcrMixinTypes = "mix:versionable, mix:lockable", extend=BasicEntity.class)
+@Node(jcrType = "nt:unstructured", jcrMixinTypes = "mix:versionable, mix:lockable", extend = BasicEntity.class)
 @Entity
 @Embeddable
-public class Ristorante extends BasicEntity implements BasicNode{
+public class Ristorante extends BasicEntity implements BasicNode {
 
     public static final String PATH = "path";
     public static final String NAME = "name";
@@ -87,7 +87,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     @Field
     private String type;
     @Field
-    @Column(length=10000)
+    @Column(length = 10000)
     private String description;
     @Field
     private String www;
@@ -102,38 +102,39 @@ public class Ristorante extends BasicEntity implements BasicNode{
     @Field
     private String faxNumber;
     private Integer revisionNumber;
-    //@Collection(collectionConverter = MultiValueCollectionConverterImpl.class)
-    @OneToMany(cascade = { CascadeType.ALL}, fetch = FetchType.EAGER)
+    // @Collection(collectionConverter = MultiValueCollectionConverterImpl.class)
+    @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
-    //@JoinTable
-    //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    // @JoinTable
+    // @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private List<RateOnRistorante> rates;
-    //@Collection(collectionConverter = MultiValueCollectionConverterImpl.class)
+    // @Collection(collectionConverter = MultiValueCollectionConverterImpl.class)
     @ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
-    //@JoinTable
-    //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    // @JoinTable
+    // @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private List<Tag> tags;
-    //@OneToMany(mappedBy = "ristorante", cascade = { CascadeType.ALL })
-    //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    // @OneToMany(mappedBy = "ristorante", cascade = { CascadeType.ALL })
+    // @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @JoinTable
-    //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    // @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     private List<ActivityRistorante> activities;
-    //@OneToMany(mappedBy = "ristorante", cascade = { CascadeType.ALL })
+    // @OneToMany(mappedBy = "ristorante", cascade = { CascadeType.ALL })
     @OneToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
-    //@JoinTable
-    //@Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
+    // @JoinTable
+    // @Cascade(org.hibernate.annotations.CascadeType.DELETE_ORPHAN)
     @OrderBy("ristoranteRevision.revisionNumber DESC")
     private List<RistoranteRevision> revisions;
-    @OneToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private RistoranteTypes types;
-    @OneToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @Fetch(FetchMode.SELECT)
+    @JoinTable
     private List<RistoranteDescriptionI18n> descriptions;
-    
-    
+
     public Ristorante() {
         rates = new ArrayList<RateOnRistorante>();
         tags = new ArrayList<Tag>();
@@ -159,10 +160,12 @@ public class Ristorante extends BasicEntity implements BasicNode{
     public final void setUuid(String uuid) {
         this.uuid = uuid;
     }
+
     @Deprecated
     public String getVersion() {
         return this.version;
     }
+
     @Deprecated
     public void setVersion(String version) {
         this.version = version;
@@ -239,7 +242,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     public void setRates(List<RateOnRistorante> rates) {
         this.rates = rates;
     }
-    
+
     public void addARate(RateOnRistorante rate) {
         this.rates.add(rate);
     }
@@ -255,7 +258,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     public void addTag(Tag tag) {
         this.tags.add(tag);
     }
-    
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -283,7 +286,7 @@ public class Ristorante extends BasicEntity implements BasicNode{
     public void addActivity(ActivityRistorante activity) {
         this.activities.add(activity);
     }
-    
+
     public Timestamp getCreationTime() {
         return creationTime;
     }
@@ -319,14 +322,14 @@ public class Ristorante extends BasicEntity implements BasicNode{
     public void setRevisions(List<RistoranteRevision> revisions) {
         this.revisions = revisions;
     }
-    
+
     /**
      * @param revisions the revisions to set
      */
     public void addRevision(RistoranteRevision revision) {
         this.revisions.add(revision);
     }
-    
+
     /**
      * @return the versionNumber
      */
@@ -345,34 +348,34 @@ public class Ristorante extends BasicEntity implements BasicNode{
      * @return the www
      */
     public String getWww() {
-    	return www;
+        return www;
     }
 
-	/**
+    /**
      * @param www the www to set
      */
     public void setWww(String www) {
-    	this.www = www;
+        this.www = www;
     }
 
-	/**
+    /**
      * @return the faxNumber
      */
     public String getFaxNumber() {
-    	return faxNumber;
+        return faxNumber;
     }
 
-	/**
+    /**
      * @param faxNumber the faxNumber to set
      */
     public void setFaxNumber(String faxNumber) {
-    	this.faxNumber = faxNumber;
+        this.faxNumber = faxNumber;
     }
 
-	/**
-	 * @return the types of the restaurant
-	 */
-	public RistoranteTypes getTypes() {
+    /**
+     * @return the types of the restaurant
+     */
+    public RistoranteTypes getTypes() {
         return types;
     }
 
@@ -398,13 +401,13 @@ public class Ristorante extends BasicEntity implements BasicNode{
     public void setDescriptions(List<RistoranteDescriptionI18n> descriptions) {
         this.descriptions = descriptions;
     }
-    
+
     /**
      * add a new description
      * 
      * @param description
      */
-    public void addDescriptions(RistoranteDescriptionI18n description){
+    public void addDescriptions(RistoranteDescriptionI18n description) {
         this.descriptions.add(description);
     }
 

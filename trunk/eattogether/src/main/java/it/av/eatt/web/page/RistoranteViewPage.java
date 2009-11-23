@@ -17,6 +17,7 @@ package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
+import it.av.eatt.ocm.model.RistoranteDescriptionI18n;
 import it.av.eatt.ocm.model.Tag;
 import it.av.eatt.service.RistoranteService;
 
@@ -93,7 +94,14 @@ public class RistoranteViewPage extends BasePage {
                 item.add(new Label("tagItem", item.getModelObject().getTag()));
             } 
         });
-        form.add(new MultiLineLabel(Ristorante.DESCRIPTION));
+        ListView<RistoranteDescriptionI18n> descriptions = new ListView<RistoranteDescriptionI18n>("descriptions") {
+            @Override
+            protected void populateItem(ListItem<RistoranteDescriptionI18n> item) {
+                item.add(new Label(RistoranteDescriptionI18n.LANGUAGE, item.getModelObject().getLanguage().getLanguage()));
+                item.add(new MultiLineLabel(RistoranteDescriptionI18n.DESCRIPTION, new PropertyModel<String>(item.getModelObject(), RistoranteDescriptionI18n.DESCRIPTION)));
+            }
+        };
+        form.add(descriptions);
         // form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
         form.add(new Label("revisionNumber"));
           

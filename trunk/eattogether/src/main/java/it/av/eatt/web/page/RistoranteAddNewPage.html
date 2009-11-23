@@ -58,7 +58,10 @@
                 <tr>
                 <th><label for="description"><wicket:message key="description"/></label></th>
                 <td>
-                <textarea wicket:id="description" autocomplete="off" accesskey="u" name="description" rows="15" cols="60"></textarea>
+                <span wicket:id="descriptions">
+                    <span wicket:id="language"></span>
+                    <textarea wicket:id="description" autocomplete="off" accesskey="u" name="description" rows="15" cols="60"></textarea>
+                </span>
                 </td>
                 </tr>
                 <tr class="submitarea">
