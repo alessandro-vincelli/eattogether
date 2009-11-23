@@ -16,6 +16,7 @@
 package it.av.eatt.web.page;
 
 import it.av.eatt.ocm.model.Eater;
+import it.av.eatt.web.Locales;
 import it.av.eatt.web.security.SecuritySession;
 
 import org.apache.wicket.ResourceReference;
@@ -34,7 +35,6 @@ import org.apache.wicket.markup.html.resources.CompressedResourceReference;
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  */
-
 public class BasePage extends WebPage {
 
     // private static final CompressedResourceReference BASEPAGE_JS = new CompressedResourceReference(BasePage.class,
@@ -188,6 +188,60 @@ public class BasePage extends WebPage {
                         .isInstantiationAuthorized(FriendsPage.class)));
             }
         });
+
+        Link<String> goItalian = new Link<String>("goItalian"){
+            @Override
+            public void onClick() {
+                getSession().setLocale(Locales.ITALIAN);
+            }
+
+            @Override
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                setVisible(!(getLocale().getLanguage().equals(Locales.ITALIAN.getLanguage())));
+            }
+            @Override
+            protected boolean callOnBeforeRenderIfNotVisible() {
+                return true;
+            }
+        };
+        add(goItalian);
+        
+        Link<String> goEnglish = new Link<String>("goEnglish"){
+            @Override
+            public void onClick() {
+                getSession().setLocale(Locales.ENGLISH);
+            }
+
+            @Override
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                setVisible(!(getLocale().getLanguage().equals(Locales.ENGLISH.getLanguage())));
+            }
+            @Override
+            protected boolean callOnBeforeRenderIfNotVisible() {
+                return true;
+            }
+        };
+        add(goEnglish);
+        
+        Link<String> goDutch = new Link<String>("goDutch"){
+            @Override
+            public void onClick() {
+                getSession().setLocale(Locales.DUTCH);
+            }
+
+            @Override
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                setVisible(!(getLocale().getLanguage().equals(Locales.DUTCH.getLanguage())));
+            }
+            @Override
+            protected boolean callOnBeforeRenderIfNotVisible() {
+                return true;
+            }
+        };
+        add(goDutch);
 
         Link<String> goSignOut = new Link<String>("goSignOut") {
             private static final long serialVersionUID = 1L;

@@ -93,6 +93,9 @@ public class RistoranteServiceTest {
         a = ristoranteService.getByID(a.getId());
         assertNotNull("A is null", a);
         assertEquals("Invalid value for test", "RistoAlessandro", a.getName());
+        assertNotNull(a.getDescriptions());
+        assertNotNull(a.getDescriptions().get(0));
+        assertTrue(a.getDescriptions().get(0).getDescription().equals("description"));
 
         a = ristoranteService.addRate(a, user, 1);
 
@@ -132,7 +135,7 @@ public class RistoranteServiceTest {
         for (Language language : languages) {
             RistoranteDescriptionI18n descriptionI18n = new RistoranteDescriptionI18n();
             descriptionI18n.setLanguage(language);
-            descriptionI18n.setDescription(language.getCountry() + "description");
+            descriptionI18n.setDescription("description");
             descriptionI18ns.add(descriptionI18n);
         }
         return descriptionI18ns;

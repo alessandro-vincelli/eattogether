@@ -18,13 +18,17 @@ package it.av.eatt.web.page;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.JackWicketRunTimeException;
 import it.av.eatt.ocm.model.DataRistorante;
+import it.av.eatt.ocm.model.Language;
 import it.av.eatt.ocm.model.Ristorante;
+import it.av.eatt.ocm.model.RistoranteDescriptionI18n;
 import it.av.eatt.ocm.model.data.City;
 import it.av.eatt.ocm.model.data.Country;
 import it.av.eatt.service.CityService;
 import it.av.eatt.service.CountryService;
 import it.av.eatt.service.DataRistoranteService;
+import it.av.eatt.service.LanguageService;
 import it.av.eatt.service.RistoranteService;
+import it.av.eatt.web.Locales;
 import it.av.eatt.web.commons.AutocompleteUtils;
 import it.av.eatt.web.components.CityAutocompleteBox;
 import it.av.eatt.web.components.RistoranteAutocompleteBox;
@@ -32,15 +36,15 @@ import it.av.eatt.web.security.SecuritySession;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -48,13 +52,17 @@ import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.ValidationError;
+import org.springframework.util.Assert;
 
 /**
  * To add a new {@link Ristorante}.
@@ -74,6 +82,8 @@ public class RistoranteAddNewPage extends BasePage {
     private CountryService countryService;
     @SpringBean
     private CityService cityService;
+    @SpringBean
+    private LanguageService languageService;
 
     private final AjaxFallbackLink<Ristorante> buttonClearForm;
 
@@ -89,6 +99,7 @@ public class RistoranteAddNewPage extends BasePage {
      */
     public RistoranteAddNewPage() throws JackWicketException {
         ristorante = new Ristorante();
+        ristorante.addDescriptions(getDescriptionI18n());
         form = new Form<Ristorante>("ristoranteForm", new CompoundPropertyModel<Ristorante>(ristorante));
         add(getFeedbackPanel());
         AjaxFormComponentUpdatingBehavior updatingBehavior = new AjaxFormComponentUpdatingBehavior("onchange") {
@@ -150,25 +161,32 @@ public class RistoranteAddNewPage extends BasePage {
         form.add(city);
         form.add(new RequiredTextField<String>(Ristorante.PROVINCE));
         form.add(new RequiredTextField<String>(Ristorante.POSTALCODE));
-        DropDownChoice<Country> country = new DropDownChoice<Country>(Ristorante.COUNTRY, countryService.getAll(), new CountryChoiceRenderer());
+        DropDownChoice<Country> country = new DropDownChoice<Country>(Ristorante.COUNTRY, countryService.getAll(),
+                new CountryChoiceRenderer());
         country.add(new OnChangeAjaxBehavior() {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
             }
-        });              
+        });
         country.setRequired(true);
         form.add(country);
         form.add(new TextField<String>(Ristorante.PHONE_NUMBER));
         form.add(new TextField<String>(Ristorante.FAX_NUMBER));
         form.add(new TextField<String>(Ristorante.MOBILE_PHONE_NUMBER));
-        form.add(new TextArea<String>(Ristorante.DESCRIPTION));
         form.add(new TextField<String>(Ristorante.WWW));
         form.add(new CheckBox("types.ristorante"));
         form.add(new CheckBox("types.pizzeria"));
         form.add(new CheckBox("types.bar"));
-        // form.add(new DropDownChoice<EaterProfile>("userProfile", new
-        // ArrayList<EaterProfile>(userProfileService.getAll()), new
-        // UserProfilesList()).setOutputMarkupId(true));
+
+        ListView<RistoranteDescriptionI18n> descriptions = new ListView<RistoranteDescriptionI18n>("descriptions") {
+            @Override
+            protected void populateItem(ListItem<RistoranteDescriptionI18n> item) {
+                item.add(new Label(RistoranteDescriptionI18n.LANGUAGE, item.getModelObject().getLanguage().getLanguage()));
+                item.add(new TextArea<String>(RistoranteDescriptionI18n.DESCRIPTION, new PropertyModel<String>(item.getModelObject(), RistoranteDescriptionI18n.DESCRIPTION)));
+            }
+        };
+        descriptions.setReuseItems(true);
+        form.add(descriptions);
 
         buttonClearForm = new AjaxFallbackLink<Ristorante>("buttonClearForm", new Model<Ristorante>(ristorante)) {
             @Override
@@ -236,50 +254,7 @@ public class RistoranteAddNewPage extends BasePage {
             target.addComponent(getFeedbackPanel());
         }
     }
-
-    private class AutocompleteButton extends AjaxFallbackButton {
-        private static final long serialVersionUID = 1L;
-
-        public AutocompleteButton(String id, Form<Ristorante> form) {
-            super(id, form);
-        }
-
-        @Override
-        protected void onComponentTag(ComponentTag tag) {
-            super.onComponentTag(tag);
-            if (StringUtils.isEmpty(form.getModelObject().getPath())) {
-                tag.getAttributes().put("value", new StringResourceModel("button.create", this, null).getString());
-            } else {
-                tag.getAttributes().put("value", new StringResourceModel("button.update", this, null).getString());
-            }
-        }
-
-        @Override
-        protected void onSubmit(AjaxRequestTarget target, Form form) {
-            try {
-                DataRistorante dataRistorante = dataRistoranteService.find(
-                        form.get(Ristorante.NAME).getDefaultModelObjectAsString(), 0).iterator().next();
-                form.get(Ristorante.ADDRESS).setDefaultModelObject(dataRistorante.getAddress());
-                if (target != null) {
-                    info("Restaurant found");
-                    target.addComponent(getFeedbackPanel());
-                    target.addComponent(form);
-                }
-            } catch (JackWicketException e) {
-                if (target != null) {
-                    info("Restaurant not found");
-                    target.addComponent(getFeedbackPanel());
-                }
-            }
-        }
-
-        @Override
-        protected void onError(AjaxRequestTarget target, Form form) {
-            getFeedbackPanel().anyErrorMessage();
-            target.addComponent(getFeedbackPanel());
-        }
-    }
-
+   
     public final Form<Ristorante> getForm() {
         return form;
     }
@@ -312,6 +287,21 @@ public class RistoranteAddNewPage extends BasePage {
                 }
             }
         }
+    }
+
+    private RistoranteDescriptionI18n getDescriptionI18n() throws JackWicketException {
+        Locale locale = Locales.getSupportedLocale(getLocale());
+        //TODO create a getByLanguage or Country
+        List<Language> langs = languageService.getAll();
+        Language lang = null;
+        for (Language language : langs) {
+            if(language.getCountry().equals(locale.getCountry())){
+                lang = language;
+            }
+        }
+        Assert.notNull(lang);
+        RistoranteDescriptionI18n descriptionI18n = new RistoranteDescriptionI18n(lang);
+        return descriptionI18n;
     }
 
     public String getCityName() {
