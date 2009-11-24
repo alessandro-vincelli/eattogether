@@ -124,9 +124,7 @@
 
 	<bean id="activityService" class="it.av.eatt.service.impl.ActivityServiceHibernate" parent="jpaDaoSupport" />
 
-	<bean id="activityRistoranteService" class="it.av.eatt.service.impl.ActivityRistoranteServiceHibernate" parent="jpaDaoSupport">
-		<property name="userRelationService" ref="userRelationService" />
-	</bean>
+	<bean id="activityRistoranteService" class="it.av.eatt.service.impl.ActivityRistoranteServiceHibernate" parent="jpaDaoSupport"/>
 
 	<bean id="tagService" class="it.av.eatt.service.impl.TagServiceHibernate" parent="jpaDaoSupport" />
 

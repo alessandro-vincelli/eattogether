@@ -29,6 +29,18 @@ public interface ActivityRistoranteService extends ApplicationService<ActivityRi
      */
     @Transactional(readOnly = true)
     List<ActivityRistorante> findByUser(Eater user) throws JackWicketException;
+    
+    /**
+     * Find activities on ristoranti for the given user
+     * 
+     * @param user
+     * @param firstResult first result
+     * @param maxResults number of results
+     * @return activities for the given user
+     * @throws JackWicketException
+     */
+    @Transactional(readOnly = true)
+    List<ActivityRistorante> findByUser(Eater user, int firstResult ,int maxResults) throws JackWicketException;
 
     /**
      * Find activities on ristoranti for the given user and activityType
@@ -51,6 +63,30 @@ public interface ActivityRistoranteService extends ApplicationService<ActivityRi
      */
     @Transactional(readOnly = true)
     List<ActivityRistorante> findByUserFriend(Eater ofUser) throws JackWicketException;
+    
+    /**
+     * Find activities on restaurants for the friends given user
+     * 
+     * @param ofUser
+     * @param firstResult first result
+     * @param maxResults number of results
+     * @return activities for the friends of the given user
+     * @throws JackWicketException
+     */
+    @Transactional(readOnly = true)
+    List<ActivityRistorante> findByUserFriend(Eater ofUser, int firstResult ,int maxResults) throws JackWicketException;
+    
+    /**
+     * Find activities on ristoranti for the given users
+     * 
+     * @param users
+     * @param firstResult first result
+     * @param maxResults number of results
+     * @return activities for the given user
+     * @throws JackWicketException
+     */
+    @Transactional(readOnly = true)
+    List<ActivityRistorante> findByUsers(List<Eater> users, int firstResult ,int maxResults) throws JackWicketException;
     
     ActivityRistorante save(ActivityRistorante activityRistorante) throws JackWicketException;
 }

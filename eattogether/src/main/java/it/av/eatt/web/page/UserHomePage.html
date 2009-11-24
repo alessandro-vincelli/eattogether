@@ -9,6 +9,7 @@
     </div>
     <div id="extra">
     <span class="titleMyActivities"><wicket:message key="userHomePage.myRistoActivities" /></span>
+    <span wicket:id="activitiesListContainer">
     <ul class="activitiesList">
         <li wicket:id="activitiesList">
             <img wicket:id="type" class="iconActivities"></img>
@@ -16,9 +17,12 @@
             <span wicket:id="date.time" class="dateActivities"></span>
         </li>
     </ul>
+    <a style="text-align: center;" href="#" wicket:id="moreActivities">more</a>
+    </span>
     </div>
     <div id="navigation">
     <label><wicket:message key="userHomePage.myFriendRistoActivities" /></label>
+    <span wicket:id="friendsActivitiesListContainer">
     <ul class="activitiesList">
         <li wicket:id="friendsActivitiesList"> 
         <img wicket:id="type" class="iconActivities"></img>
@@ -27,5 +31,7 @@
         <span wicket:id="date.time" class="dateActivities"></span> 
         </li>
     </ul>
+    <a style="text-align: center;" href="#" wicket:id="moreFriendsActivitiesLink">more</a>
+    </span>
     </div>
 </wicket:extend>
