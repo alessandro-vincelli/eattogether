@@ -13,21 +13,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibernate<ActivityRistorante> implements ActivityRistoranteService{
-    
-    private EaterRelationService userRelationService;
-    
+public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibernate<ActivityRistorante> implements
+        ActivityRistoranteService {
+
+    @Autowired
+    private EaterRelationService eaterRelationService;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public List<ActivityRistorante> findByRistorante(Ristorante risto) throws JackWicketException {
         Criterion crit = Restrictions.eq(ActivityRistorante.RISTORANTE, risto);
-        List<ActivityRistorante> results = findByCriteria(crit);
-        return results;
+        return findByCriteria(crit);
     }
 
     /**
@@ -35,10 +38,7 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
      */
     @Override
     public List<ActivityRistorante> findByUser(Eater user) throws JackWicketException {
-        Criterion crit = Restrictions.eq(ActivityRistorante.USER, user);
-        Order orderByDate = Order.desc(Activity.DATE);
-        List<ActivityRistorante> results = findByCriteria(orderByDate, crit);
-        return results;
+        return findByUser(user, 0, 0);
     }
 
     /**
@@ -47,7 +47,7 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
     @Override
     public List<ActivityRistorante> findByUserFriend(Eater ofUser) throws JackWicketException {
         List<ActivityRistorante> results = new ArrayList<ActivityRistorante>();
-        for (EaterRelation relation : userRelationService.getAllActiveRelations(ofUser)) {
+        for (EaterRelation relation : eaterRelationService.getAllActiveRelations(ofUser)) {
             results.addAll(findByUser(relation.getToUser()));
         }
         return results;
@@ -57,22 +57,65 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
      * {@inheritDoc}
      */
     @Override
-    public List<ActivityRistorante> findByUserRistoType(Eater user, Ristorante risto, String activityType) throws JackWicketException {
+    public List<ActivityRistorante> findByUserRistoType(Eater user, Ristorante risto, String activityType)
+            throws JackWicketException {
         Criterion critByUser = Restrictions.eq(ActivityRistorante.USER, user);
         Criterion critByRisto = Restrictions.eq(ActivityRistorante.RISTORANTE, risto);
         Criterion critByType = Restrictions.eq(ActivityRistorante.TYPE, activityType);
-        List<ActivityRistorante> results = findByCriteria(critByUser, critByType, critByRisto);
-        return results;
+        return findByCriteria(critByUser, critByType, critByRisto);
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    public ActivityRistorante save(ActivityRistorante activityRistorante) throws JackWicketException{
-        return super.save(activityRistorante); 
+    public ActivityRistorante save(ActivityRistorante activityRistorante) throws JackWicketException {
+        return super.save(activityRistorante);
     }
-    
-    public void setUserRelationService(EaterRelationService userRelationService) {
-        this.userRelationService = userRelationService;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ActivityRistorante> findByUser(Eater user, int firstResult, int maxResults) throws JackWicketException {
+        Criterion crit = Restrictions.eq(ActivityRistorante.USER, user);
+        Order orderByDate = Order.desc(Activity.DATE);
+        return findByCriteria(orderByDate, firstResult, maxResults, crit);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ActivityRistorante> findByUserFriend(Eater ofUser, int firstResult, int maxResults)
+            throws JackWicketException {
+        // TODO, improve this method using a method that return the Friends as Eater and not as Relation
+        List<EaterRelation> relations = eaterRelationService.getAllActiveRelations(ofUser);
+        // if the user hasn't friends, just return an empty list
+        if(relations.isEmpty()){
+            return new ArrayList<ActivityRistorante>(0);
+        }
+        List<Eater> friends = new ArrayList<Eater>(relations.size());
+        for (EaterRelation relation : relations) {
+            friends.add(relation.getToUser());
+        }
+        return findByUsers(friends, firstResult, maxResults);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<ActivityRistorante> findByUsers(List<Eater> users, int firstResult, int maxResults)
+            throws JackWicketException {
+        // if the users list is empty, just return an empty list
+        if(users.isEmpty()){
+            return new ArrayList<ActivityRistorante>(0);
+        }
+        Disjunction orUSer = Restrictions.disjunction();
+        for (Eater eater : users) {
+            orUSer.add(Restrictions.eq(ActivityRistorante.USER, eater));
+        }
+        Order orderByDate = Order.desc(Activity.DATE);
+        return findByCriteria(orderByDate, firstResult, maxResults, orUSer);
     }
 }

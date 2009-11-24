@@ -25,18 +25,22 @@ import it.av.eatt.web.components.RistoNameColumn;
 import it.av.eatt.web.components.RistoranteDataTable;
 import it.av.eatt.web.data.RistoranteSortableDataProvider;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ResourceReference;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -60,6 +64,14 @@ public class UserHomePage extends BasePage {
     private ActivityRistoranteService activityRistoranteService;
     @SpringBean(name = "ristoranteService")
     private RistoranteService ristoranteService;
+
+    private ActivityPaging activityPagingUser = new ActivityPaging(0, 3);
+    private ActivityPaging activityPagingFriends = new ActivityPaging(0, 3);
+    private List<ActivityRistorante> activities;
+    private WebMarkupContainer activitiesListContainer;
+    private PropertyListView<ActivityRistorante> activitiesList;
+    Collection<ActivityRistorante> friendsActivities;
+    private WebMarkupContainer friendsActivitiesListContainer;
 
     public UserHomePage() {
         RistoranteSortableDataProvider ristoranteSortableDataProvider = new RistoranteSortableDataProvider(
@@ -89,17 +101,19 @@ public class UserHomePage extends BasePage {
                 ristoranteSortableDataProvider, ristoranteDataTable, getFeedbackPanel());
         add(ristoranteSearchPanel);
 
-        // My activities List
-        Collection<ActivityRistorante> activities;
+        // User activities
         try {
-            activities = activityRistoranteService.findByUser(getLoggedInUser());
+            activities = activityRistoranteService.findByUser(getLoggedInUser(), activityPagingUser.getFirstResult(),
+                    activityPagingUser.getMaxResults());
         } catch (JackWicketException e) {
             activities = new ArrayList<ActivityRistorante>();
             error(new StringResourceModel("error.errorGettingListActivities", this, null).getString());
         }
 
-        PropertyListView<ActivityRistorante> activitiesList = new PropertyListView<ActivityRistorante>(
-                "activitiesList", new ArrayList<ActivityRistorante>(activities)) {
+        activitiesListContainer = new WebMarkupContainer("activitiesListContainer");
+        activitiesListContainer.setOutputMarkupId(true);
+        add(activitiesListContainer);
+        activitiesList = new PropertyListView<ActivityRistorante>("activitiesList", activities) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -113,17 +127,35 @@ public class UserHomePage extends BasePage {
                 item.add(ristoLink);
             }
         };
-        add(activitiesList);
-
-        // My Friends activities List
-        Collection<ActivityRistorante> friendsActivities;
+        activitiesList.setOutputMarkupId(true);
+        activitiesListContainer.add(activitiesList);
+        AjaxFallbackLink<String> moreActivitiesLink = new AjaxFallbackLink<String>("moreActivities") {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                activityPagingUser.addNewPage();
+                try {
+                    activities.addAll(activityRistoranteService.findByUser(getLoggedInUser(), activityPagingUser
+                            .getFirstResult(), activityPagingUser.getMaxResults()));
+                    if (target != null) {
+                        target.addComponent(activitiesListContainer);
+                    }
+                } catch (JackWicketException e) {
+                    error(new StringResourceModel("error.errorGettingListActivities", this, null).getString());
+                }
+            }
+        };
+        activitiesListContainer.add(moreActivitiesLink);
+        // Friends activities
         try {
-            friendsActivities = activityRistoranteService.findByUserFriend(getLoggedInUser());
+            friendsActivities = activityRistoranteService.findByUserFriend(getLoggedInUser(), 0, 3);
         } catch (JackWicketException e) {
             friendsActivities = new ArrayList<ActivityRistorante>();
             error(new StringResourceModel("error.errorGettingListActivities", this, null).getString());
         }
 
+        friendsActivitiesListContainer = new WebMarkupContainer("friendsActivitiesListContainer");
+        friendsActivitiesListContainer.setOutputMarkupId(true);
+        add(friendsActivitiesListContainer);
         PropertyListView<ActivityRistorante> friendsActivitiesList = new PropertyListView<ActivityRistorante>(
                 "friendsActivitiesList", new ArrayList<ActivityRistorante>(friendsActivities)) {
             private static final long serialVersionUID = 1L;
@@ -141,7 +173,23 @@ public class UserHomePage extends BasePage {
                 item.add(new Label("eater.lastname"));
             }
         };
-        add(friendsActivitiesList);
+        friendsActivitiesListContainer.add(friendsActivitiesList);
+        AjaxFallbackLink<String> moreFriendsActivitiesLink = new AjaxFallbackLink<String>("moreFriendsActivitiesLink") {
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                activityPagingFriends.addNewPage();
+                try {
+                    friendsActivities.addAll(activityRistoranteService.findByUserFriend(getLoggedInUser(),
+                            activityPagingFriends.getFirstResult(), activityPagingFriends.getMaxResults()));
+                    if (target != null) {
+                        target.addComponent(friendsActivitiesListContainer);
+                    }
+                } catch (JackWicketException e) {
+                    error(new StringResourceModel("error.errorGettingListActivities", this, null).getString());
+                }
+            }
+        };
+        friendsActivitiesListContainer.add(moreFriendsActivitiesLink);
     }
 
     private Image createActivityIcon(final ListItem<ActivityRistorante> item) {
@@ -160,5 +208,72 @@ public class UserHomePage extends BasePage {
                 tag.getAttributes().put("title", item.getModelObject().getType());
             }
         };
+    }
+
+    private class ActivityPaging implements Serializable {
+        private int firstResult;
+        private int maxResults;
+        private int page;
+
+        /**
+         * @param firstResult
+         * @param maxResults
+         */
+        public ActivityPaging(int firstResult, int maxResults) {
+            super();
+            this.firstResult = firstResult;
+            this.maxResults = maxResults;
+            this.page = 0;
+        }
+
+        public ActivityPaging addNewPage() {
+            this.setPage(this.getPage() + 1);
+            int offset = this.getMaxResults() * this.getPage();
+            this.setFirstResult(this.getFirstResult() + offset);
+            return this;
+        }
+
+        /**
+         * @return the firstResult
+         */
+        public int getFirstResult() {
+            return firstResult;
+        }
+
+        /**
+         * @param firstResult the firstResult to set
+         */
+        public void setFirstResult(int firstResult) {
+            this.firstResult = firstResult;
+        }
+
+        /**
+         * @return the maxResults
+         */
+        public int getMaxResults() {
+            return maxResults;
+        }
+
+        /**
+         * @param maxResults the maxResults to set
+         */
+        public void setMaxResults(int maxResults) {
+            this.maxResults = maxResults;
+        }
+
+        /**
+         * @return the page
+         */
+        public int getPage() {
+            return page;
+        }
+
+        /**
+         * @param page the page to set
+         */
+        public void setPage(int page) {
+            this.page = page;
+        }
+
     }
 }
