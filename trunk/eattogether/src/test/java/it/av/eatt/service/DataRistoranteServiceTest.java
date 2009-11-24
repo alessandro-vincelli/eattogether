@@ -38,7 +38,7 @@ public class DataRistoranteServiceTest {
     
     
     @Test
-    public void testUsersBasic() throws JackWicketException {
+    public void DataRistoranteServiceTest() throws JackWicketException {
         System.out.println(dataRistoranteService.getAll().size());    
     }
 
