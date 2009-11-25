@@ -459,7 +459,9 @@ button.descriptionLinkActive {
     text-align: left;
 }
 
-.submitarea input {
-    width: auto;
+td.submitarea {
     text-align: center;
+}
+.submitarea input{
+    width: auto;
 }
