@@ -294,17 +294,9 @@ button {
     text-align: right;
 }
 
-.form-risto td {
-    text-align: left;
-}
-
 .form-risto input {
     width: 300px;
     text-align: left;
-}
-
-.submitarea input {
-    width: auto;
 }
 
 div .friendsList {
@@ -445,4 +437,29 @@ button.descriptionLinkActive {
     display: inline-block;
     font-size: 1em;
     padding: 0em 0.15em 0em 0em;
+}
+
+
+.form-signup {
+    text-align: left;
+    float: left;
+    display: block;
+}
+
+.form-signup th {
+    text-align: right;
+}
+
+.captchaArea{
+    text-align: center;
+}
+
+.form-signup input {
+    width: 300px;
+    text-align: left;
+}
+
+.submitarea input {
+    width: auto;
+    text-align: center;
 }

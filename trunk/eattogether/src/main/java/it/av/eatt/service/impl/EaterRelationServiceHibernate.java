@@ -18,11 +18,14 @@ package it.av.eatt.service.impl;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterRelation;
+import it.av.eatt.ocm.util.DateUtil;
 import it.av.eatt.service.EaterRelationService;
 
 import java.util.List;
 
+import org.hibernate.criterion.Conjunction;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -58,6 +61,13 @@ public class EaterRelationServiceHibernate extends ApplicationServiceHibernate<E
         if (relation != null && relation.getStatus().equals(EaterRelation.STATUS_PENDING)
                 && relation.getType().equals(EaterRelation.TYPE_FRIEND)) {
             relation.setStatus(EaterRelation.STATUS_ACTIVE);
+            EaterRelation inverseRelation = new EaterRelation();
+            inverseRelation.setFromUser(relation.getToUser());
+            inverseRelation.setToUser(relation.getFromUser());
+            inverseRelation.setStartDate(DateUtil.getTimestamp());
+            inverseRelation.setType(EaterRelation.TYPE_FRIEND);
+            inverseRelation.setStatus(EaterRelation.STATUS_ACTIVE);
+            save(inverseRelation);
             return save(relation);
         } else {
             throw new JackWicketException("Relation cannot be updated");
@@ -105,8 +115,14 @@ public class EaterRelationServiceHibernate extends ApplicationServiceHibernate<E
      */
     @Override
     public List<EaterRelation> getAllRelations(Eater ofUser) {
-        Criterion critUser = Restrictions.eq(EaterRelation.FROM_USER, ofUser);
-        return findByCriteria(critUser);
+        Conjunction pendingFriend = Restrictions.conjunction(); 
+        pendingFriend.add(Restrictions.eq(EaterRelation.STATUS, EaterRelation.STATUS_PENDING));
+        pendingFriend.add(Restrictions.eq(EaterRelation.TYPE, EaterRelation.TYPE_FRIEND));
+        pendingFriend.add(Restrictions.eq(EaterRelation.TO_USER, ofUser));
+        Disjunction inOr = Restrictions.disjunction();
+        inOr.add(pendingFriend);
+        inOr.add(Restrictions.eq(EaterRelation.FROM_USER, ofUser));
+        return findByCriteria(inOr);
     }
 
     /**

@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -33,7 +34,7 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
- * Add and remove friends.
+ * See, Confirm and remove friends.
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
  * 
@@ -73,6 +74,7 @@ public class FriendsPage extends BasePage {
 
             @Override
             protected void populateItem(ListItem<EaterRelation> item) {
+                boolean isPendingFriendRequest = item.getModelObject().getStatus().equals(EaterRelation.STATUS_PENDING) && item.getModelObject().getToUser().equals(getLoggedInUser());
                 item.add(new Label(EaterRelation.TO_USER + ".firstname"));
                 item.add(new Label(EaterRelation.TO_USER + ".lastname"));
                 item.add(new Label(EaterRelation.TYPE));
@@ -97,6 +99,45 @@ public class FriendsPage extends BasePage {
                         target.addComponent(((FriendsPage) target.getPage()).getFeedbackPanel());
                     }
                 });
+                item.add(new AjaxLink<EaterRelation>("acceptFriend", new Model<EaterRelation>(item.getModelObject())) {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+                        try {
+                            ((FriendsPage) getPage()).userRelationService.performFriendRequestConfirm(getModelObject());
+                            allRelations = userRelationService.getAllRelations(getLoggedInUser());
+                            ((FriendsPage) target.getPage()).friendsList.setModelObject(allRelations);
+                            noYetFriends.setVisible(allRelations.size() == 0);
+                            target.addComponent((noYetFriends));
+                            target.addComponent((friendsListContainer));
+                            // info(new StringResourceModel("info.userRelationRemoved", this, null).getString());
+                        } catch (JackWicketException e) {
+                            error(new StringResourceModel("genericErrorMessage", this, null).getString());
+                        }
+                        target.addComponent(((FriendsPage) target.getPage()).getFeedbackPanel());
+                    }
+                }.setVisible(isPendingFriendRequest));
+                
+                item.add(new AjaxLink<EaterRelation>("ignoreFriendRequest", new Model<EaterRelation>(item.getModelObject())) {
+                    
+                    private static final long serialVersionUID = 1L;
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+                        try {
+                            ((FriendsPage) getPage()).userRelationService.performFriendRequestIgnore(getModelObject());
+                            allRelations = userRelationService.getAllRelations(getLoggedInUser());
+                            ((FriendsPage) target.getPage()).friendsList.setModelObject(allRelations);
+                            noYetFriends.setVisible(allRelations.size() == 0);
+                            target.addComponent((noYetFriends));
+                            target.addComponent((friendsListContainer));
+                            // info(new StringResourceModel("info.userRelationRemoved", this, null).getString());
+                        } catch (JackWicketException e) {
+                            error(new StringResourceModel("genericErrorMessage", this, null).getString());
+                        }
+                        target.addComponent(((FriendsPage) target.getPage()).getFeedbackPanel());
+                    }
+                }.setVisible(isPendingFriendRequest));
             }
         };
         friendsListContainer.add(friendsList);
