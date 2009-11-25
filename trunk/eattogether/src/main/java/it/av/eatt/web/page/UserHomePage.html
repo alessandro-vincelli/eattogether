@@ -17,11 +17,11 @@
             <span wicket:id="date.time" class="dateActivities"></span>
         </li>
     </ul>
-    <a style="text-align: center;" href="#" wicket:id="moreActivities">more</a>
+    <div class="moreActivitiesArea"><a href="#" wicket:id="moreActivities">more</a></div>
     </span>
     </div>
     <div id="navigation">
-    <label><wicket:message key="userHomePage.myFriendRistoActivities" /></label>
+    <label class="titleMyActivities"><wicket:message key="userHomePage.myFriendRistoActivities" /></label>
     <span wicket:id="friendsActivitiesListContainer">
     <ul class="activitiesList">
         <li wicket:id="friendsActivitiesList"> 
@@ -31,7 +31,7 @@
         <span wicket:id="date.time" class="dateActivities"></span> 
         </li>
     </ul>
-    <a style="text-align: center;" href="#" wicket:id="moreFriendsActivitiesLink">more</a>
+    <div class="moreActivitiesArea"><a href="#" wicket:id="moreFriendsActivitiesLink">more</a></div>
     </span>
     </div>
 </wicket:extend>
