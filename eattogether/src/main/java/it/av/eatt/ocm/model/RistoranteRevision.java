@@ -54,6 +54,7 @@ public class RistoranteRevision extends BasicEntity implements Cloneable {
             this.ristoranteRevision.setTags(null);
             this.ristoranteRevision.setRevisions(null);
             this.ristoranteRevision.setTypes(null);
+            this.ristoranteRevision.setPictures(null);
             List<RistoranteDescriptionI18n> copiedDescriptionI18ns = new ArrayList<RistoranteDescriptionI18n>(risto
                     .getDescriptions().size());
             for (RistoranteDescriptionI18n descriptionI18n : risto.getDescriptions()) {

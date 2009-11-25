@@ -24,11 +24,17 @@ import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.Language;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.RistoranteDescriptionI18n;
+import it.av.eatt.ocm.model.RistorantePicture;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,7 +85,7 @@ public class RistoranteServiceTest {
     }
 
     @Test
-    public void testRistoranteService() throws JackWicketException {
+    public void testRistoranteService() throws JackWicketException, IOException {
 
         Ristorante a = new Ristorante();
         a.setName("RistoAlessandro");
@@ -124,6 +130,16 @@ public class RistoranteServiceTest {
         a = ristoranteService.getByID(a.getId());
         assertNotNull("A is null", a);
         assertEquals("Invalid value for test", "newName", a.getName());
+        
+        //add a picture
+        RistorantePicture img = new RistorantePicture();
+        img.setPicture(FileUtils.readFileToByteArray(new File(this.getClass().getResource("images/test.png").getFile())));
+        a.addPicture(img);
+        a = ristoranteService.update(a, user);
+
+        a = ristoranteService.getByID(a.getId());
+        assertNotNull("A is null", a.getPictures());
+        assertEquals("Invalid value for test", 1, a.getPictures().size());
 
         ristoranteService.remove(a);
 

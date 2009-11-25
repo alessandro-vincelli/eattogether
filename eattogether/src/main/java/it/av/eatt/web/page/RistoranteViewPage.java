@@ -234,6 +234,26 @@ public class RistoranteViewPage extends BasePage {
             editDataRistorante.setVisible(false);
         }
         add(editDataRistorante);
+        
+        AjaxFallbackLink<String> editPictures = new AjaxFallbackLink<String>("editPictures") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                try {
+                    setResponsePage(new RistoranteEditPicturePage(getRistorante()));
+                } catch (JackWicketException e) {
+                    error(new StringResourceModel("genericErrorMessage", this, null).getString());
+                }
+            }
+        };
+        editPictures.setOutputMarkupId(true);
+        if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(RistoranteEditPicturePage.class)) {
+            editPictures.setVisible(true);
+        } else {
+            editPictures.setVisible(false);
+        }
+        add(editPictures);
 
 
         add(revisionsPanel = new ModalWindow("revisionsPanel"));
