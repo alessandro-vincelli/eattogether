@@ -55,7 +55,6 @@ div#navigation {
     width: 200px;
     margin-left: -200px;
     /*background: #B9CAFF;*/
-    text-align: center;
     padding-left: 0px;
 }
 
@@ -439,7 +438,6 @@ button.descriptionLinkActive {
     padding: 0em 0.15em 0em 0em;
 }
 
-
 .form-signup {
     text-align: left;
     float: left;
@@ -450,7 +448,7 @@ button.descriptionLinkActive {
     text-align: right;
 }
 
-.captchaArea{
+.captchaArea {
     text-align: center;
 }
 
@@ -462,6 +460,11 @@ button.descriptionLinkActive {
 td.submitarea {
     text-align: center;
 }
-.submitarea input{
+
+.submitarea input {
     width: auto;
+}
+
+.moreActivitiesArea {
+    text-align: center;
 }
