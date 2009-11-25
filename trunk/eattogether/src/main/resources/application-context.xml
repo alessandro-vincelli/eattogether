@@ -151,9 +151,10 @@
 	<bean id="cityService" class="it.av.eatt.service.impl.CityServiceHibernate" parent="jpaDaoSupport"/>
 	
 	<bean id="languageService" class="it.av.eatt.service.impl.LanguageServiceHibernate" parent="jpaDaoSupport"/>
+	
+	<bean id="ristorantePictureHibernate" class="it.av.eatt.service.impl.RistorantePictureHibernate" parent="jpaDaoSupport"/>
 
-	<bean id="repositoryInitStructure" class="it.av.eatt.repo.util.RepositoryInitStructureImpl">
-	</bean>
+	<bean id="repositoryInitStructure" class="it.av.eatt.repo.util.RepositoryInitStructureImpl"/>
 
 	<bean id="applicationInit" class="it.av.eatt.init.ApplicationInit">
 		<constructor-arg ref="repositoryInitStructure" />

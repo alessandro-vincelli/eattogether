@@ -115,4 +115,14 @@ public interface RistoranteService {
      */
     @Transactional(readOnly = true)
     boolean hasUsersAlreadyRated(Ristorante risto, Eater user) throws JackWicketException;
+
+    /**
+     * Update a restaurant without create a new revision
+     * 
+     * @param ristorante
+     * @return just saved ristorante
+     * @throws JackWicketException
+     */
+    @Transactional
+    Ristorante updateNoRevision(Ristorante ristorante) throws JackWicketException;;
 }

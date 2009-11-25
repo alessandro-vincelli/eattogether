@@ -134,6 +134,9 @@ public class Ristorante extends BasicEntity implements BasicNode {
     @Fetch(FetchMode.SELECT)
     @JoinTable
     private List<RistoranteDescriptionI18n> descriptions;
+    @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
+    @Fetch(FetchMode.SELECT)
+    private List<RistorantePicture> pictures;
 
     public Ristorante() {
         rates = new ArrayList<RateOnRistorante>();
@@ -142,6 +145,7 @@ public class Ristorante extends BasicEntity implements BasicNode {
         revisions = new ArrayList<RistoranteRevision>();
         types = new RistoranteTypes();
         descriptions = new ArrayList<RistoranteDescriptionI18n>();
+        pictures = new ArrayList<RistorantePicture>();
     }
 
     public final String getPath() {
@@ -404,11 +408,35 @@ public class Ristorante extends BasicEntity implements BasicNode {
 
     /**
      * add a new description
-     * 
      * @param description
      */
     public void addDescriptions(RistoranteDescriptionI18n description) {
         this.descriptions.add(description);
+    }
+
+    /**
+     * @return the pictures
+     */
+    public List<RistorantePicture> getPictures() {
+        return pictures;
+    }
+
+    /**
+     * @param pictures the pictures to set
+     */
+    public void setPictures(List<RistorantePicture> pictures) {
+        this.pictures = pictures;
+    }
+    
+    /**
+     * Add a new picture
+     * @param picture
+     */
+    public void addPicture(RistorantePicture picture){
+        if(pictures == null){
+            pictures = new ArrayList<RistorantePicture>();
+        }
+        this.pictures.add(picture);
     }
 
     /**

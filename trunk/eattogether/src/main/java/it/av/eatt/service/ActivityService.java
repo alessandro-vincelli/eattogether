@@ -24,24 +24,25 @@ import java.util.Date;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * Operations on {@Link Activity}
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
+ * 
  */
 @Service
 @Transactional
-public interface ActivityService extends ApplicationService<Activity>{
-    
-    
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ApplicationService#save(java.lang.Object)
+public interface ActivityService extends ApplicationService<Activity> {
+
+    /**
+     * {@inheritDoc}
      */
     @Transactional
     Activity save(Activity object) throws JackWicketException;
+
     /**
-     * Return the activity on the given date  
+     * Return the activity on the given date
      * 
      * @param date
      * @return activities on the given date
@@ -49,7 +50,7 @@ public interface ActivityService extends ApplicationService<Activity>{
      */
     @Transactional(readOnly = true)
     Collection<Activity> findByDate(Date date) throws JackWicketException;
-    
+
     /**
      * Find activities of the given user
      * 
@@ -60,11 +61,10 @@ public interface ActivityService extends ApplicationService<Activity>{
     @Transactional(readOnly = true)
     Collection<Activity> findByUser(Eater user) throws JackWicketException;
 
-    /* (non-Javadoc)
-     * @see it.av.eatt.service.ApplicationService#remove(java.lang.Object)
+    /**
+     * {@inheritDoc}
      */
     @Transactional
     void remove(Activity object) throws JackWicketException;
 
-    
 }

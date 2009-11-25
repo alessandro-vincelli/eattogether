@@ -146,4 +146,12 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
     public void setActivityRistoranteService(ActivityRistoranteService activityRistoranteService) {
         this.activityRistoranteService = activityRistoranteService;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Ristorante updateNoRevision(Ristorante ristorante) throws JackWicketException {
+        return save(ristorante);
+    }
 }
