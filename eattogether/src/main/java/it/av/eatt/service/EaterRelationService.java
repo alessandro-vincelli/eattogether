@@ -115,7 +115,7 @@ public interface EaterRelationService {
     List<EaterRelation> getAllFollowUsers(Eater ofUser);
 
     /**
-     * Return all the relations of the passed user, are included also the pending relations
+     * Return all the relations of the passed user, are included also the pending relations.
      * 
      * @param ofUser
      * @return list of all friends relations

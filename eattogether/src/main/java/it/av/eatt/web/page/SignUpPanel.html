@@ -1,37 +1,41 @@
 <wicket:panel>
-       <form wicket:id="signUpForm" class="cmxform">
+       <form wicket:id="signUpForm" class="form-signup">
        	<fieldset>
-       	 <ol>
-        	<li>
-        	<label for="firstname"><wicket:message key="firstname"/></label>
-        	<input type="text" wicket:id="firstname"/>
-        	<label for="lastname"><wicket:message key="lastname"/></label>
-        	<input type="text" wicket:id="lastname"/>
-        	</li>
-        	<li>
-        	<label for="email"><wicket:message key="email"/></label>
-        	<input type="text" wicket:id="email"/>
-        	</li>
-          	<li>
-        	<label for="country"><wicket:message key="country"/></label>
-        	<select wicket:id="country"/>
-        	</li>
-   			<li>
-        	<label for="password"><wicket:message key="password"/></label>
-        	<input type="password" wicket:id="password"/>
-        	</li>
-        	<li>
-                <img wicket:id="captchaImage" />
-            </li>
-            <li>
-                <label for="captchaInput"><wicket:message key="captchaInput"/></label>
-                <input type="text" wicket:id="captchaInput" />
-        	</li>
-        	<li>
-        	<input type="submit" wicket:id="buttonCreateNewAccount" wicket:message="title:signUp.buttonCreateNewAccount,value:signUp.buttonCreateNewAccount"/>
+       	 <table>
+        	<tr>
+        	<th><label for="firstname"><wicket:message key="firstname"/></label></th>
+        	<td><input type="text" wicket:id="firstname"/></td>
+            </tr>
+            <tr>
+            <th><label for="lastname"><wicket:message key="lastname"/></label></th>
+            <td><input type="text" wicket:id="lastname"/></td>
+        	</tr>
+        	<tr>
+        	<th><label for="email"><wicket:message key="email"/></label></th>
+        	<td><input type="text" wicket:id="email"/></td>
+            </tr>
+          	<tr>
+        	<th><label for="country"><wicket:message key="country"/></label></th>
+        	<td><select wicket:id="country"/></td>
+        	</tr>
+   			<tr>
+        	<th><label for="password"><wicket:message key="password"/></label></th>
+        	<td><input type="password" wicket:id="password"/></td>
+        	</tr>
+        	<tr>
+                <td colspan="2" class="captchaArea"><img wicket:id="captchaImage" /></td>
+            </tr>
+            <tr>
+                <th><label for="captchaInput"><wicket:message key="captchaInput"/></label></th>
+                <td><input type="text" wicket:id="captchaInput" /></td>
+        	</tr>
+        	<tr class="submitarea">
+        	<td colspan="2" ><input type="submit" wicket:id="buttonCreateNewAccount" wicket:message="title:signUp.buttonCreateNewAccount,value:signUp.buttonCreateNewAccount"/>
         	<!-- <button wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button>
-        	--></li>
-        </ol>
+        	-->
+            </td>
+            </tr>
+        </table>
        	</fieldset>
        </form>
        <button wicket:id="goSignInAfterSignUp"><wicket:message key="goSignInAfterSignUp"/></button>
