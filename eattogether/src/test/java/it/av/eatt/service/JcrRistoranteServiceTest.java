@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 //@Transactional
 public class JcrRistoranteServiceTest {
     @Test
-    void test(){
+    public void test(){
         Assert.assertTrue(true);
     }
 //    @Autowired
