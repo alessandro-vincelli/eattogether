@@ -107,6 +107,17 @@ public class RistoranteEditPicturePage extends BasePage {
                             target.addComponent(form);
                         }
                     }
+                    @Override
+                    protected void onComponentTag(ComponentTag tag) {
+                        super.onComponentTag(tag);
+                        if(item.getModelObject().isActive()){
+                            tag.getAttributes().put("value", getString("button.unpublish"));   
+                        }
+                        else{
+                            tag.getAttributes().put("value", getString("button.publish"));
+                        }
+                    }
+
                 });
                 item.add(new AjaxFallbackButton("remove", form) {
                     @Override
@@ -144,12 +155,6 @@ public class RistoranteEditPicturePage extends BasePage {
 
         public SubmitButton(String id, Form<Ristorante> form) {
             super(id, form);
-        }
-
-        @Override
-        protected void onComponentTag(ComponentTag tag) {
-            super.onComponentTag(tag);
-            tag.getAttributes().put("value", getString("button.update"));
         }
 
         @Override

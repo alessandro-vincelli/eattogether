@@ -7,24 +7,26 @@
         	 <table class="form-risto">
     			<tr>
 	        	<th><label for="upload"><wicket:message key="addAPicture"/></label></th>
-	        	<td><input wicket:id="uploadField" id="upload" type="file"/></td>
+	        	<td><input wicket:id="uploadField" id="upload" type="file" class="uploadfield"></input></td>
 	        	</tr>
                 <tr>
                 <td colspan="2"><span wicket:id="progressBar"></span></td>
                 </tr>
 	        	<tr>
-	        	<td><input type="submit" wicket:id="submitForm"></input></td>
+	        	<td  colspan="2"><input type="submit" wicket:id="submitForm" class="submitButton"></input></td>
 	        	</tr>
 	        </table>
-            <div>
+            
             <ul class="picturesList">
                 <li wicket:id="picturesList">
-                <img wicket:id="picture"></img>
-                <input type="submit" wicket:id="publish-unpublish">pub</input>
-                <input type="submit" wicket:id="remove">remove</input>
+                <div id="picturesList">
+                <div id="picture"><img wicket:id="picture"></img></div>
+                <div id="pictureButton"><input type="submit" wicket:id="publish-unpublish"></input>
+                <input type="submit" wicket:id="remove" wicket:message="value:button.remove" value=""></input>
+                </div>
+                </div>
                 </li>
             </ul>
-            </div>
         	</fieldset>
         </form>
        </div>

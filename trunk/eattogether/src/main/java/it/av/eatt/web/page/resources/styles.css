@@ -284,16 +284,16 @@ button {
 }
 
 .form-risto {
-    text-align: left;
+    text-align: center;
     float: left;
-    display: block;
+    width: 100%;
 }
 
 .form-risto th {
     text-align: right;
 }
 
-.form-risto input {
+.uploadfield {
     width: 300px;
     text-align: left;
 }
@@ -467,4 +467,46 @@ td.submitarea {
 
 .moreActivitiesArea {
     text-align: center;
+}
+
+#picturesList {
+    float: left;
+    display: block;
+    width: 30%;
+    height: 130px;
+    vertical-align: bottom;
+    border-bottom: 1px solid #EEEEEE;
+    margin-bottom: 7px;
+}
+
+#picturesList ul {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+    width: 100%;
+}
+
+#picturesList li {
+    border: transparent;
+    display: inline-block;
+    font-size: 1em;
+}
+
+#pictureButton {
+    padding-top: 5px; text-align : center;
+    position: relative;
+    width: 100%;
+    height: 18px;
+    text-align: center;
+}
+
+#picture div {
+    width: 140px;
+    height: 95px;
+    text-align: center;
+}
+
+#picture img {
+    width: 95px;
+    height: 88px;
 }

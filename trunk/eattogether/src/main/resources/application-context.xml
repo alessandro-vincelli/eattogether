@@ -41,10 +41,10 @@
 		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"></property>
 	</bean>
 	
-	<bean id="entityManagerFactoryStaticData" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<!-- <bean id="entityManagerFactoryStaticData" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="staticDataPersistance" />
 		<property name="persistenceXmlLocation" value="classpath:META-INF/persistenceStaticData.xml"></property>
-	</bean>
+	</bean> -->
 
 	<!--
 		PostProcessors to perform resource injection according to the JPA specification
