@@ -15,12 +15,23 @@
  */
 package it.av.eatt.service;
 
+import junit.framework.Assert;
 
-//@ContextConfiguration(locations = "classpath:application-context.xml")
-//@RunWith(SpringJUnit4ClassRunner.class)
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+
+@ContextConfiguration(locations = "classpath:application-context.xml")
+@RunWith(SpringJUnit4ClassRunner.class)
 //@TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 //@Transactional
 public class JcrRistoranteServiceTest {
+    @Test
+    void test(){
+        Assert.assertTrue(true);
+    }
 //    @Autowired
 //    private RistoranteService ristoranteService;
 //    //@Autowired
