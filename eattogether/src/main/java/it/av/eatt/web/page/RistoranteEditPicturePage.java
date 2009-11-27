@@ -92,6 +92,7 @@ public class RistoranteEditPicturePage extends BasePage {
         picturesList = new ListView<RistorantePicture>("picturesList", ristorante.getPictures()) {
             @Override
             protected void populateItem(final ListItem<RistorantePicture> item) {
+                //Button disabled, because the getPicture is not yet implemented
                 item.add(new AjaxFallbackButton("publish-unpublish", form) {
                     @Override
                     protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
@@ -119,7 +120,7 @@ public class RistoranteEditPicturePage extends BasePage {
                             tag.getAttributes().put("class", "publishPictureButton");
                         }
                     }
-                });
+                }.setVisible(false));
                 item.add(new AjaxFallbackButton("remove", form) {
                     @Override
                     protected void onSubmit(AjaxRequestTarget target, Form<?> form) {

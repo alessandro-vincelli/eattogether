@@ -41,7 +41,7 @@ public interface EaterService {
      */
     @Transactional
     Eater update(Eater object) throws JackWicketException;
-    
+
     /**
      * Add a new user, if the role is empty, it's used the USER role
      * 
@@ -53,8 +53,7 @@ public interface EaterService {
     Eater add(Eater object) throws JackWicketException;
 
     /**
-     * Insert a new user, during the insert is also encrypted the users's
-     * password
+     * Insert a new user, during the insert is also encrypted the users's password
      * 
      * @param object
      * @return just inserted user
@@ -83,8 +82,8 @@ public interface EaterService {
     Collection<Eater> find(String pattern) throws JackWicketException;
 
     /**
-     * Return users without relations with the passed user and the given pattern
-     * the search is performed on the firstname and lastname of the user
+     * Return users without relations with the passed user and the given pattern the search is performed on the
+     * firstname and lastname of the user
      * 
      * @param forUser
      * @param pattern
@@ -99,11 +98,11 @@ public interface EaterService {
      * 
      * @param forUser
      * @return all users not related to this user
-     * @throws JackWicketException 
+     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
     Collection<Eater> findUserWithoutRelation(Eater forUser) throws JackWicketException;
-    
+
     /**
      * Remove the user
      * 
@@ -114,8 +113,7 @@ public interface EaterService {
     void remove(Eater user) throws JackWicketException;
 
     /**
-     * Return the user with this email, there is an unique constraint on the
-     * user email
+     * Return the user with this email, there is an unique constraint on the user email
      * 
      * @param email
      * @return user with the passed email
@@ -123,5 +121,13 @@ public interface EaterService {
     @Transactional(readOnly = true)
     Eater getByEmail(String email);
 
-
+    /**
+     * Return the user by id
+     * 
+     * @param id
+     * @return user with the passed email
+     * @throws JackWicketException
+     */
+    @Transactional(readOnly = true)
+    Eater getByID(String id) throws JackWicketException;
 }

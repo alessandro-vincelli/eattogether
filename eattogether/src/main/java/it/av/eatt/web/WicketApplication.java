@@ -25,6 +25,7 @@ import it.av.eatt.web.page.SignUpPage;
 import it.av.eatt.web.page.UserHomePage;
 import it.av.eatt.web.page.UserManagerPage;
 import it.av.eatt.web.page.UserProfilePage;
+import it.av.eatt.web.page.ViewUserPage;
 import it.av.eatt.web.security.SecuritySession;
 
 import javax.servlet.http.HttpServletRequest;
@@ -83,6 +84,7 @@ public class WicketApplication extends AuthenticatedWebApplication {
         mount(new HybridUrlCodingStrategy("/friends", FriendsPage.class)); 
         mount(new IndexedParamUrlCodingStrategy("/signUp", SignUpPage.class));
         mount(new IndexedParamUrlCodingStrategy("/userHomePage", UserHomePage.class));
+        mount(new HybridUrlCodingStrategy("/viewuser", ViewUserPage.class));
     }
 
     /**
@@ -95,7 +97,6 @@ public class WicketApplication extends AuthenticatedWebApplication {
         }
         return HomePage.class;
     }
-    
 
     /**
      * @return WebApplicationContext

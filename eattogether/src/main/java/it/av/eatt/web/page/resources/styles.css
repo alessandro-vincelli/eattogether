@@ -552,3 +552,59 @@ input.unpublishPictureButton {
     width: 25px;
     height: 25px;
 }
+
+.upload-picture{
+    width: 100%;
+    text-align: center;
+}
+.upload-picture th{
+    text-align: right;
+}
+.upload-picture ts{
+    text-align: left;
+}
+
+
+.eateractivitiesList {
+    list-style-image: none;
+    list-style-position: inside;
+    list-style-type: none;
+    font-size: medium;
+    text-align: left;
+    padding-bottom: 2px;
+    padding-left: 130px;
+    padding-right: 2px;
+    padding-top: 2px;
+}
+
+.eateractivitiesList ul {
+    display: inline;
+    float: left;
+}
+
+.eateractivitiesList li {
+    color: #A4A0A1;
+    margin: 7px 0px 0px 0px;
+}
+
+.eateractivitiesList li a {
+    color: #000;
+    text-decoration: none;
+}
+
+.eateractivitiesList li a:hover {
+    color: #000;
+    text-decoration: underline;
+}
+
+.iconActivities {
+    height: 12px;
+    width: 12px;
+}
+
+.eaterDateActivities {
+    white-space: nowrap;
+    width: 100%;
+    float: left;
+    padding-left: 15px;
+}
