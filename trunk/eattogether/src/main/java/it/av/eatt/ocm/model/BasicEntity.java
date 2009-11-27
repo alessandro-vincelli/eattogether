@@ -10,6 +10,7 @@ import javax.persistence.MappedSuperclass;
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.DocumentId;
 
 @MappedSuperclass
 @Node(isAbstract = true)
@@ -20,6 +21,7 @@ public class BasicEntity implements Serializable {
     @GenericGenerator(name = "generator", strategy = "uuid", parameters = {})
     @GeneratedValue(generator = "generator")
     @Column(updatable = false, length = 36)
+    @DocumentId
     private String id;
 
     /**

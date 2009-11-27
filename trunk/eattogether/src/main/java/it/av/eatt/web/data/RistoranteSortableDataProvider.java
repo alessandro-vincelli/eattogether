@@ -94,9 +94,7 @@ public class RistoranteSortableDataProvider extends SortableDataProvider<Ristora
      */
     public final void fetchResults(String pattern) throws JackWicketException {
         if (StringUtils.isNotBlank(pattern)) {
-            results = ristoranteService.find(pattern);
-        } else {
-            results = ristoranteService.getAll();
+            results = ristoranteService.freeTextSearch(pattern);
         }
     }
 

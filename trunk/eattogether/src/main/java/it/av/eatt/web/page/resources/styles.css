@@ -284,18 +284,32 @@ button {
 }
 
 .form-risto {
-    text-align: center;
+    text-align: left;
     float: left;
-    width: 100%;
+    display: block;
 }
 
 .form-risto th {
     text-align: right;
 }
 
-.uploadfield {
+.form-risto input {
     width: 300px;
     text-align: left;
+}
+
+/* doesn't work
+.uploadfield {
+    border: 1px solid #AAAAAA !important;
+}
+
+.uploadfield input {
+    border: 1px solid #AAAAAA !important;
+}
+*/
+fieldset input[type="file"] {
+    border: 1px solid #AAAAAA;
+    padding: 4px 2px;
 }
 
 div .friendsList {
@@ -469,6 +483,12 @@ td.submitarea {
     text-align: center;
 }
 
+.picturesList{
+    list-style-image: none;
+    list-style-position: inside;
+    list-style-type: none;
+}
+
 #picturesList {
     float: left;
     display: block;
@@ -480,9 +500,6 @@ td.submitarea {
 }
 
 #picturesList ul {
-    list-style-image: none;
-    list-style-position: outside;
-    list-style-type: none;
     width: 100%;
 }
 
@@ -493,11 +510,17 @@ td.submitarea {
 }
 
 #pictureButton {
-    padding-top: 5px; text-align : center;
+    padding-top: 5px;
+    text-align: center;
     position: relative;
     width: 100%;
     height: 18px;
     text-align: center;
+}
+
+#pictureButton input {
+    margin-left: 8px;
+    margin-right: 8x;
 }
 
 #picture div {
@@ -509,4 +532,23 @@ td.submitarea {
 #picture img {
     width: 95px;
     height: 88px;
+}
+
+input.publishPictureButton {
+    background: transparent url("images/publish_picture.png") no-repeat
+        center top;
+    cursor: pointer;
+    border: none;
+    width: 25px;
+    height: 25px;
+    color: white;
+}
+
+input.unpublishPictureButton {
+    background: transparent url("images/unpublish_picture.png") no-repeat
+        center top;
+    cursor: pointer;
+    border: none;
+    width: 25px;
+    height: 25px;
 }

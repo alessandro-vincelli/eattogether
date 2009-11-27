@@ -5,9 +5,13 @@ import it.av.eatt.ocm.model.BasicEntity;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 
-import org.hibernate.annotations.Index;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 @Entity
+@Indexed
 public class City extends BasicEntity {
 
     public final static String NAME_FIELD = "name";
@@ -17,7 +21,7 @@ public class City extends BasicEntity {
     @ManyToOne(optional=false)
     private Country country;
     private String nameSimplified;
-    @Index(name="cityname")
+    @Field(index=Index.TOKENIZED, store=Store.YES)
     private String name;
     private String region;
     private String latitude;

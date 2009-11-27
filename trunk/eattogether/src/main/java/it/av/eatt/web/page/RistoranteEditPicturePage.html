@@ -13,7 +13,7 @@
                 <td colspan="2"><span wicket:id="progressBar"></span></td>
                 </tr>
 	        	<tr>
-	        	<td  colspan="2"><input type="submit" wicket:id="submitForm" class="submitButton"></input></td>
+	        	<td  colspan="2"><input type="submit" wicket:id="submitForm" class="submitButton" value="upload" wicket:message="value:button.uploadPicture"></input></td>
 	        	</tr>
 	        </table>
             
@@ -21,8 +21,8 @@
                 <li wicket:id="picturesList">
                 <div id="picturesList">
                 <div id="picture"><img wicket:id="picture"></img></div>
-                <div id="pictureButton"><input type="submit" wicket:id="publish-unpublish"></input>
-                <input type="submit" wicket:id="remove" wicket:message="value:button.remove" value=""></input>
+                <div id="pictureButton"><input type="submit" wicket:id="publish-unpublish" class="" value=""></input>
+                <input type="submit" wicket:id="remove" wicket:message="title:button.remove" title="" value="" class="deleteButton"></input>
                 </div>
                 </div>
                 </li>

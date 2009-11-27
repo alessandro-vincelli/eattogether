@@ -181,7 +181,7 @@ public class RistoranteAddNewPage extends BasePage {
         ListView<RistoranteDescriptionI18n> descriptions = new ListView<RistoranteDescriptionI18n>("descriptions") {
             @Override
             protected void populateItem(ListItem<RistoranteDescriptionI18n> item) {
-                item.add(new Label(RistoranteDescriptionI18n.LANGUAGE, item.getModelObject().getLanguage().getLanguage()));
+                item.add(new Label(RistoranteDescriptionI18n.LANGUAGE, getString(item.getModelObject().getLanguage().getCountry())));
                 item.add(new TextArea<String>(RistoranteDescriptionI18n.DESCRIPTION, new PropertyModel<String>(item.getModelObject(), RistoranteDescriptionI18n.DESCRIPTION)));
             }
         };

@@ -51,6 +51,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.hibernate.dialect.FirebirdDialect;
 
 /**
  * Personal user home page.
@@ -188,6 +189,15 @@ public class UserHomePage extends BasePage {
                     error(new StringResourceModel("error.errorGettingListActivities", this, null).getString());
                 }
             }
+
+            @Override
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                if(friendsActivities.size() == 0){
+                    setVisible(false);
+                }
+            }
+            
         };
         friendsActivitiesListContainer.add(moreFriendsActivitiesLink);
     }

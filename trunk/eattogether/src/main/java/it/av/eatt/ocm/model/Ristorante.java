@@ -34,10 +34,24 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 
-import org.apache.jackrabbit.ocm.mapper.impl.annotation.Field;
 import org.apache.jackrabbit.ocm.mapper.impl.annotation.Node;
+import org.apache.solr.analysis.ISOLatin1AccentFilterFactory;
+import org.apache.solr.analysis.LowerCaseFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
+import org.apache.solr.analysis.StopFilterFactory;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Filter;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.AnalyzerDef;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Parameter;
+import org.hibernate.search.annotations.Store;
+import org.hibernate.search.annotations.TokenFilterDef;
+import org.hibernate.search.annotations.TokenizerDef;
 
 /**
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
@@ -46,6 +60,13 @@ import org.hibernate.annotations.FetchMode;
 @Node(jcrType = "nt:unstructured", jcrMixinTypes = "mix:versionable, mix:lockable", extend = BasicEntity.class)
 @Entity
 @Embeddable
+@Indexed
+@AnalyzerDef(name = "ristoranteanalyzer", tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class), filters = {
+        @TokenFilterDef(factory = ISOLatin1AccentFilterFactory.class),
+        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+        @TokenFilterDef(factory = StopFilterFactory.class, params = {
+                @Parameter(name = "words", value = "properties/stoplist.properties"),
+                @Parameter(name = "ignoreCase", value = "true") }) })
 public class Ristorante extends BasicEntity implements BasicNode {
 
     public static final String PATH = "path";
@@ -64,42 +85,43 @@ public class Ristorante extends BasicEntity implements BasicNode {
     public static final String MOBILE_PHONE_NUMBER = "mobilePhoneNumber";
     public static final String FAX_NUMBER = "faxNumber";
 
-    @Field(path = true)
     private String path;
-    @Field(uuid = true)
+
     private String uuid;
     @Deprecated
     private String version;
-    @Field
+    @Field(index = Index.TOKENIZED, store = Store.NO)
+    @Analyzer(definition = "ristoranteanalyzer")
     private String name;
     @Field
     private String address;
-    @Field
+
     private String postalCode;
-    @Field
+
     @ManyToOne
     private Country country;
-    @Field
+
     private String province;
-    @Field
+
+    @IndexedEmbedded
     @ManyToOne
     private City city;
-    @Field
+
     private String type;
-    @Field
+
     @Column(length = 10000)
     private String description;
-    @Field
+
     private String www;
-    @Field
+
     private Timestamp creationTime;
-    @Field
+
     private Timestamp modificationTime;
-    @Field
+
     private String phoneNumber;
-    @Field
+
     private String mobilePhoneNumber;
-    @Field
+
     private String faxNumber;
     private Integer revisionNumber;
     // @Collection(collectionConverter = MultiValueCollectionConverterImpl.class)
@@ -130,6 +152,7 @@ public class Ristorante extends BasicEntity implements BasicNode {
     private List<RistoranteRevision> revisions;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private RistoranteTypes types;
+    @IndexedEmbedded
     @OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL })
     @Fetch(FetchMode.SELECT)
     @JoinTable
@@ -156,7 +179,6 @@ public class Ristorante extends BasicEntity implements BasicNode {
         this.path = path;
     }
 
-    @Field(uuid = true)
     public final String getUuid() {
         return uuid;
     }
@@ -408,6 +430,7 @@ public class Ristorante extends BasicEntity implements BasicNode {
 
     /**
      * add a new description
+     * 
      * @param description
      */
     public void addDescriptions(RistoranteDescriptionI18n description) {
@@ -422,18 +445,27 @@ public class Ristorante extends BasicEntity implements BasicNode {
     }
 
     /**
+     * @return the pictures
+     */
+    @Filter(condition = "active=true", name = "active")
+    public List<RistorantePicture> getActivePictures() {
+        return pictures;
+    }
+
+    /**
      * @param pictures the pictures to set
      */
     public void setPictures(List<RistorantePicture> pictures) {
         this.pictures = pictures;
     }
-    
+
     /**
      * Add a new picture
+     * 
      * @param picture
      */
-    public void addPicture(RistorantePicture picture){
-        if(pictures == null){
+    public void addPicture(RistorantePicture picture) {
+        if (pictures == null) {
             pictures = new ArrayList<RistorantePicture>();
         }
         this.pictures.add(picture);

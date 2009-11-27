@@ -28,11 +28,16 @@ import it.av.eatt.service.RateRistoranteService;
 import it.av.eatt.service.RistoranteRevisionService;
 import it.av.eatt.service.RistoranteService;
 
+import java.awt.print.Book;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
+import org.apache.lucene.queryParser.ParseException;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.search.jpa.FullTextEntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -153,5 +158,25 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
     @Override
     public Ristorante updateNoRevision(Ristorante ristorante) throws JackWicketException {
         return save(ristorante);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Ristorante> freeTextSearch(String pattern) throws JackWicketException {
+        FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search
+                .getFullTextEntityManager(getJpaTemplate().getEntityManager());
+        String[] fields = new String[] { "name" };
+        MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, fullTextEntityManager.getSearchFactory()
+                .getAnalyzer("ristoranteanalyzer"));
+        org.apache.lucene.search.Query query;
+        try {
+            query = parser.parse(pattern);
+        } catch (ParseException e) {
+            throw new JackWicketException(e);
+        }
+        javax.persistence.Query persistenceQuery = fullTextEntityManager.createFullTextQuery(query, Ristorante.class);
+        return persistenceQuery.getResultList();
     }
 }

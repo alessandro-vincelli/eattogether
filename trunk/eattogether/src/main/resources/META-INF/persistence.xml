@@ -16,6 +16,9 @@
 			<!-- Scan for annotated classes  -->
 			<property name="hibernate.archive.autodetection" value="class" />
 			<property name="hibernate.jdbc.use_streams_for_binary" value="true"/>
+			
+			<property name="hibernate.search.default.directory_provider" value="org.hibernate.search.store.FSDirectoryProvider"/>
+			<property name="hibernate.search.default.indexBase" value="/Users/alessandro/Documents/eattogether/luceneIndex"/>
 
 			<!-- SQL stdout logging -->
 			<property name="hibernate.show_sql" value="true" />

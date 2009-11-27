@@ -20,6 +20,7 @@ import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.Ristorante;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Repository
 public interface RistoranteService {
-
     /**
      * Update a restaurant
      * 
@@ -72,6 +72,15 @@ public interface RistoranteService {
      */
     @Transactional(readOnly = true)
     Collection<Ristorante> find(String pattern) throws JackWicketException;
+    
+    /**
+     * Find the restaurant by the given pattern, using Lucene
+     * 
+     * @param pattern
+     * @return Collection<Ristorante>
+     */
+    @Transactional(readOnly = true)
+    List<Ristorante> freeTextSearch(String pattern) throws JackWicketException;
     
     /**
      * Remove a restaurant from the repository

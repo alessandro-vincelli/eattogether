@@ -111,13 +111,14 @@ public class RistoranteEditPicturePage extends BasePage {
                     protected void onComponentTag(ComponentTag tag) {
                         super.onComponentTag(tag);
                         if(item.getModelObject().isActive()){
-                            tag.getAttributes().put("value", getString("button.unpublish"));   
+                            tag.getAttributes().put("title", getString("button.unpublish"));
+                            tag.getAttributes().put("class", "unpublishPictureButton");
                         }
                         else{
-                            tag.getAttributes().put("value", getString("button.publish"));
+                            tag.getAttributes().put("title", getString("button.publish"));
+                            tag.getAttributes().put("class", "publishPictureButton");
                         }
                     }
-
                 });
                 item.add(new AjaxFallbackButton("remove", form) {
                     @Override
@@ -128,7 +129,6 @@ public class RistoranteEditPicturePage extends BasePage {
                             ristoranteService.updateNoRevision(ristorante);
                             ristorantePictureService.remove(picture);
                             ristorante = ristoranteService.getByID(ristorante.getId());
-                            picturesList.setModelObject(ristorante.getPictures());
                         } catch (JackWicketException e) {
                             error(getString("genericErrorMessage"));
                         }
@@ -146,6 +146,8 @@ public class RistoranteEditPicturePage extends BasePage {
                 }));
             }
         };
+        picturesList.setOutputMarkupId(true);
+        picturesList.setReuseItems(true);
         form.add(picturesList);
 
     }
