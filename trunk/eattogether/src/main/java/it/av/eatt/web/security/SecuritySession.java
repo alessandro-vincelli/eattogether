@@ -34,8 +34,7 @@ public class SecuritySession extends AuthenticatedWebSession {
     /**
      * Construct.
      * 
-     * @param request
-     *            The current request object
+     * @param request The current request object
      */
     public SecuritySession(Request request) {
         super(request);
@@ -48,8 +47,7 @@ public class SecuritySession extends AuthenticatedWebSession {
     private Eater loggedInUser;
 
     /**
-     * @see org.apache.wicket.authentication.AuthenticatedWebSession#authenticate(java.lang.String,
-     *      java.lang.String)
+     * @see org.apache.wicket.authentication.AuthenticatedWebSession#authenticate(java.lang.String, java.lang.String)
      */
     @Override
     public boolean authenticate(final String username, final String password) {

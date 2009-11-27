@@ -2,10 +2,8 @@ package it.av.eatt.todb;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
-import it.av.eatt.ocm.model.data.City;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
