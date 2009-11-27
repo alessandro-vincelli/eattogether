@@ -19,6 +19,7 @@ import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Language;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.RistoranteDescriptionI18n;
+import it.av.eatt.ocm.model.RistorantePicture;
 import it.av.eatt.ocm.model.Tag;
 import it.av.eatt.service.LanguageService;
 import it.av.eatt.service.RistoranteService;
@@ -41,6 +42,8 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.image.resource.DynamicImageResource;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -63,9 +66,9 @@ public class RistoranteViewPage extends BasePage {
     private RistoranteService ristoranteService;
     @SpringBean
     private LanguageService languageService;
-    
+
     private Ristorante ristorante = new Ristorante();;
-    
+
     private ModalWindow revisionsPanel;
     private boolean hasVoted = Boolean.FALSE;
     private Language actualDescriptionLanguage;
@@ -73,7 +76,8 @@ public class RistoranteViewPage extends BasePage {
     private WebMarkupContainer descriptionsContainer;
     private Form<Ristorante> form;
     private WebMarkupContainer descriptionLinksContainer;
-    
+    private ListView<RistorantePicture> picturesList;
+
     /**
      * Constructor that is invoked when page is invoked without a session.
      * 
@@ -85,16 +89,16 @@ public class RistoranteViewPage extends BasePage {
         if (StringUtils.isNotBlank(ristoranteId)) {
             this.ristorante = ristoranteService.getByID(ristoranteId);
         } else {
-            
+
             setRedirect(true);
             setResponsePage(getApplication().getHomePage());
         }
-        
+
         form = new Form<Ristorante>("ristoranteForm", new CompoundPropertyModel<Ristorante>(ristorante));
         add(form);
         form.setOutputMarkupId(true);
         form.add(new Label(Ristorante.NAME));
-        
+
         Label typeRistoranteLabel = new Label("typeRistoranteLabel", getString("type.Ristorante"));
         typeRistoranteLabel.setVisible(ristorante.getTypes().isRistorante());
         form.add(typeRistoranteLabel);
@@ -104,14 +108,15 @@ public class RistoranteViewPage extends BasePage {
         Label typeBarLabel = new Label("typeBarLabel", getString("type.Bar"));
         typeBarLabel.setVisible(ristorante.getTypes().isBar());
         form.add(typeBarLabel);
-        
+
         form.add(new SmartLinkLabel(Ristorante.WWW));
-        form.add(new ListView<Tag>(Ristorante.TAGS){
+        form.add(new ListView<Tag>(Ristorante.TAGS) {
             private static final long serialVersionUID = 1L;
+
             @Override
             protected void populateItem(ListItem<Tag> item) {
                 item.add(new Label("tagItem", item.getModelObject().getTag()));
-            } 
+            }
         });
         descriptionLinksContainer = new WebMarkupContainer("descriptionLinksContainer");
         descriptionLinksContainer.setOutputMarkupId(true);
@@ -120,12 +125,12 @@ public class RistoranteViewPage extends BasePage {
             @Override
             protected void populateItem(final ListItem<Language> item) {
                 item.add(new AjaxFallbackButton("descriptionLink", form) {
-                    
+
                     @Override
                     protected void onComponentTag(ComponentTag tag) {
                         super.onComponentTag(tag);
-                        if(actualDescriptionLanguage.getCountry().equals(item.getModelObject().getCountry())){
-                            tag.getAttributes().put("class", "descriptionLink descriptionLinkActive");    
+                        if (actualDescriptionLanguage.getCountry().equals(item.getModelObject().getCountry())) {
+                            tag.getAttributes().put("class", "descriptionLink descriptionLinkActive");
                         }
                     }
 
@@ -164,10 +169,12 @@ public class RistoranteViewPage extends BasePage {
             }
         };
         descriptionsContainer.add(descriptions);
-        // form.add(new DropDownChoice<EaterProfile>("userProfile", new ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
+        // form.add(new DropDownChoice<EaterProfile>("userProfile", new
+        // ArrayList<EaterProfile>(userProfileService.getAll()), new UserProfilesList()).setOutputMarkupId(true));
         form.add(new Label("revisionNumber"));
-          
-        Form<Ristorante> formAddress = new Form<Ristorante>("ristoranteAddressForm", new CompoundPropertyModel<Ristorante>(ristorante));
+
+        Form<Ristorante> formAddress = new Form<Ristorante>("ristoranteAddressForm",
+                new CompoundPropertyModel<Ristorante>(ristorante));
         add(formAddress);
         formAddress.add(new Label(Ristorante.ADDRESS));
         formAddress.add(new Label(Ristorante.CITY));
@@ -177,7 +184,9 @@ public class RistoranteViewPage extends BasePage {
         formAddress.add(new Label(Ristorante.MOBILE_PHONE_NUMBER));
         formAddress.add(new Label(Ristorante.PHONE_NUMBER));
         formAddress.add(new Label(Ristorante.FAX_NUMBER));
-        formAddress.add(new RatingPanel("rating1", new PropertyModel<Integer>(getRistorante(), "rating"), new Model<Integer>(5), new PropertyModel<Integer>(getRistorante(), "rates.size"), new PropertyModel<Boolean>(this, "hasVoted"), true ) {
+        formAddress.add(new RatingPanel("rating1", new PropertyModel<Integer>(getRistorante(), "rating"),
+                new Model<Integer>(5), new PropertyModel<Integer>(getRistorante(), "rates.size"),
+                new PropertyModel<Boolean>(this, "hasVoted"), true) {
             @Override
             protected boolean onIsStarActive(int star) {
                 return star < ((int) (getRistorante().getRating() + 0.5));
@@ -194,7 +203,6 @@ public class RistoranteViewPage extends BasePage {
             }
         });
 
-        
         AjaxFallbackLink<String> editRistorante = new AjaxFallbackLink<String>("editRistorante") {
             private static final long serialVersionUID = 1L;
 
@@ -208,13 +216,14 @@ public class RistoranteViewPage extends BasePage {
             }
         };
         editRistorante.setOutputMarkupId(true);
-        if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(RistoranteEditAddressPage.class)) {
+        if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(
+                RistoranteEditAddressPage.class)) {
             editRistorante.setVisible(true);
         } else {
             editRistorante.setVisible(false);
         }
         add(editRistorante);
-        
+
         AjaxFallbackLink<String> editDataRistorante = new AjaxFallbackLink<String>("editDataRistorante") {
             private static final long serialVersionUID = 1L;
 
@@ -228,13 +237,8 @@ public class RistoranteViewPage extends BasePage {
             }
         };
         editDataRistorante.setOutputMarkupId(true);
-        if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(RistoranteEditDataPage.class)) {
-            editDataRistorante.setVisible(true);
-        } else {
-            editDataRistorante.setVisible(false);
-        }
         add(editDataRistorante);
-        
+
         AjaxFallbackLink<String> editPictures = new AjaxFallbackLink<String>("editPictures") {
             private static final long serialVersionUID = 1L;
 
@@ -248,14 +252,21 @@ public class RistoranteViewPage extends BasePage {
             }
         };
         editPictures.setOutputMarkupId(true);
-        if (getApplication().getSecuritySettings().getAuthorizationStrategy().isInstantiationAuthorized(RistoranteEditPicturePage.class)) {
-            editPictures.setVisible(true);
-        } else {
-            editPictures.setVisible(false);
-        }
         add(editPictures);
 
+        picturesList = new ListView<RistorantePicture>("picturesList", ristorante.getActivePictures()) {
 
+            @Override
+            protected void populateItem(final ListItem<RistorantePicture> item) {
+                item.add(new Image("picture", new DynamicImageResource() {
+                    @Override
+                    protected byte[] getImageData() {
+                        return item.getModelObject().getPicture();
+                    }
+                }));
+            }
+        };
+        form.add(picturesList);
         add(revisionsPanel = new ModalWindow("revisionsPanel"));
         revisionsPanel.setWidthUnit("%");
         revisionsPanel.setInitialHeight(450);
@@ -279,20 +290,21 @@ public class RistoranteViewPage extends BasePage {
 
         add(new AjaxLink("showsAllRevisions") {
             public void onClick(AjaxRequestTarget target) {
-                ((RistoranteRevisionsPanel) revisionsPanel.get(revisionsPanel.getContentId())).refreshRevisionsList(ristorante);
+                ((RistoranteRevisionsPanel) revisionsPanel.get(revisionsPanel.getContentId()))
+                        .refreshRevisionsList(ristorante);
                 revisionsPanel.show(target);
             }
         });
 
-        setHasVoted(ristoranteService.hasUsersAlreadyRated(getRistorante(), getLoggedInUser()) || getLoggedInUser() == null);
-        
+        setHasVoted(ristoranteService.hasUsersAlreadyRated(getRistorante(), getLoggedInUser())
+                || getLoggedInUser() == null);
+
     }
 
     public RistoranteViewPage(Ristorante ristorante) throws JackWicketException {
         this(new PageParameters("ristoranteId=" + ristorante.getId()));
     }
 
-    
     public final Ristorante getRistorante() {
         return ristorante;
     }
