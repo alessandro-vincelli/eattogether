@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Tag;
 
 import java.util.List;
@@ -23,35 +22,33 @@ import java.util.List;
 import org.hibernate.criterion.Criterion;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * Services on Tag
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
+ * 
  */
 @Service
 public interface TagService {
 
     /**
-     * insert a new tag, the operation takes care of maintain 
-     * the list without duplicated values
+     * insert a new tag, the operation takes care of maintain the list without duplicated values
      * 
      * @param tag
      * @return just created Tag or already present tag
-     * @throws JackWicketException
      */
-	@Transactional
-    Tag insert(String tag) throws JackWicketException;
-    
+    @Transactional
+    Tag insert(String tag);
+
     /**
      * Return all the tags
      * 
      * @return List<Tag>
      */
     @Transactional(readOnly = true)
-    List<Tag> getAll() throws JackWicketException;
-    
-    
+    List<Tag> getAll();
+
     /**
      * Find tags by the given string
      * 
@@ -59,7 +56,7 @@ public interface TagService {
      * @return List<Tag>
      */
     @Transactional(readOnly = true)
-    List<Tag> find(String pattern) throws JackWicketException;
+    List<Tag> find(String pattern);
 
     /**
      * Find tags by the given criterions
@@ -70,7 +67,6 @@ public interface TagService {
     @Transactional(readOnly = true)
     List<Tag> findByCriteria(Criterion... criterions);
 
-    
     /**
      * Retarn tag with the given tag value, exact match search
      * 
@@ -78,15 +74,14 @@ public interface TagService {
      * @return Tag
      */
     @Transactional(readOnly = true)
-    Tag getByTagValue(String tagValue) throws JackWicketException;
-    
+    Tag getByTagValue(String tagValue);
+
     /**
      * Remove a tag
      * 
      * @param tag
-     * @throws JackWicketException
      */
     @Transactional
-    void remove(Tag tag) throws JackWicketException;
-    
+    void remove(Tag tag);
+
 }

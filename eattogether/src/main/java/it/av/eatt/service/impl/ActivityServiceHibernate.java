@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service.impl;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Activity;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.service.ActivityService;
@@ -38,7 +37,7 @@ public class ActivityServiceHibernate extends ApplicationServiceHibernate<Activi
      * {@inheritDoc}
      */
     @Override
-    public Collection<Activity> findByDate(Date date) throws JackWicketException {
+    public Collection<Activity> findByDate(Date date){
         Criterion crit = Restrictions.eq(Activity.DATE, date);
         return findByCriteria(crit);
     }
@@ -47,7 +46,7 @@ public class ActivityServiceHibernate extends ApplicationServiceHibernate<Activi
      * {@inheritDoc}
      */
     @Override
-    public Collection<Activity> findByUser(Eater user) throws JackWicketException {
+    public Collection<Activity> findByUser(Eater user){
         Criterion crit = Restrictions.eq(Activity.USER, user);
         return findByCriteria(crit);
     }

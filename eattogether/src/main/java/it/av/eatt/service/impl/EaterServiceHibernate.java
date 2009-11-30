@@ -48,7 +48,7 @@ public class EaterServiceHibernate extends ApplicationServiceHibernate<Eater> im
      * {@inheritDoc}
      */
     @Override
-    public Eater addRegolarUser(Eater object) throws JackWicketException {
+    public Eater addRegolarUser(Eater object) {
         object.setUserProfile(userProfileService.getRegolarUserProfile());
         try {
             return add(object);
@@ -61,7 +61,7 @@ public class EaterServiceHibernate extends ApplicationServiceHibernate<Eater> im
      * {@inheritDoc}
      */
     @Override
-    public Eater add(Eater object) throws JackWicketException {
+    public Eater add(Eater object) {
         if (object == null || StringUtils.isBlank(object.getEmail())) {
             throw new JackWicketException("Eater is null or email is empty");
         }
@@ -76,7 +76,7 @@ public class EaterServiceHibernate extends ApplicationServiceHibernate<Eater> im
      * {@inheritDoc}
      */
     @Override
-    public Eater update(Eater object) throws JackWicketException {
+    public Eater update(Eater object) {
         try {
             super.save(object);
         } catch (DataAccessException e) {
@@ -103,7 +103,7 @@ public class EaterServiceHibernate extends ApplicationServiceHibernate<Eater> im
      * {@inheritDoc}
      */
     @Override
-    public Collection<Eater> findUserWithoutRelation(Eater forUser, String pattern) throws JackWicketException {
+    public Collection<Eater> findUserWithoutRelation(Eater forUser, String pattern) {
         // TODO can be improved with an outer join
         Collection<EaterRelation> relatedUser = userRelationService.getAllRelations(forUser);
         ArrayList<String> relatedUserId = new ArrayList<String>(relatedUser.size());
@@ -128,7 +128,7 @@ public class EaterServiceHibernate extends ApplicationServiceHibernate<Eater> im
      * {@inheritDoc}
      */
     @Override
-    public Collection<Eater> findUserWithoutRelation(Eater forUser) throws JackWicketException {
+    public Collection<Eater> findUserWithoutRelation(Eater forUser) {
         return findUserWithoutRelation(forUser, null);
     }
 
@@ -136,7 +136,7 @@ public class EaterServiceHibernate extends ApplicationServiceHibernate<Eater> im
      * {@inheritDoc}
      */
     @Override
-    public void remove(Eater user) throws JackWicketException {
+    public void remove(Eater user) {
         super.remove(user);
     }
 
@@ -156,7 +156,7 @@ public class EaterServiceHibernate extends ApplicationServiceHibernate<Eater> im
      * {@inheritDoc}
      */
     @Override
-    public Collection<Eater> find(String pattern) throws JackWicketException {
+    public Collection<Eater> find(String pattern) {
         Criterion critByName = Restrictions.ilike(Eater.LASTNAME, pattern);
         List<Eater> results = findByCriteria(critByName);
         return results;

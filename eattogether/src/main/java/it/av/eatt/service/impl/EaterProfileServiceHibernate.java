@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service.impl;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.EaterProfile;
 import it.av.eatt.service.EaterProfileService;
 
@@ -35,7 +34,7 @@ public class EaterProfileServiceHibernate extends ApplicationServiceHibernate<Ea
      * {@inheritDoc}
      */
     @Override
-    public EaterProfile getRegolarUserProfile() throws JackWicketException {
+    public EaterProfile getRegolarUserProfile() {
         return getByName("USER");
     }
 

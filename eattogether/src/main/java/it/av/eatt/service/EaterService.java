@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
 
 import java.util.Collection;
@@ -37,49 +36,44 @@ public interface EaterService {
      * 
      * @param object
      * @return just updated user
-     * @throws JackWicketException
      */
     @Transactional
-    Eater update(Eater object) throws JackWicketException;
+    Eater update(Eater object);
 
     /**
      * Add a new user, if the role is empty, it's used the USER role
      * 
      * @param object
      * @return just added user
-     * @throws JackWicketException
      */
     @Transactional
-    Eater add(Eater object) throws JackWicketException;
+    Eater add(Eater object);
 
     /**
      * Insert a new user, during the insert is also encrypted the users's password
      * 
      * @param object
      * @return just inserted user
-     * @throws JackWicketException
      */
     @Transactional
-    Eater addRegolarUser(Eater object) throws JackWicketException;
+    Eater addRegolarUser(Eater object);
 
     /**
      * Return all the users
      * 
      * @return all the users
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Collection<Eater> getAll() throws JackWicketException;
+    Collection<Eater> getAll();
 
     /**
      * Search users
      * 
      * @param pattern
      * @return the found users
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Collection<Eater> find(String pattern) throws JackWicketException;
+    Collection<Eater> find(String pattern);
 
     /**
      * Return users without relations with the passed user and the given pattern the search is performed on the
@@ -88,29 +82,26 @@ public interface EaterService {
      * @param forUser
      * @param pattern
      * @return all found users
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Collection<Eater> findUserWithoutRelation(Eater forUser, String pattern) throws JackWicketException;
+    Collection<Eater> findUserWithoutRelation(Eater forUser, String pattern);
 
     /**
      * Return users without relations with the passed user
      * 
      * @param forUser
      * @return all users not related to this user
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Collection<Eater> findUserWithoutRelation(Eater forUser) throws JackWicketException;
+    Collection<Eater> findUserWithoutRelation(Eater forUser);
 
     /**
      * Remove the user
      * 
      * @param user
-     * @throws JackWicketException
      */
     @Transactional
-    void remove(Eater user) throws JackWicketException;
+    void remove(Eater user);
 
     /**
      * Return the user with this email, there is an unique constraint on the user email
@@ -126,8 +117,7 @@ public interface EaterService {
      * 
      * @param id
      * @return user with the passed email
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Eater getByID(String id) throws JackWicketException;
+    Eater getByID(String id);
 }

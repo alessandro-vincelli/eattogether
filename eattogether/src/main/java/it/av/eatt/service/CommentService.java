@@ -15,18 +15,17 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Comment;
 
 import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * Operations on Comments
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
  */
 @Service
 @Transactional
@@ -37,10 +36,9 @@ public interface CommentService {
      * 
      * @param comment
      * @return Comment
-     * @throws JackWicketException
      */
     @Transactional
-    Comment save(Comment comment) throws JackWicketException;
+    Comment save(Comment comment);
 
     /**
      * Get all the comment
@@ -48,16 +46,13 @@ public interface CommentService {
      * @return Collection<Comment>
      */
     @Transactional
-    Collection<Comment> getAll() throws JackWicketException;
+    Collection<Comment> getAll();
 
     /**
      * Remove an comment from the repository
      * 
      * @param comment
-     * @throws JackWicketException
      */
     @Transactional
-    void remove(Comment comment) throws JackWicketException;
-    
-    
+    void remove(Comment comment);
 }

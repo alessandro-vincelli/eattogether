@@ -1,6 +1,5 @@
 package it.av.eatt.service.impl;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Activity;
 import it.av.eatt.ocm.model.ActivityRistorante;
 import it.av.eatt.ocm.model.Eater;
@@ -28,7 +27,7 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
      * {@inheritDoc}
      */
     @Override
-    public List<ActivityRistorante> findByRistorante(Ristorante risto) throws JackWicketException {
+    public List<ActivityRistorante> findByRistorante(Ristorante risto) {
         Criterion crit = Restrictions.eq(ActivityRistorante.RISTORANTE, risto);
         return findByCriteria(crit);
     }
@@ -37,7 +36,7 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
      * {@inheritDoc}
      */
     @Override
-    public List<ActivityRistorante> findByUser(Eater user) throws JackWicketException {
+    public List<ActivityRistorante> findByUser(Eater user) {
         return findByUser(user, 0, 0);
     }
 
@@ -45,7 +44,7 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
      * {@inheritDoc}
      */
     @Override
-    public List<ActivityRistorante> findByUserFriend(Eater ofUser) throws JackWicketException {
+    public List<ActivityRistorante> findByUserFriend(Eater ofUser) {
         List<ActivityRistorante> results = new ArrayList<ActivityRistorante>();
         for (EaterRelation relation : eaterRelationService.getAllActiveRelations(ofUser)) {
             results.addAll(findByUser(relation.getToUser()));
@@ -57,8 +56,7 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
      * {@inheritDoc}
      */
     @Override
-    public List<ActivityRistorante> findByUserRistoType(Eater user, Ristorante risto, String activityType)
-            throws JackWicketException {
+    public List<ActivityRistorante> findByUserRistoType(Eater user, Ristorante risto, String activityType) {
         Criterion critByUser = Restrictions.eq(ActivityRistorante.USER, user);
         Criterion critByRisto = Restrictions.eq(ActivityRistorante.RISTORANTE, risto);
         Criterion critByType = Restrictions.eq(ActivityRistorante.TYPE, activityType);
@@ -68,7 +66,7 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
     /**
      * {@inheritDoc}
      */
-    public ActivityRistorante save(ActivityRistorante activityRistorante) throws JackWicketException {
+    public ActivityRistorante save(ActivityRistorante activityRistorante) {
         return super.save(activityRistorante);
     }
 
@@ -76,7 +74,7 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
      * {@inheritDoc}
      */
     @Override
-    public List<ActivityRistorante> findByUser(Eater user, int firstResult, int maxResults) throws JackWicketException {
+    public List<ActivityRistorante> findByUser(Eater user, int firstResult, int maxResults) {
         Criterion crit = Restrictions.eq(ActivityRistorante.USER, user);
         Order orderByDate = Order.desc(Activity.DATE);
         return findByCriteria(orderByDate, firstResult, maxResults, crit);
@@ -86,12 +84,11 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
      * {@inheritDoc}
      */
     @Override
-    public List<ActivityRistorante> findByUserFriend(Eater ofUser, int firstResult, int maxResults)
-            throws JackWicketException {
+    public List<ActivityRistorante> findByUserFriend(Eater ofUser, int firstResult, int maxResults) {
         // TODO, improve this method using a method that return the Friends as Eater and not as Relation
         List<EaterRelation> relations = eaterRelationService.getAllActiveRelations(ofUser);
         // if the user hasn't friends, just return an empty list
-        if(relations.isEmpty()){
+        if (relations.isEmpty()) {
             return new ArrayList<ActivityRistorante>(0);
         }
         List<Eater> friends = new ArrayList<Eater>(relations.size());
@@ -105,10 +102,9 @@ public class ActivityRistoranteServiceHibernate extends ApplicationServiceHibern
      * {@inheritDoc}
      */
     @Override
-    public List<ActivityRistorante> findByUsers(List<Eater> users, int firstResult, int maxResults)
-            throws JackWicketException {
+    public List<ActivityRistorante> findByUsers(List<Eater> users, int firstResult, int maxResults) {
         // if the users list is empty, just return an empty list
-        if(users.isEmpty()){
+        if (users.isEmpty()) {
             return new ArrayList<ActivityRistorante>(0);
         }
         Disjunction orUSer = Restrictions.disjunction();

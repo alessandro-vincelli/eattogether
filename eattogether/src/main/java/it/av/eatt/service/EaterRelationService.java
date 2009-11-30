@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.EaterRelation;
 
@@ -29,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
  * Operations to manage relations between users
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
 @Service
 @Transactional
@@ -40,19 +38,17 @@ public interface EaterRelationService {
      * 
      * @param relation
      * @return EaterRelation just saved
-     * @throws JackWicketException
      */
     @Transactional
-    EaterRelation save(EaterRelation relation) throws JackWicketException;
+    EaterRelation save(EaterRelation relation);
 
     /**
      * Remove a relation
      * 
      * @param relation relation to remove
-     * @throws JackWicketException
      */
     @Transactional
-    void remove(EaterRelation relation) throws JackWicketException;
+    void remove(EaterRelation relation);
 
     /**
      * Create a following relation
@@ -60,10 +56,9 @@ public interface EaterRelationService {
      * @param fromUser
      * @param toUser
      * @return EaterRelation, just new relation
-     * @throws JackWicketException
      */
     @Transactional
-    EaterRelation addFollowUser(Eater fromUser, Eater toUser) throws JackWicketException;
+    EaterRelation addFollowUser(Eater fromUser, Eater toUser);
 
     /**
      * Create a friend relation with {@link EaterRelation} with STATUS_PENDING
@@ -71,30 +66,27 @@ public interface EaterRelationService {
      * @param fromUser
      * @param toUser
      * @return EaterRelation, just new relation
-     * @throws JackWicketException
      */
     @Transactional
-    EaterRelation addFriendRequest(Eater fromUser, Eater toUser) throws JackWicketException;
+    EaterRelation addFriendRequest(Eater fromUser, Eater toUser);
 
     /**
      * Update the relation to status STATUS_CONFIRMED
      * 
      * @param relation
      * @return EaterRelation, just updated relation
-     * @throws JackWicketException
      */
     @Transactional
-    EaterRelation performFriendRequestConfirm(EaterRelation relation) throws JackWicketException;
+    EaterRelation performFriendRequestConfirm(EaterRelation relation);
 
     /**
      * Update the relation to status STATUS_IGNORE
      * 
      * @param relation
      * @return EaterRelation, just updated relation
-     * @throws JackWicketException
      */
     @Transactional
-    EaterRelation performFriendRequestIgnore(EaterRelation relation) throws JackWicketException;
+    EaterRelation performFriendRequestIgnore(EaterRelation relation);
 
     /**
      * Return all the friends relations of the passed user

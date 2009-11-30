@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.ocm.model.Ristorante;
 
@@ -25,11 +24,11 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * Services on Ristoranti
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
  */
 @Service
 @Repository
@@ -39,22 +38,20 @@ public interface RistoranteService {
      * 
      * @param risto the Risto to be modified
      * @param user the user that is performing the modification
-     * @return Ristorante
-     * @throws JackWicketException
+     * @return ristorante
      */
-	@Transactional
-    Ristorante update(Ristorante risto, Eater user) throws JackWicketException;
-    
+    @Transactional
+    Ristorante update(Ristorante risto, Eater user);
+
     /**
      * Insert a new restaurant
      * 
      * @param risto the Risto to be inserted
      * @param user the user that is performing the modification
      * @return Ristorante
-     * @throws JackWicketException
      */
     @Transactional
-    Ristorante insert(Ristorante risto, Eater user) throws JackWicketException;
+    Ristorante insert(Ristorante risto, Eater user);
 
     /**
      * Return all the restaurant
@@ -62,8 +59,8 @@ public interface RistoranteService {
      * @return Collection<Ristorante>
      */
     @Transactional(readOnly = true)
-    Collection<Ristorante> getAll() throws JackWicketException;
-    
+    Collection<Ristorante> getAll();
+
     /**
      * Find the restaurant by the given pattern
      * 
@@ -71,67 +68,61 @@ public interface RistoranteService {
      * @return Collection<Ristorante>
      */
     @Transactional(readOnly = true)
-    Collection<Ristorante> find(String pattern) throws JackWicketException;
-    
+    Collection<Ristorante> find(String pattern);
+
     /**
      * Find the restaurant by the given pattern, using Lucene
      * 
      * @param pattern
-     * @return Collection<Ristorante>
+     * @return List<Ristorante>
      */
     @Transactional(readOnly = true)
-    List<Ristorante> freeTextSearch(String pattern) throws JackWicketException;
-    
+    List<Ristorante> freeTextSearch(String pattern);
+
     /**
      * Remove a restaurant from the repository
      * 
      * @param risto
-     * @throws JackWicketException
      */
     @Transactional
-    void remove(Ristorante risto) throws JackWicketException;
-    
+    void remove(Ristorante risto);
+
     /**
-     * Get a restaurant by ID 
+     * Get a restaurant by ID
      * 
      * @param id the id of the restaurant
      * @return Ristorante ristorante
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Ristorante getByID(String id) throws JackWicketException;
+    Ristorante getByID(String id);
 
-    
     /**
-     * Add a rate on the given restaurant by the given user 
+     * Add a rate on the given restaurant by the given user
      * 
      * @param risto
      * @param user
      * @param rate
      * @return just rated risto
-     * @throws JackWicketException
      */
     @Transactional
-    Ristorante addRate(Ristorante risto, Eater user, int rate) throws JackWicketException;
-    
+    Ristorante addRate(Ristorante risto, Eater user, int rate);
+
     /**
      * check if the given user has already voted the given risto
      * 
      * @param risto
      * @param user
      * @return boolean
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    boolean hasUsersAlreadyRated(Ristorante risto, Eater user) throws JackWicketException;
+    boolean hasUsersAlreadyRated(Ristorante risto, Eater user);
 
     /**
      * Update a restaurant without create a new revision
      * 
      * @param ristorante
      * @return just saved ristorante
-     * @throws JackWicketException
      */
     @Transactional
-    Ristorante updateNoRevision(Ristorante ristorante) throws JackWicketException;;
+    Ristorante updateNoRevision(Ristorante ristorante);
 }

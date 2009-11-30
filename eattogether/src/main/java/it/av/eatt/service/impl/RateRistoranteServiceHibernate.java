@@ -1,6 +1,5 @@
 package it.av.eatt.service.impl;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.RateOnRistorante;
 import it.av.eatt.service.RateRistoranteService;
 
@@ -11,7 +10,7 @@ public class RateRistoranteServiceHibernate extends ApplicationServiceHibernate<
      * {@inheritDoc}
      */
     @Override
-    public RateOnRistorante insert(RateOnRistorante rate) throws JackWicketException {
+    public RateOnRistorante insert(RateOnRistorante rate){
         return save(rate);
     }
 }

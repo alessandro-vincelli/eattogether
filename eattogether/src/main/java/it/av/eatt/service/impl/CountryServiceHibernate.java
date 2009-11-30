@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service.impl;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.data.Country;
 import it.av.eatt.service.CountryService;
 
@@ -35,7 +34,7 @@ public class CountryServiceHibernate extends ApplicationServiceHibernate<Country
      * {@inheritDoc}
      */
     @Override
-    public List<Country> getAll() throws JackWicketException {
+    public List<Country> getAll(){
         Order orderBYName = Order.asc(Country.NAME);
         return super.findByCriteria(orderBYName);
     }

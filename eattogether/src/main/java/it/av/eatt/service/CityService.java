@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.data.City;
 import it.av.eatt.ocm.model.data.Country;
 
@@ -29,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
  * Services on {@Link City}
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
 @Service
 @Repository
@@ -42,10 +40,9 @@ public interface CityService extends ApplicationService<City> {
      * @param country
      * @param maxResults
      * @return found cities
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    List<City> find(String string, Country country, int maxResults) throws JackWicketException;
+    List<City> find(String string, Country country, int maxResults);
 
     /**
      * Find the restaurant using the given pattern
@@ -53,24 +50,20 @@ public interface CityService extends ApplicationService<City> {
      * @param string
      * @param maxResults
      * @return found cities
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    List<City> find(String string, int maxResults) throws JackWicketException;
+    List<City> find(String string, int maxResults);
 
-    
     /**
      * Find a city using an exact match (case insensitive) on the given cityName and country
      * 
      * @param cityName
      * @param country
      * @return a city
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    City getByNameAndCountry(String cityName, Country country) throws JackWicketException;
+    City getByNameAndCountry(String cityName, Country country);
 
-    
     /**
      * Find the restaurant using the given pattern, and return only the cityName
      * 
@@ -78,10 +71,9 @@ public interface CityService extends ApplicationService<City> {
      * @param country
      * @param maxResults
      * @return found cities
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    List<String> findName(String string, Country country, int maxResults) throws JackWicketException;
+    List<String> findName(String string, Country country, int maxResults);
 
     /**
      * Find the restaurant using the given pattern, and return only the cityName
@@ -89,9 +81,8 @@ public interface CityService extends ApplicationService<City> {
      * @param string
      * @param maxResults
      * @return found cities
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    List<String> findName(String string, int maxResults) throws JackWicketException;
+    List<String> findName(String string, int maxResults);
 
 }
