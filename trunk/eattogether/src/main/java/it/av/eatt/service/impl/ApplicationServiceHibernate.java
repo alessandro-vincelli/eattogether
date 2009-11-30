@@ -46,7 +46,7 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
     /**
      * @param entityManager
      */
-    @PersistenceContext(type = PersistenceContextType.TRANSACTION, unitName="mainPersistance")
+    @PersistenceContext(type = PersistenceContextType.TRANSACTION, unitName = "mainPersistance")
     public void setInternalEntityManager(final EntityManager entityManager) {
         setEntityManager(entityManager);
     }
@@ -55,7 +55,7 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
      * {@inheritDoc}
      */
     @Override
-    public T save(T obj) throws JackWicketException {
+    public T save(T obj) {
         if (obj == null) {
             throw new JackWicketException("Object is null");
         }
@@ -78,7 +78,7 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
      * {@inheritDoc}
      */
     @Override
-    public List<T> getAll() throws JackWicketException {
+    public List<T> getAll() {
         return findByCriteria();
     }
 
@@ -86,7 +86,7 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
      * {@inheritDoc}
      */
     @Deprecated
-    public List<T> findFullText(String query) throws JackWicketException {
+    public List<T> findFullText(String query) {
         /*        //DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
                 DetachedCriteria criteria = DetachedCriteria.forClass(getPersistentClass());
                 //return getHibernateTemplate().findByCriteria(criteria, 0, -1);
@@ -117,7 +117,7 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
      * {@inheritDoc}
      */
     @Override
-    public void remove(T object) throws JackWicketException {
+    public void remove(T object) {
         try {
             getJpaTemplate().remove(object);
             // getJpaTemplate().flush();
@@ -142,33 +142,34 @@ public class ApplicationServiceHibernate<T extends BasicEntity> extends JpaDaoSu
     public List<T> findByCriteria(Order order, int firstResult, int maxResults, Criterion... criterion) {
         return findByCriteria(getPersistentClass(), order, firstResult, maxResults, criterion);
     }
-    
+
     protected List<T> findByCriteria(Order order, Criterion... criterion) {
         return findByCriteria(getPersistentClass(), order, 0, 0, criterion);
     }
 
-    protected List<T> findByCriteria(Class<T> actualClass, Order order, int firstResult, int maxResults, Criterion... criterion) {
+    protected List<T> findByCriteria(Class<T> actualClass, Order order, int firstResult, int maxResults,
+            Criterion... criterion) {
         Criteria criteria = getHibernateSession().createCriteria(getPersistentClass());
-        if (order != null){
+        if (order != null) {
             criteria.addOrder(order);
         }
         for (Criterion c : criterion) {
             criteria.add(c);
         }
-        if(firstResult > 0){
+        if (firstResult > 0) {
             criteria.setFirstResult(firstResult);
         }
-        if(maxResults > 0){
+        if (maxResults > 0) {
             criteria.setMaxResults(maxResults);
         }
         return criteria.list();
-     }
+    }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public T getByID(String id) throws JackWicketException {
+    public T getByID(String id) {
         Criterion crit = Restrictions.idEq(id);
         return findByCriteria(crit).iterator().next();
     }

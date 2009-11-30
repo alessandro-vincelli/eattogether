@@ -39,7 +39,7 @@ public class EaterRelationServiceHibernate extends ApplicationServiceHibernate<E
      * {@inheritDoc}
      */
     @Override
-    public EaterRelation addFollowUser(Eater fromUser, Eater toUser) throws JackWicketException {
+    public EaterRelation addFollowUser(Eater fromUser, Eater toUser) {
         EaterRelation relation = EaterRelation.createFollowRelation(fromUser, toUser);
         return save(relation);
     }
@@ -48,7 +48,7 @@ public class EaterRelationServiceHibernate extends ApplicationServiceHibernate<E
      * {@inheritDoc}
      */
     @Override
-    public EaterRelation addFriendRequest(Eater fromUser, Eater toUser) throws JackWicketException {
+    public EaterRelation addFriendRequest(Eater fromUser, Eater toUser) {
         EaterRelation relation = EaterRelation.createFriendRelation(fromUser, toUser);
         return save(relation);
     }
@@ -57,7 +57,7 @@ public class EaterRelationServiceHibernate extends ApplicationServiceHibernate<E
      * {@inheritDoc}
      */
     @Override
-    public EaterRelation performFriendRequestConfirm(EaterRelation relation) throws JackWicketException {
+    public EaterRelation performFriendRequestConfirm(EaterRelation relation) {
         if (relation != null && relation.getStatus().equals(EaterRelation.STATUS_PENDING)
                 && relation.getType().equals(EaterRelation.TYPE_FRIEND)) {
             relation.setStatus(EaterRelation.STATUS_ACTIVE);
@@ -78,7 +78,7 @@ public class EaterRelationServiceHibernate extends ApplicationServiceHibernate<E
      * {@inheritDoc}
      */
     @Override
-    public EaterRelation performFriendRequestIgnore(EaterRelation relation) throws JackWicketException {
+    public EaterRelation performFriendRequestIgnore(EaterRelation relation) {
         if (relation != null && relation.getStatus().equals(EaterRelation.STATUS_PENDING)
                 && relation.getType().equals(EaterRelation.TYPE_FRIEND)) {
             relation.setStatus(EaterRelation.STATUS_IGNORED);
@@ -115,7 +115,7 @@ public class EaterRelationServiceHibernate extends ApplicationServiceHibernate<E
      */
     @Override
     public List<EaterRelation> getAllRelations(Eater ofUser) {
-        Conjunction pendingFriend = Restrictions.conjunction(); 
+        Conjunction pendingFriend = Restrictions.conjunction();
         pendingFriend.add(Restrictions.eq(EaterRelation.STATUS, EaterRelation.STATUS_PENDING));
         pendingFriend.add(Restrictions.eq(EaterRelation.TYPE, EaterRelation.TYPE_FRIEND));
         pendingFriend.add(Restrictions.eq(EaterRelation.TO_USER, ofUser));
@@ -139,7 +139,7 @@ public class EaterRelationServiceHibernate extends ApplicationServiceHibernate<E
      * {@inheritDoc}
      */
     @Override
-    public void remove(EaterRelation relation) throws JackWicketException {
+    public void remove(EaterRelation relation) {
         EaterRelation eaterRelation = getByID(relation.getId());
         super.remove(eaterRelation);
     }

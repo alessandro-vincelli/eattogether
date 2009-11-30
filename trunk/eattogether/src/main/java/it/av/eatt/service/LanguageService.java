@@ -23,8 +23,7 @@ import org.springframework.stereotype.Service;
 /**
  * Services on {@Link Language}
  * 
- * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
+ * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a> 
  */
 @Service
 @Repository

@@ -55,7 +55,7 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
      * {@inheritDoc}
      */
     @Override
-    public Ristorante update(Ristorante risto, Eater user) throws JackWicketException {
+    public Ristorante update(Ristorante risto, Eater user) {
         risto.setModificationTime(DateUtil.getTimestamp());
         risto.setRevisionNumber(risto.getRevisionNumber() + 1);
         save(risto);
@@ -69,7 +69,7 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
      * {@inheritDoc}
      */
     @Override
-    public Ristorante insert(Ristorante risto, Eater user) throws JackWicketException {
+    public Ristorante insert(Ristorante risto, Eater user) {
         risto.setCreationTime(DateUtil.getTimestamp());
         risto.setModificationTime(DateUtil.getTimestamp());
         risto.setRevisionNumber(1);
@@ -84,7 +84,7 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
      * {@inheritDoc}
      */
     @Override
-    public Ristorante addRate(Ristorante risto, Eater user, int rate) throws JackWicketException {
+    public Ristorante addRate(Ristorante risto, Eater user, int rate) {
         if (user != null && risto != null && !(hasUsersAlreadyRated(risto, user))) {
             if (rate >= 0 && rate <= 5) {
                 ActivityRistorante activity = activityRistoranteService.save(new ActivityRistorante(user, risto,
@@ -103,7 +103,7 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
      * {@inheritDoc}
      */
     @Override
-    public boolean hasUsersAlreadyRated(Ristorante risto, Eater user) throws JackWicketException {
+    public boolean hasUsersAlreadyRated(Ristorante risto, Eater user) {
         List<ActivityRistorante> results = activityRistoranteService.findByUserRistoType(user, risto,
                 ActivityRistorante.TYPE_VOTED);
         if (results.size() == 0) {
@@ -116,7 +116,7 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
      * {@inheritDoc}
      */
     @Override
-    public Collection<Ristorante> find(String pattern) throws JackWicketException {
+    public Collection<Ristorante> find(String pattern) {
         Criterion critByName = Restrictions.ilike(Ristorante.NAME, pattern);
         List<Ristorante> results = findByCriteria(critByName);
         return results;
@@ -126,7 +126,7 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
      * {@inheritDoc}
      */
     @Override
-    public void remove(Ristorante object) throws JackWicketException {
+    public void remove(Ristorante object) {
         // for (ActivityRistorante activityRistorante : object.getActivities()) {
         // getJpaTemplate().remove(activityRistorante);
         // }
@@ -154,7 +154,7 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
      * {@inheritDoc}
      */
     @Override
-    public Ristorante updateNoRevision(Ristorante ristorante) throws JackWicketException {
+    public Ristorante updateNoRevision(Ristorante ristorante) {
         return save(ristorante);
     }
 
@@ -162,7 +162,7 @@ public class RistoranteServiceHibernate extends ApplicationServiceHibernate<Rist
      * {@inheritDoc}
      */
     @Override
-    public List<Ristorante> freeTextSearch(String pattern) throws JackWicketException {
+    public List<Ristorante> freeTextSearch(String pattern) {
         FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search
                 .getFullTextEntityManager(getJpaTemplate().getEntityManager());
         String[] fields = new String[] { "name" };

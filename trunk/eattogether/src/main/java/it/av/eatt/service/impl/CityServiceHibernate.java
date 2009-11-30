@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service.impl;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.model.data.City;
 import it.av.eatt.ocm.model.data.Country;
@@ -41,7 +40,7 @@ public class CityServiceHibernate extends ApplicationServiceHibernate<City> impl
      * {@inheritDoc}
      */
     @Override
-    public List<City> getAll() throws JackWicketException {
+    public List<City> getAll() {
         Order orderBYName = Order.asc(City.NAME_FIELD);
         return super.findByCriteria(orderBYName);
     }
@@ -50,7 +49,7 @@ public class CityServiceHibernate extends ApplicationServiceHibernate<City> impl
      * {@inheritDoc}
      */
     @Override
-    public List<City> find(String string, Country country, int maxResults) throws JackWicketException {
+    public List<City> find(String string, Country country, int maxResults) {
         Criterion critByName = Restrictions.ilike(Ristorante.NAME, string + "%");
         Criterion byCountry = Restrictions.eq(City.COUNTRY_FIELD, country);
         Order orderByName = Order.asc(City.NAME_FIELD);
@@ -61,7 +60,7 @@ public class CityServiceHibernate extends ApplicationServiceHibernate<City> impl
      * {@inheritDoc}
      */
     @Override
-    public List<City> find(String string, int maxResults) throws JackWicketException {
+    public List<City> find(String string, int maxResults) {
         Criterion critByName = Restrictions.ilike(Ristorante.NAME, string + "%");
         Order orderByName = Order.asc(City.NAME_FIELD);
         return findByCriteria(orderByName, 0, maxResults, critByName);
@@ -71,7 +70,7 @@ public class CityServiceHibernate extends ApplicationServiceHibernate<City> impl
      * {@inheritDoc}
      */
     @Override
-    public List<String> findName(String string, Country country, int maxResults) throws JackWicketException {
+    public List<String> findName(String string, Country country, int maxResults) {
         Query query = getJpaTemplate().getEntityManager().createQuery(
                 "select name  from City as city where upper(city.name) like upper(:name) and city.country = :country");
         query.setParameter("name", string + "%");
@@ -84,7 +83,7 @@ public class CityServiceHibernate extends ApplicationServiceHibernate<City> impl
      * {@inheritDoc}
      */
     @Override
-    public List<String> findName(String string, int maxResults) throws JackWicketException {
+    public List<String> findName(String string, int maxResults) {
         Query query = getJpaTemplate().getEntityManager().createQuery(
                 "select name  from City as city where upper(city.name) like upper(:name)");
         query.setParameter("name", string + "%");
@@ -96,7 +95,7 @@ public class CityServiceHibernate extends ApplicationServiceHibernate<City> impl
      * {@inheritDoc}
      */
     @Override
-    public City getByNameAndCountry(String cityName, Country country) throws JackWicketException {
+    public City getByNameAndCountry(String cityName, Country country) {
         Query query = getJpaTemplate().getEntityManager().createQuery(
                 "select city from City as city where upper(city.name) = upper(:name) and city.country = :country");
         query.setParameter("name", cityName);

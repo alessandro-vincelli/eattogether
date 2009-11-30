@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Activity;
 import it.av.eatt.ocm.model.Eater;
 
@@ -39,32 +38,30 @@ public interface ActivityService extends ApplicationService<Activity> {
      * {@inheritDoc}
      */
     @Transactional
-    Activity save(Activity object) throws JackWicketException;
+    Activity save(Activity object);
 
     /**
      * Return the activity on the given date
      * 
      * @param date
      * @return activities on the given date
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Collection<Activity> findByDate(Date date) throws JackWicketException;
+    Collection<Activity> findByDate(Date date);
 
     /**
      * Find activities of the given user
      * 
      * @param user
      * @return activities for the given user
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Collection<Activity> findByUser(Eater user) throws JackWicketException;
+    Collection<Activity> findByUser(Eater user);
 
     /**
      * {@inheritDoc}
      */
     @Transactional
-    void remove(Activity object) throws JackWicketException;
+    void remove(Activity object);
 
 }

@@ -19,15 +19,15 @@ import it.av.eatt.ocm.model.data.Country;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+
 /**
- * Services on {@Link Country} 
- *   
+ * Services on {@Link Country}
+ * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
+ * 
  */
 @Service
 @Repository
 public interface CountryService extends ApplicationService<Country> {
-
 
 }

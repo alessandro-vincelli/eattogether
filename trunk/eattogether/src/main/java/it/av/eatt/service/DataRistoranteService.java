@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.DataRistorante;
 import it.av.eatt.ocm.model.ProvIta;
 import it.av.eatt.ocm.model.data.Country;
@@ -31,7 +30,6 @@ import org.springframework.transaction.annotation.Transactional;
  * Services on {@link DataRistorante}
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- * 
  */
 @Service
 @Repository
@@ -42,20 +40,18 @@ public interface DataRistoranteService {
      * 
      * @param risto the Risto to be modified
      * @return DataRistorante
-     * @throws JackWicketException
      */
     @Transactional
-    DataRistorante update(DataRistorante risto) throws JackWicketException;
+    DataRistorante update(DataRistorante risto);
 
     /**
      * Insert a new restaurant
      * 
      * @param risto the Risto to be inserted
      * @return DataRistorante
-     * @throws JackWicketException
      */
     @Transactional
-    DataRistorante insert(DataRistorante risto) throws JackWicketException;
+    DataRistorante insert(DataRistorante risto);
 
     /**
      * Return all the restaurant
@@ -63,17 +59,17 @@ public interface DataRistoranteService {
      * @return Collection<DataRistorante>
      */
     @Transactional(readOnly = true)
-    Collection<DataRistorante> getAll() throws JackWicketException;
+    Collection<DataRistorante> getAll();
 
     /**
      * Find the restaurant by the given pattern
      * 
      * @param pattern
-     * @param maxResults the max number of results, 0 for unlimited 
+     * @param maxResults the max number of results, 0 for unlimited
      * @return Collection<DataRistorante>
      */
     @Transactional(readOnly = true)
-    Collection<DataRistorante> find(String pattern, int maxResults) throws JackWicketException;
+    Collection<DataRistorante> find(String pattern, int maxResults);
 
     /**
      * Find the restaurant by the given pattern, city, country
@@ -85,29 +81,27 @@ public interface DataRistoranteService {
      * @return Collection<DataRistorante>
      */
     @Transactional(readOnly = true)
-    Collection<DataRistorante> find(String pattern, String city, Country country, int maxResults) throws JackWicketException;
+    Collection<DataRistorante> find(String pattern, String city, Country country, int maxResults);
 
     /**
      * Remove a restaurant from the repository
      * 
      * @param risto
-     * @throws JackWicketException
      */
     @Transactional
-    void remove(DataRistorante risto) throws JackWicketException;
+    void remove(DataRistorante risto);
 
     /**
      * Get a restaurant by ID
      * 
      * @param id
      * @return DataRistorante
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    DataRistorante getByID(String id) throws JackWicketException;
+    DataRistorante getByID(String id);
 
     @Transactional(readOnly = true)
-    public List<ProvIta> getAllProv() throws JackWicketException;
+    public List<ProvIta> getAllProv();
 
     /**
      * exact match search on given parameters
@@ -116,9 +110,8 @@ public interface DataRistoranteService {
      * @param city
      * @param country
      * @return found datRisto
-     * @throws JackWicketException
      */
     @Transactional(readOnly = true)
-    Collection<DataRistorante> getBy(String pattern, String city, Country country) throws JackWicketException;
+    Collection<DataRistorante> getBy(String pattern, String city, Country country);
 
 }

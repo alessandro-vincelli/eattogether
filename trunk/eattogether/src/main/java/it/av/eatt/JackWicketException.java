@@ -18,7 +18,7 @@ package it.av.eatt;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-public class JackWicketException extends Exception {
+public class JackWicketException extends RuntimeException {
 
     private static final long serialVersionUID = -2549208951901428566L;
     private static Log log = LogFactory.getLog(JackWicketException.class);

@@ -15,18 +15,17 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.EaterProfile;
 
 import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * Services on the Eater Profile
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
  */
 @Service
 public interface EaterProfileService {
@@ -35,35 +34,40 @@ public interface EaterProfileService {
      * 
      * @param object
      * @return just saved profile
-     * @throws JackWicketException
      */
     @Transactional
-    EaterProfile save(EaterProfile object) throws JackWicketException;
+    EaterProfile save(EaterProfile object);
+
     /**
      * Get all the user profile
      * 
      * @return all the user profile
-     * @throws JackWicketException
      */
-    @Transactional(readOnly=true)
-    Collection<EaterProfile> getAll() throws JackWicketException;
+    @Transactional(readOnly = true)
+    Collection<EaterProfile> getAll();
 
+    /**
+     * Remove a profile
+     * 
+     * @param profile
+     */
     @Transactional
-    void remove(EaterProfile object) throws JackWicketException;
+    void remove(EaterProfile profile);
+
     /**
      * Return the regular user profile, it must be the "USER" profile
      * 
      * @return EaterProfile
-     * @throws JackWicketException
      */
-    EaterProfile getRegolarUserProfile() throws JackWicketException;
+    EaterProfile getRegolarUserProfile();
+
     /**
      * Return the user with the passed name, there's a unique constraint on the user profile name
      * 
      * @param id
      * @return the user with the given name
      */
-    @Transactional(readOnly=true)
+    @Transactional(readOnly = true)
     EaterProfile getByName(String id);
 
 }

@@ -15,8 +15,6 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
-
 import java.util.List;
 
 import org.hibernate.criterion.Criterion;
@@ -35,48 +33,43 @@ public interface ApplicationService<T> {
      * 
      * @param item
      * @return just saved T item
-     * @throws JackWicketException
      */
     @Transactional
-    T save(T item) throws JackWicketException;
+    T save(T item);
 
     /**
      * Return all the T item
      * 
      * @return all T item
-     * @throws JackWicketException
      */
     @Transactional(readOnly=true)
-    List<T> getAll() throws JackWicketException;
+    List<T> getAll();
 
     /**
      * Search on the T item by the given text value
      * 
      * @param pattern
      * @return found T item
-     * @throws JackWicketException
      */
     @Deprecated
-    List<T> findFullText(String pattern) throws JackWicketException;
+    List<T> findFullText(String pattern);
 
     /**
      * Remove the given T item
      * 
      * @param item
-     * @throws JackWicketException
      */
     @Transactional
-    void remove(T item) throws JackWicketException;
+    void remove(T item);
 
     /**
      * Get an item by ID
      * 
      * @param id
      * @return T item
-     * @throws JackWicketException
      */
     @Transactional(readOnly=true)
-    T getByID(String id) throws JackWicketException;
+    T getByID(String id);
     
     @Transactional(readOnly=true)
     List<T> findByCriteria(Criterion... criterion);

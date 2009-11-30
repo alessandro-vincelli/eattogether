@@ -15,17 +15,17 @@
  */
 package it.av.eatt.service;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.RistoranteRevision;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
  * Services on Ristoranti
  * 
  * @author <a href='mailto:a.vincelli@gmail.com'>Alessandro Vincelli</a>
- *
+ * 
  */
 @Service
 @Repository
@@ -34,12 +34,10 @@ public interface RistoranteRevisionService {
     /**
      * Insert a new revision restaurant
      * 
-     * @param R the Risto to be inserted
-     * @param user the user that is performing the modification
+     * @param revision
      * @return RistoranteRevision
-     * @throws JackWicketException
      */
     @Transactional
-    RistoranteRevision insert(RistoranteRevision revision) throws JackWicketException;
+    RistoranteRevision insert(RistoranteRevision revision);
 
 }

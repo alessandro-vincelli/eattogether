@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service.impl;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.DataRistorante;
 import it.av.eatt.ocm.model.ProvIta;
 import it.av.eatt.ocm.model.Ristorante;
@@ -51,7 +50,7 @@ public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<
      * {@inheritDoc}
      */
     @Override
-    public DataRistorante update(DataRistorante risto) throws JackWicketException {
+    public DataRistorante update(DataRistorante risto){
         super.save(risto);
         getJpaTemplate().flush();
         return risto;
@@ -61,7 +60,7 @@ public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<
      * {@inheritDoc}
      */
     @Override
-    public DataRistorante insert(DataRistorante risto) throws JackWicketException {
+    public DataRistorante insert(DataRistorante risto){
         super.save(risto);
         return risto;
     }
@@ -70,7 +69,7 @@ public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<
      * {@inheritDoc}
      */
     @Override
-    public Collection<DataRistorante> find(String pattern, int maxResults) throws JackWicketException {
+    public Collection<DataRistorante> find(String pattern, int maxResults){
         Criterion critByName = Restrictions.ilike(Ristorante.NAME, "%" + pattern + "%");
         Order orderByName = Order.asc(DataRistorante.NAME);
         return findByCriteria(orderByName, 0, maxResults, critByName);        
@@ -80,7 +79,7 @@ public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<
      * {@inheritDoc}
      */
     @Override
-    public void remove(DataRistorante object) throws JackWicketException {
+    public void remove(DataRistorante object){
         super.remove(object);
     }
 
@@ -88,7 +87,7 @@ public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<
      * {@inheritDoc}
      */
     @Override
-    public List<ProvIta> getAllProv() throws JackWicketException {
+    public List<ProvIta> getAllProv(){
         Criteria criteria = getHibernateSession().createCriteria(ProvIta.class);
         return criteria.list();
     }
@@ -97,7 +96,7 @@ public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<
      * {@inheritDoc}
      */
     @Override
-    public Collection<DataRistorante> find(String pattern, String city, Country country, int maxResults) throws JackWicketException {
+    public Collection<DataRistorante> find(String pattern, String city, Country country, int maxResults){
         Criterion critByName = Restrictions.ilike(Ristorante.NAME, "%" + pattern + "%");
         Criterion critByCity = Restrictions.eq(Ristorante.CITY, city);
         Criterion critByCountry = Restrictions.eq(Ristorante.COUNTRY, country.getIso2());
@@ -109,7 +108,7 @@ public class DataRistoranteServiceHibernate extends ApplicationServiceHibernate<
      * {@inheritDoc}
      */
     @Override
-    public Collection<DataRistorante> getBy(String pattern, String city, Country country) throws JackWicketException {
+    public Collection<DataRistorante> getBy(String pattern, String city, Country country){
         Criterion critByName = Restrictions.eq(Ristorante.NAME, pattern);
         Criterion critByCity = Restrictions.eq(Ristorante.CITY, city);
         Criterion critByCountry = Restrictions.eq(Ristorante.COUNTRY, country.getIso2());

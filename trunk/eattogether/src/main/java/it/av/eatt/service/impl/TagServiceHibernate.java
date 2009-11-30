@@ -15,7 +15,6 @@
  */
 package it.av.eatt.service.impl;
 
-import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Tag;
 import it.av.eatt.service.TagService;
 
@@ -34,7 +33,7 @@ public class TagServiceHibernate extends ApplicationServiceHibernate<Tag> implem
      * {@inheritDoc}
      */
     @Override
-    public Tag insert(String tag) throws JackWicketException {
+    public Tag insert(String tag) {
         Tag result = getByTagValue(tag);
         if (result != null) {
             return result;
@@ -47,7 +46,7 @@ public class TagServiceHibernate extends ApplicationServiceHibernate<Tag> implem
      * {@inheritDoc}
      */
     @Override
-    public List<Tag> find(String query) throws JackWicketException {
+    public List<Tag> find(String query) {
         Criterion crit = Restrictions.ilike(Tag.TAG, query);
         List<Tag> results = findByCriteria(crit);
         return results;
@@ -57,7 +56,7 @@ public class TagServiceHibernate extends ApplicationServiceHibernate<Tag> implem
      * {@inheritDoc}
      */
     @Override
-    public Tag getByTagValue(String tagValue) throws JackWicketException {
+    public Tag getByTagValue(String tagValue) {
         Criterion crit = Restrictions.eq(Tag.TAG, tagValue);
         List<Tag> results = findByCriteria(crit);
         if (results.size() == 1) {
