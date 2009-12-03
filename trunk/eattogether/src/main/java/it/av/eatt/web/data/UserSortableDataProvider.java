@@ -26,7 +26,9 @@ import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+import org.apache.wicket.injection.web.InjectorHolder;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * 
@@ -34,17 +36,18 @@ import org.apache.wicket.model.IModel;
  */
 public class UserSortableDataProvider extends SortableDataProvider<Eater> {
     private static final long serialVersionUID = 1L;
+    @SpringBean
     private EaterService usersService;
     private Collection<Eater> results;
 
     /**
-     * @param usersService
+     * Construct
      */
-    public UserSortableDataProvider(EaterService usersService) {
+    public UserSortableDataProvider() {
         super();
         results = new ArrayList<Eater>();
-        this.usersService = usersService;
         // setSort(LightVac.SortedFieldNames.dateTime.value(), true);
+        InjectorHolder.getInjector().inject(this);
     }
 
     /**
@@ -54,7 +57,6 @@ public class UserSortableDataProvider extends SortableDataProvider<Eater> {
     public final Iterator<Eater> iterator(int first, int count) {
         return Collections.synchronizedList(new ArrayList<Eater>(results)).subList(first, first + count).iterator();
     }
-
 
     /**
      *{@inheritDoc}
@@ -72,14 +74,14 @@ public class UserSortableDataProvider extends SortableDataProvider<Eater> {
      */
     @Override
     public final IModel<Eater> model(Eater user) {
-        return new UserDetachableModel(user, usersService);
+        return new UserDetachableModel(user);
     }
 
     /**
      * Performs the search
      * 
      * @param searchData the string to use for the search
-     * @throws JackWicketException 
+     * @throws JackWicketException
      */
     public final void fetchResults(String searchData) throws JackWicketException {
         if (StringUtils.isNotBlank(searchData)) {

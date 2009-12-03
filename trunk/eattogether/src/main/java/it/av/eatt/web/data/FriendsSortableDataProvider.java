@@ -26,8 +26,10 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+import org.apache.wicket.injection.web.InjectorHolder;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * 
@@ -36,17 +38,17 @@ import org.apache.wicket.model.Model;
  */
 public class FriendsSortableDataProvider extends SortableDataProvider<EaterRelation> {
     private static final long serialVersionUID = 1L;
+    @SpringBean
     private EaterRelationService userRelationService;
     private Collection<EaterRelation> results;
 
     /**
-     * @param usersService
      * @param user
      */
-    public FriendsSortableDataProvider(EaterRelationService userRelationService, Eater ofUser) {
+    public FriendsSortableDataProvider(Eater ofUser) {
         super();
         //this.user = user;
-        this.userRelationService = userRelationService;
+        InjectorHolder.getInjector().inject(this);
         results = userRelationService.getAllRelations(ofUser);
         // setSort(LightVac.SortedFieldNames.dateTime.value(), true);
     }

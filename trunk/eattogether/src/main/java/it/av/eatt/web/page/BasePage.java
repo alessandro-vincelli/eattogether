@@ -19,6 +19,7 @@ import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.web.Locales;
 import it.av.eatt.web.security.SecuritySession;
 
+import org.apache.wicket.PageParameters;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -251,6 +252,7 @@ public class BasePage extends WebPage {
                 setResponsePage(SignOut.class);
             }
         };
+
         Link<String> goSignIn = new Link<String>("goSignIn") {
             private static final long serialVersionUID = 1L;
 
@@ -259,7 +261,7 @@ public class BasePage extends WebPage {
                 setResponsePage(SignIn.class);
             }
         };
-
+        
         goSignIn.setOutputMarkupId(true);
         goSignOut.setOutputMarkupId(true);
 
@@ -272,6 +274,30 @@ public class BasePage extends WebPage {
         }
         add(goSignOut);
         add(goSignIn);
+
+        Link<String> goAccount = new Link<String>("goAccount") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick() {
+                Eater eater = getLoggedInUser();
+                if(eater != null){
+                    PageParameters pp = new PageParameters(YoueatHttpParams.PARAM_YOUEAT_ID + "=" + eater.getId());
+                    setResponsePage(UserAccountPage.class, pp);    
+                }                
+            }
+            @Override
+            protected void onBeforeRender() {
+                super.onBeforeRender();
+                setVisible((getApplication().getSecuritySettings().getAuthorizationStrategy()
+                        .isInstantiationAuthorized(UserAccountPage.class)));
+            }
+            @Override
+            protected boolean callOnBeforeRenderIfNotVisible() {
+                return true;
+            }
+        };
+        add(goAccount);
 
     }
 

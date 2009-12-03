@@ -19,7 +19,9 @@ import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.service.RistoranteService;
 
+import org.apache.wicket.injection.web.InjectorHolder;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * 
@@ -30,16 +32,16 @@ public class RistoranteDetachableModel extends LoadableDetachableModel<Ristorant
 
     private static final long serialVersionUID = 1L;
     private final String id;
+    @SpringBean
     private RistoranteService ristoranteService;
 
     /**
      * 
      * @param object
-     * @param userService
      */
-    public RistoranteDetachableModel(Ristorante object, RistoranteService ristoranteService) {
+    public RistoranteDetachableModel(Ristorante object) {
         this(object.getId());
-        this.ristoranteService = ristoranteService;
+        InjectorHolder.getInjector().inject(this);
     }
 
     /**

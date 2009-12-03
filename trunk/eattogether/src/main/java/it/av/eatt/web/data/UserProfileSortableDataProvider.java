@@ -25,7 +25,9 @@ import java.util.Collections;
 import java.util.Iterator;
 
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+import org.apache.wicket.injection.web.InjectorHolder;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * 
@@ -34,27 +36,27 @@ import org.apache.wicket.model.IModel;
  */
 public class UserProfileSortableDataProvider extends SortableDataProvider<EaterProfile> {
     private static final long serialVersionUID = 1L;
+    @SpringBean
     private EaterProfileService userProfileService;
     private Collection<EaterProfile> results;
 
     /**
-     * 
-     * @param userProfileService
+     * Construct
      */
-    public UserProfileSortableDataProvider(EaterProfileService userProfileService) {
+    public UserProfileSortableDataProvider() {
         super();
-        this.userProfileService = userProfileService;
+        InjectorHolder.getInjector().inject(this);
         // setSort(LightVac.SortedFieldNames.dateTime.value(), true);
     }
 
     /**
      * 
-     * @see org.apache.wicket.markup.repeater.data.IDataProvider#iterator(int,
-     *      int)
+     * @see org.apache.wicket.markup.repeater.data.IDataProvider#iterator(int, int)
      */
     @Override
     public final Iterator<EaterProfile> iterator(int first, int count) {
-        return Collections.synchronizedList(new ArrayList<EaterProfile>(results)).subList(first, first + count).iterator();
+        return Collections.synchronizedList(new ArrayList<EaterProfile>(results)).subList(first, first + count)
+                .iterator();
     }
 
     /**
@@ -68,7 +70,7 @@ public class UserProfileSortableDataProvider extends SortableDataProvider<EaterP
 
     @Override
     public final IModel<EaterProfile> model(EaterProfile userProfile) {
-        return new UserProfileDetachableModel(userProfile, userProfileService);
+        return new UserProfileDetachableModel(userProfile);
     }
 
     /**
@@ -81,8 +83,7 @@ public class UserProfileSortableDataProvider extends SortableDataProvider<EaterP
     /**
      * Performs the search
      * 
-     * @param request
-     * @throws JackWicketException 
+     * @throws JackWicketException
      */
     public final void fetchResults() throws JackWicketException {
         results = userProfileService.getAll();

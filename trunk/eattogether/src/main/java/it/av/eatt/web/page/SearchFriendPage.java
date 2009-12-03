@@ -17,7 +17,6 @@ package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
-import it.av.eatt.service.EaterService;
 import it.av.eatt.web.data.SearchUserFriendSortableDataProvider;
 
 import java.util.ArrayList;
@@ -34,7 +33,6 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * Add and remove friends.
@@ -44,10 +42,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  */
 @AuthorizeInstantiation( { "USER", "ADMIN", "EDITOR" })
 public class SearchFriendPage extends BasePage {
-
-    private static final long serialVersionUID = 1L;
-    @SpringBean(name = "userService")
-    private EaterService userService;
 
     private SearchUserFriendSortableDataProvider searchFriendsDataProvider;
     private final WebMarkupContainer searchFriendsContainer;
@@ -73,7 +67,7 @@ public class SearchFriendPage extends BasePage {
                 .getString()), "firstname"));
         columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("lastname", this, null)
                 .getString()), "lastname"));
-        searchFriendsDataProvider = new SearchUserFriendSortableDataProvider(userService, getLoggedInUser());
+        searchFriendsDataProvider = new SearchUserFriendSortableDataProvider(getLoggedInUser());
         AjaxFallbackDefaultDataTable<Eater> searchFriendsDataTable = new AjaxFallbackDefaultDataTable<Eater>(
                 "searchFriendsDataTable", columns, searchFriendsDataProvider, 20);
         searchFriendsContainer.add(searchFriendsDataTable);

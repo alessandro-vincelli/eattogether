@@ -18,7 +18,9 @@ package it.av.eatt.web.data;
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.service.EaterService;
 
+import org.apache.wicket.injection.web.InjectorHolder;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * 
@@ -29,16 +31,16 @@ public class UserDetachableModel extends LoadableDetachableModel<Eater> {
 
     private static final long serialVersionUID = 1L;
     private final String id;
+    @SpringBean
     private EaterService userService;
 
     /**
      * 
-     * @param c
-     * @param userService
+     * @param eater
      */
-    public UserDetachableModel(Eater c, EaterService userService) {
-        this(c.getEmail());
-        this.userService = userService;
+    public UserDetachableModel(Eater eater) {
+        this(eater.getEmail());
+        InjectorHolder.getInjector().inject(this);
     }
 
     /**

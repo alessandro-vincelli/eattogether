@@ -26,7 +26,9 @@ import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+import org.apache.wicket.injection.web.InjectorHolder;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * 
@@ -35,6 +37,7 @@ import org.apache.wicket.model.IModel;
  */
 public class RistoranteSortableDataProvider extends SortableDataProvider<Ristorante> {
     private static final long serialVersionUID = 1L;
+    @SpringBean
     private RistoranteService ristoranteService;
     private Collection<Ristorante> results;
 
@@ -42,9 +45,9 @@ public class RistoranteSortableDataProvider extends SortableDataProvider<Ristora
      * 
      * @param ristoranteService
      */
-    public RistoranteSortableDataProvider(RistoranteService ristoranteService) {
+    public RistoranteSortableDataProvider() {
         super();
-        this.ristoranteService = ristoranteService;
+        InjectorHolder.getInjector().inject(this);
         results = new ArrayList<Ristorante>(0);
         // setSort(LightVac.SortedFieldNames.dateTime.value(), true);
     }
@@ -76,7 +79,7 @@ public class RistoranteSortableDataProvider extends SortableDataProvider<Ristora
      */
     @Override
     public final IModel<Ristorante> model(Ristorante ristorante) {
-        return new RistoranteDetachableModel(ristorante, ristoranteService);
+        return new RistoranteDetachableModel(ristorante);
     }
 
     /**
