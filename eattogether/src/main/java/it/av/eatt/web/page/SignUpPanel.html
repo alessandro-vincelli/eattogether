@@ -22,21 +22,22 @@
         	<th><label for="password"><wicket:message key="password"/></label></th>
         	<td><input type="password" wicket:id="password"/></td>
         	</tr>
-        	<tr>
-                <td colspan="2" class="captchaArea"><img wicket:id="captchaImage" /></td>
-            </tr>
             <tr>
-                <th><label for="captchaInput"><wicket:message key="captchaInput"/></label></th>
-                <td><input type="text" wicket:id="captchaInput" /></td>
-        	</tr>
-        	<tr >
-        	<td colspan="2" class="submitarea"><input type="submit" wicket:id="buttonCreateNewAccount" wicket:message="title:signUp.buttonCreateNewAccount,value:signUp.buttonCreateNewAccount"/>
+            <th><label for="password-confirm"><wicket:message key="password-confirm"/></label></th>
+            <td><input type="password" wicket:id="password-confirm"/></td>
+            </tr>
+        </table>
+        <div class="captchaArea" wicket:id="captcha" ></div>
+        <table class="form-signup">
+        	<tr class="submitarea">
+        	<td><input type="submit" wicket:id="buttonCreateNewAccount" wicket:message="title:signUp.buttonCreateNewAccount,value:signUp.buttonCreateNewAccount"/>
         	<!-- <button wicket:id="buttonClearForm"><wicket:message key="button.clean"/></button>
         	-->
             </td>
             </tr>
         </table>
        	</fieldset>
+        
        </form>
        <button wicket:id="goSignInAfterSignUp"><wicket:message key="goSignInAfterSignUp"/></button>
 	

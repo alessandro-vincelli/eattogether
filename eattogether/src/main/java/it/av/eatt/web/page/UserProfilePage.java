@@ -101,7 +101,7 @@ public class UserProfilePage extends BasePage {
                 .getString()), "name"));
         columns.add(new PropertyColumn<EaterProfile>(new Model<String>(new StringResourceModel("description", this,
                 null).getString()), "description"));
-        dataProvider = new UserProfileSortableDataProvider(userProfileService);
+        dataProvider = new UserProfileSortableDataProvider();
         refreshDataTable();
         usersProfileDataTable = new AjaxFallbackDefaultDataTable<EaterProfile>("usersDataTable", columns, dataProvider,
                 10);

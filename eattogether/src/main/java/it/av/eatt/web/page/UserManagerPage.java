@@ -108,7 +108,7 @@ public class UserManagerPage extends BasePage {
                 .getString()), "email"));
         columns.add(new PropertyColumn<Eater>(new Model<String>(new StringResourceModel("userProfile", this, null)
                 .getString()), "userProfile.name"));
-        dataProvider = new UserSortableDataProvider(userService);
+        dataProvider = new UserSortableDataProvider();
         usersDataTable = new AjaxFallbackDefaultDataTable<Eater>("usersDataTable", columns, dataProvider, 10);
         add(usersDataTable);
         searchPanel = new SearchPanel(dataProvider, usersDataTable, "searchPanel", getFeedbackPanel());

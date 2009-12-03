@@ -17,7 +17,6 @@ package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Ristorante;
-import it.av.eatt.service.RistoranteService;
 import it.av.eatt.web.components.RistoNameColumn;
 import it.av.eatt.web.components.RistoranteDataTable;
 import it.av.eatt.web.data.RistoranteSortableDataProvider;
@@ -33,7 +32,6 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * The page provides the home page.
@@ -44,8 +42,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 public class HomePage extends BasePage {
 
     private static final long serialVersionUID = 1L;
-    @SpringBean(name = "ristoranteService")
-    private RistoranteService ristoranteService;
     private RistoranteSortableDataProvider ristoranteSortableDataProvider;
 
     /**
@@ -54,7 +50,7 @@ public class HomePage extends BasePage {
      * @throws JackWicketException
      */
     public HomePage() throws JackWicketException {
-        ristoranteSortableDataProvider = new RistoranteSortableDataProvider(ristoranteService);
+        ristoranteSortableDataProvider = new RistoranteSortableDataProvider();
 
         List<IColumn<Ristorante>> columns = new ArrayList<IColumn<Ristorante>>();
         columns.add(new AbstractColumn<Ristorante>(new Model<String>(new StringResourceModel(

@@ -26,7 +26,9 @@ import java.util.Iterator;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.wicket.extensions.markup.html.repeater.util.SortableDataProvider;
+import org.apache.wicket.injection.web.InjectorHolder;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * 
@@ -35,18 +37,19 @@ import org.apache.wicket.model.IModel;
  */
 public class SearchUserFriendSortableDataProvider extends SortableDataProvider<Eater> {
     private static final long serialVersionUID = 1L;
+    @SpringBean
     private EaterService usersService;
     private Collection<Eater> results;
     private Eater forUser;
 
     /**
-     * @param usersService
+     * @param forUser
      */
-    public SearchUserFriendSortableDataProvider(EaterService usersService, Eater forUser) {
+    public SearchUserFriendSortableDataProvider(Eater forUser) {
         super();
         results = new ArrayList<Eater>();
         this.forUser = forUser;
-        this.usersService = usersService;
+        InjectorHolder.getInjector().inject(this);
         // setSort(LightVac.SortedFieldNames.dateTime.value(), true);
     }
 
@@ -76,7 +79,7 @@ public class SearchUserFriendSortableDataProvider extends SortableDataProvider<E
      */
     @Override
     public final IModel<Eater> model(Eater user) {
-        return new UserDetachableModel(user, usersService);
+        return new UserDetachableModel(user);
     }
 
     /**

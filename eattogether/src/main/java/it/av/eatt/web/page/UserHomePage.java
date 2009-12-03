@@ -20,7 +20,6 @@ import it.av.eatt.ocm.model.ActivityRistorante;
 import it.av.eatt.ocm.model.Ristorante;
 import it.av.eatt.ocm.util.DateUtil;
 import it.av.eatt.service.ActivityRistoranteService;
-import it.av.eatt.service.RistoranteService;
 import it.av.eatt.web.components.RistoNameColumn;
 import it.av.eatt.web.components.RistoranteDataTable;
 import it.av.eatt.web.data.RistoranteSortableDataProvider;
@@ -50,7 +49,6 @@ import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
-import org.apache.wicket.protocol.http.RequestUtils;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
@@ -63,8 +61,6 @@ public class UserHomePage extends BasePage {
     private static final long serialVersionUID = 1L;
     @SpringBean(name = "activityRistoranteService")
     private ActivityRistoranteService activityRistoranteService;
-    @SpringBean(name = "ristoranteService")
-    private RistoranteService ristoranteService;
 
     private ActivityPaging activityPagingUser = new ActivityPaging(0, 3);
     private ActivityPaging activityPagingFriends = new ActivityPaging(0, 3);
@@ -75,8 +71,7 @@ public class UserHomePage extends BasePage {
     private WebMarkupContainer friendsActivitiesListContainer;
 
     public UserHomePage() {
-        RistoranteSortableDataProvider ristoranteSortableDataProvider = new RistoranteSortableDataProvider(
-                ristoranteService);
+        RistoranteSortableDataProvider ristoranteSortableDataProvider = new RistoranteSortableDataProvider();
         List<IColumn<Ristorante>> columns = new ArrayList<IColumn<Ristorante>>();
         columns.add(new AbstractColumn<Ristorante>(new Model<String>(new StringResourceModel(
                 "datatableactionpanel.actions", this, null).getString())) {

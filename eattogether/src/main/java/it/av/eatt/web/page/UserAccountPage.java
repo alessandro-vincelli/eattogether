@@ -16,36 +16,25 @@
 package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
-import it.av.eatt.ocm.model.ActivityRistorante;
 import it.av.eatt.ocm.model.Eater;
-import it.av.eatt.ocm.util.DateUtil;
-import it.av.eatt.service.ActivityRistoranteService;
 import it.av.eatt.service.EaterService;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import org.apache.wicket.PageParameters;
-import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxFallbackLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.image.Image;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.PropertyListView;
+import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.validator.AbstractValidator;
+import org.apache.wicket.validation.validator.StringValidator;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 
 /**
  * User account manager page.
@@ -58,21 +47,36 @@ public class UserAccountPage extends BasePage {
     @SpringBean
     private EaterService eaterService;
     private String confirmPassword = "";
+    private String oldPasswordValue = "";
+    private String newPasswordValue = "";
+    private final Eater eater;
 
     public UserAccountPage(PageParameters pageParameters) throws JackWicketException {
         if (!pageParameters.containsKey(YoueatHttpParams.PARAM_YOUEAT_ID)) {
             throw new JackWicketException("Missing user id");
         }
-
         String eaterId = pageParameters.getString(YoueatHttpParams.PARAM_YOUEAT_ID, "");
-        Eater eater = eaterService.getByID(eaterId);
+        StringValidator pwdValidator = StringValidator.LengthBetweenValidator.lengthBetween(6, 20);
+        eater = eaterService.getByID(eaterId);
 
         Form<Eater> form = new Form<Eater>("account", new CompoundPropertyModel<Eater>(eater));
-        form.add(new RequiredTextField<String>("firstName"));
-        form.add(new RequiredTextField<String>("lastName"));
-        form.add(new PasswordTextField("password"));
-        form.add(new PasswordTextField("confirm-password"));
-
+        form.setOutputMarkupId(true);
+        add(form);
+        form.add(new Label("email"));
+        form.add(new RequiredTextField<String>("firstname"));
+        form.add(new RequiredTextField<String>("lastname"));
+        PasswordTextField oldPassword = new PasswordTextField("oldPassword", new Model<String>(oldPasswordValue));
+        oldPassword.add(new OldPasswordValidator());
+        form.add(oldPassword);
+        PasswordTextField pwd1 = new PasswordTextField("newPassword", new Model<String>(newPasswordValue));
+        pwd1.add(pwdValidator);
+        pwd1.setResetPassword(false);
+        form.add(pwd1);
+        PasswordTextField pwd2 = new PasswordTextField("password-confirm", new Model<String>(confirmPassword));
+        form.add(pwd2);
+        EqualPasswordInputValidator passwordInputValidator = new EqualPasswordInputValidator(pwd1, pwd2);
+        form.add(passwordInputValidator);
+        form.add(new SubmitButton("saveAccount", form));
     }
 
     private class SubmitButton extends AjaxFallbackButton {
@@ -82,15 +86,36 @@ public class UserAccountPage extends BasePage {
 
         @Override
         protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-            try {
-                eaterService.update((Eater)form.getModelObject());
-            } catch (JackWicketException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+            info(getString("info.accountSaved"));
+            String newPwd = form.get("password-confirm").getDefaultModelObjectAsString();
+            if ((!newPwd.isEmpty())) {
+                StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+                eater.setPassword(passwordEncryptor.encryptPassword(newPwd));
             }
-
+            eaterService.update((Eater) form.getModelObject());
+            newPasswordValue = "";
+            oldPasswordValue = "";
+            confirmPassword = "";
+            target.addComponent(getFeedbackPanel());
+            target.addComponent(form);
         }
 
+        @Override
+        protected void onError(AjaxRequestTarget target, Form<?> form) {
+            super.onError(target, form);
+            target.addComponent(getFeedbackPanel());
+        }
+    }
+
+    private class OldPasswordValidator extends AbstractValidator {
+
+        @Override
+        protected void onValidate(IValidatable validatable) {
+            StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+            if (!passwordEncryptor.checkPassword(validatable.getValue().toString(), eater.getPassword())) {
+                error(validatable);
+            }
+        }
     }
 
 }
