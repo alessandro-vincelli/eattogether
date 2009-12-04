@@ -648,3 +648,6 @@ input.unpublishPictureButton {
 #menu-languages li a:hover {
     color: #2276BB;
 }
+.descriptionNotAvailableLang{
+    color: gray;
+}

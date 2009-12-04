@@ -25,6 +25,7 @@ import it.av.eatt.service.LanguageService;
 import it.av.eatt.service.RistoranteService;
 import it.av.eatt.web.Locales;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -129,15 +130,27 @@ public class RistoranteViewPage extends BasePage {
                     @Override
                     protected void onComponentTag(ComponentTag tag) {
                         super.onComponentTag(tag);
-                        if (actualDescriptionLanguage.getCountry().equals(item.getModelObject().getCountry())) {
-                            tag.getAttributes().put("class", "descriptionLink descriptionLinkActive");
+                        boolean langpresent = isDescriptionPresentOnTheGivenLanguage(ristorante, item.getModelObject());
+                        HashMap<String, String> tagAttrs = new HashMap<String, String>();
+                        if (!langpresent) {
+                            tagAttrs.put("title", getString("descriptionNotAvailableLang"));
+                            tagAttrs.put("class", "descriptionNotAvailableLang");
                         }
+                        if (actualDescriptionLanguage.getCountry().equals(item.getModelObject().getCountry())) {
+                            if (tagAttrs.containsKey("class")) {
+                                tagAttrs.put("class", tagAttrs.get("class").concat(
+                                        " descriptionLink descriptionLinkActive"));
+                            } else {
+                                tagAttrs.put("class", "descriptionLink descriptionLinkActive");
+                            }
+                        }
+                        tag.getAttributes().putAll(tagAttrs);
                     }
 
                     @Override
                     protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                         List<RistoranteDescriptionI18n> descs = ristorante.getDescriptions();
-                        boolean langpresent = false;
+                        boolean langpresent = isDescriptionPresentOnTheGivenLanguage(ristorante, item.getModelObject());
                         for (RistoranteDescriptionI18n ristoranteDescriptionI18n : descs) {
                             if (ristoranteDescriptionI18n.getLanguage().equals(item.getModelObject())) {
                                 langpresent = true;
@@ -164,8 +177,13 @@ public class RistoranteViewPage extends BasePage {
             @Override
             protected void populateItem(ListItem<RistoranteDescriptionI18n> item) {
                 boolean visible = actualDescriptionLanguage.equals(item.getModelObject().getLanguage());
-                item.add(new MultiLineLabel(RistoranteDescriptionI18n.DESCRIPTION, new PropertyModel<String>(item
-                        .getModelObject(), RistoranteDescriptionI18n.DESCRIPTION)).setVisible(visible));
+                if (item.getModelObject().getDescription() == null || item.getModelObject().getDescription().isEmpty()) {
+                    item.add(new Label(RistoranteDescriptionI18n.DESCRIPTION, getString("descriptionNotAvailableLang"))
+                            .setVisible(visible));
+                } else {
+                    item.add(new MultiLineLabel(RistoranteDescriptionI18n.DESCRIPTION, new PropertyModel<String>(item
+                            .getModelObject(), RistoranteDescriptionI18n.DESCRIPTION)).setVisible(visible));
+                }
             }
         };
         descriptionsContainer.add(descriptions);
@@ -339,5 +357,43 @@ public class RistoranteViewPage extends BasePage {
         }
         Assert.notNull(lang);
         return lang;
+    }
+
+    /**
+     * Chek if the given risto has a not empty description on the given language
+     * 
+     * @param ristorante the risto to verify
+     * @param language the language to check
+     * @return true if the risto has desc on the given lang
+     */
+    private boolean isDescriptionPresentOnTheGivenLanguage(Ristorante ristorante, Language language) {
+        List<RistoranteDescriptionI18n> descs = ristorante.getDescriptions();
+        boolean langpresent = false;
+        for (RistoranteDescriptionI18n ristoranteDescriptionI18n : descs) {
+            if (ristoranteDescriptionI18n.getLanguage().equals(language)
+                    && ristoranteDescriptionI18n.getDescription() != null
+                    && !ristoranteDescriptionI18n.getDescription().isEmpty()) {
+                langpresent = true;
+            }
+        }
+        return langpresent;
+    }
+
+    /**
+     * Chek if the given risto has a not empty description on the given language
+     * 
+     * @param ristorante the risto to verify
+     * @param language the language to check
+     * @return true if the description is currently the
+     */
+    private boolean isTheCurrentDescriptionLanguage(Ristorante ristorante, Language language) {
+        List<RistoranteDescriptionI18n> descs = ristorante.getDescriptions();
+        boolean langpresent = false;
+        for (RistoranteDescriptionI18n ristoranteDescriptionI18n : descs) {
+            if (ristoranteDescriptionI18n.getLanguage().equals(language)) {
+                langpresent = true;
+            }
+        }
+        return langpresent;
     }
 }
