@@ -45,12 +45,15 @@ public class Eater extends BasicEntity {
     public static final String EMAIL = "email";
     public static final String USERPROFILE = "userProfile";
     public static final String COUNTRY = "country";
+    public static final String LANGUAGE = "language";
     
     private String password;
     private String firstname;
     private String lastname;
     private String email;
     private String country;
+    @ManyToOne
+    private Language language;
     @ManyToOne
     private EaterProfile userProfile;
     @OneToMany//( cascade = {CascadeType.ALL} , mappedBy="user")
@@ -142,5 +145,12 @@ public class Eater extends BasicEntity {
     public void setCountry(String country) {
     	this.country = country;
     }
-    
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
 }

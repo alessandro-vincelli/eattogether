@@ -17,14 +17,18 @@ package it.av.eatt.web.page;
 
 import it.av.eatt.JackWicketException;
 import it.av.eatt.ocm.model.Eater;
+import it.av.eatt.ocm.model.Language;
 import it.av.eatt.service.EaterService;
+import it.av.eatt.service.LanguageService;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
 import org.apache.wicket.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
@@ -46,6 +50,8 @@ public class UserAccountPage extends BasePage {
     private static final long serialVersionUID = 1L;
     @SpringBean
     private EaterService eaterService;
+    @SpringBean
+    private LanguageService languageService;
     private String confirmPassword = "";
     private String oldPasswordValue = "";
     private String newPasswordValue = "";
@@ -65,14 +71,17 @@ public class UserAccountPage extends BasePage {
         form.add(new Label("email"));
         form.add(new RequiredTextField<String>("firstname"));
         form.add(new RequiredTextField<String>("lastname"));
+        form.add(new DropDownChoice<Language>("language", languageService.getAll(), new LanguageRenderer()));
         PasswordTextField oldPassword = new PasswordTextField("oldPassword", new Model<String>(oldPasswordValue));
         oldPassword.add(new OldPasswordValidator());
         form.add(oldPassword);
         PasswordTextField pwd1 = new PasswordTextField("newPassword", new Model<String>(newPasswordValue));
+        pwd1.setRequired(false);
         pwd1.add(pwdValidator);
         pwd1.setResetPassword(false);
         form.add(pwd1);
         PasswordTextField pwd2 = new PasswordTextField("password-confirm", new Model<String>(confirmPassword));
+        pwd2.setRequired(false);
         form.add(pwd2);
         EqualPasswordInputValidator passwordInputValidator = new EqualPasswordInputValidator(pwd1, pwd2);
         form.add(passwordInputValidator);
@@ -107,14 +116,25 @@ public class UserAccountPage extends BasePage {
         }
     }
 
-    private class OldPasswordValidator extends AbstractValidator {
+    private class OldPasswordValidator extends AbstractValidator<String> {
 
         @Override
-        protected void onValidate(IValidatable validatable) {
+        protected void onValidate(IValidatable<String> validatable) {
             StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
             if (!passwordEncryptor.checkPassword(validatable.getValue().toString(), eater.getPassword())) {
                 error(validatable);
             }
+        }
+    }
+    
+    private class LanguageRenderer implements IChoiceRenderer<Language>{
+        @Override
+        public Object getDisplayValue(Language object) {
+            return getString(object.getLanguage());
+        }
+        @Override
+        public String getIdValue(Language object, int index) {
+            return object.getId();
         }
     }
 

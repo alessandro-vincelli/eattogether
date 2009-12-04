@@ -17,12 +17,18 @@ package it.av.eatt.web.page;
 
 import it.av.eatt.ocm.model.Eater;
 import it.av.eatt.web.Locales;
+import it.av.eatt.web.commons.CookieUtil;
 import it.av.eatt.web.security.SecuritySession;
+
+import java.util.Locale;
+
+import javax.servlet.http.Cookie;
 
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.ResourceReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.CSSPackageResource;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.image.Image;
@@ -54,7 +60,18 @@ public class BasePage extends WebPage {
                 && ((SecuritySession) getSession()).getAuth().isAuthenticated()) {
             isAuthenticated = true;
         }
+
         loggedInUser = ((SecuritySession) getSession()).getLoggedInUser();
+        if(getWebRequestCycle().getWebRequest().getCookie(CookieUtil.LANGUAGE) != null){
+            getSession().setLocale(new Locale(getWebRequestCycle().getWebRequest().getCookie(CookieUtil.LANGUAGE).getValue()));
+        }
+        else{
+            if(loggedInUser != null){
+                getWebRequestCycle().getWebResponse().addCookie(new Cookie(CookieUtil.LANGUAGE, loggedInUser.getLanguage().getLanguage()));
+                getSession().setLocale(new Locale(loggedInUser.getLanguage().getLanguage()));    
+            }
+        }
+        
         // add(JavascriptPackageResource.getHeaderContribution(BASEPAGE_JS));
         add(CSSPackageResource.getHeaderContribution(STYLES_CSS));
 
@@ -194,16 +211,15 @@ public class BasePage extends WebPage {
             @Override
             public void onClick() {
                 getSession().setLocale(Locales.ITALIAN);
+                getWebRequestCycle().getWebResponse().addCookie(new Cookie(CookieUtil.LANGUAGE, Locales.ITALIAN.getLanguage()));
             }
-
+            
             @Override
-            protected void onBeforeRender() {
-                super.onBeforeRender();
-                setVisible(!(getLocale().getLanguage().equals(Locales.ITALIAN.getLanguage())));
-            }
-            @Override
-            protected boolean callOnBeforeRenderIfNotVisible() {
-                return true;
+            protected void onComponentTag(ComponentTag tag) {
+                super.onComponentTag(tag);
+                if(getSession().getLocale().getLanguage().equals(Locales.ITALIAN.getLanguage())){
+                    tag.getAttributes().put("class", "selected");    
+                }
             }
         };
         add(goItalian);
@@ -212,16 +228,15 @@ public class BasePage extends WebPage {
             @Override
             public void onClick() {
                 getSession().setLocale(Locales.ENGLISH);
+                getWebRequestCycle().getWebResponse().addCookie(new Cookie(CookieUtil.LANGUAGE, Locales.ENGLISH.getLanguage()));
             }
-
+            
             @Override
-            protected void onBeforeRender() {
-                super.onBeforeRender();
-                setVisible(!(getLocale().getLanguage().equals(Locales.ENGLISH.getLanguage())));
-            }
-            @Override
-            protected boolean callOnBeforeRenderIfNotVisible() {
-                return true;
+            protected void onComponentTag(ComponentTag tag) {
+                super.onComponentTag(tag);
+                if(getSession().getLocale().getLanguage().equals(Locales.ENGLISH.getLanguage())){
+                    tag.getAttributes().put("class", "selected");    
+                }
             }
         };
         add(goEnglish);
@@ -229,17 +244,16 @@ public class BasePage extends WebPage {
         Link<String> goDutch = new Link<String>("goDutch"){
             @Override
             public void onClick() {
+                getWebRequestCycle().getWebResponse().addCookie(new Cookie(CookieUtil.LANGUAGE, Locales.DUTCH.getLanguage()));
                 getSession().setLocale(Locales.DUTCH);
             }
 
             @Override
-            protected void onBeforeRender() {
-                super.onBeforeRender();
-                setVisible(!(getLocale().getLanguage().equals(Locales.DUTCH.getLanguage())));
-            }
-            @Override
-            protected boolean callOnBeforeRenderIfNotVisible() {
-                return true;
+            protected void onComponentTag(ComponentTag tag) {
+                super.onComponentTag(tag);
+                if(getSession().getLocale().getLanguage().equals(Locales.DUTCH.getLanguage())){
+                    tag.getAttributes().put("class", "selected");    
+                }
             }
         };
         add(goDutch);
