@@ -9,17 +9,17 @@ public final class Locales {
     /**
      * Useful constant for language.
      */
-    public static final Locale ENGLISH = new Locale("en_US", "US");
+    public static final Locale ENGLISH = new Locale("en", "US");
 
     /**
      * Useful constant for language.
      */
-    public static final Locale DUTCH = new Locale("nl_NL", "NL");
+    public static final Locale DUTCH = new Locale("nl", "NL");
 
     /**
      * Useful constant for language.
      */
-    public static final Locale ITALIAN = new Locale("it_IT", "IT");
+    public static final Locale ITALIAN = new Locale("it", "IT");
 
     /**
      * The default locale, used when no or unsupported locale is requested.

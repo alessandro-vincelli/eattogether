@@ -608,3 +608,43 @@ input.unpublishPictureButton {
     float: left;
     padding-left: 15px;
 }
+
+#menu-languages {
+    float: right;
+    display: block;
+    text-align: right;
+    
+}
+
+#menu-languages ul {
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: none;
+}
+
+#menu-languages li {
+    border: 1px solid transparent;
+    display: inline-block;
+    font-size: 1em;
+    padding: 0.5em 0.15em;
+}
+
+#menu-languages li a {
+    border: 1px solid transparent;
+    display: inline-block;
+    font-size: 1.00em;
+    padding: 0.2em 0.15em;
+    border-bottom: 1px solid #E9E9E9;
+    color: #000000;
+    text-decoration: none;
+    height: 17px;
+    overflow: hidden;
+    font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+}
+#menu-languages .selected{
+    text-decoration: underline;
+}
+
+#menu-languages li a:hover {
+    color: #2276BB;
+}

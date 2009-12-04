@@ -9,6 +9,13 @@
 <div id="container">
 <div id="header">
     <a class="titleAndGoHome" href="/" title="Eattogether"><img wicket:id="logo"></img></a>
+    <ul id="menu-languages">
+        <li>
+            <a wicket:id="goDutch"><wicket:message key="link.goDutch" /></a>
+            <a wicket:id="goEnglish"><wicket:message key="link.goEnglish" /></a>
+            <a wicket:id="goItalian"><wicket:message key="link.goItalian" /></a>
+        </li>
+    </ul>
 	<ul id="menu">
 		<li><a href="mailto:dev@mailing.antwoordvoorbedrijven.net">Help</a></li>
 		<li><a wicket:id="goUserPage"><wicket:message key="basepage.goUserPage" /></a></li>
@@ -22,14 +29,10 @@
 			<a wicket:id="goSignIn"><wicket:message key="basepage.goSignIn" /></a>
 		</li>
         <li>
-            <a wicket:id="goDutch"><wicket:message key="link.goDutch" /></a>
-            <a wicket:id="goEnglish"><wicket:message key="link.goEnglish" /></a>
-            <a wicket:id="goItalian"><wicket:message key="link.goItalian" /></a>
-        </li>
-        <li>
             <a wicket:id="goAccount"><wicket:message key="link.goAccount" /></a>
         </li>
 	</ul>
+    
 </div>
 
     	<span wicket:id="feedBackPanel">message will be here</span>
