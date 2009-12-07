@@ -66,9 +66,9 @@ public class RepositoryInitStructureImpl implements RepositoryInitStructure {
             profileUSER = userProfileService.save(profileUSER);
             
             Eater userADMIN = new Eater();
-            userADMIN.setEmail("admin@admin.demo");
-            userADMIN.setFirstname("Admin FN");
-            userADMIN.setLastname("Admin LN");
+            userADMIN.setEmail("a.vincelli@gmail.com");
+            userADMIN.setFirstname("Alessandro");
+            userADMIN.setLastname("Vincelli");
             userADMIN.setPassword("admin");
             userADMIN.setUserProfile(profileADMIN);
             
@@ -104,10 +104,10 @@ public class RepositoryInitStructureImpl implements RepositoryInitStructure {
             risto.setProvince("TR");
             
             userService.add(userADMIN);
-            userService.addRegolarUser(userAUSER);
-            userService.addRegolarUser(userBUSER);
-            userService.addRegolarUser(userUSER);
-            ristoranteService.insert(risto, userAUSER);
+            //userService.addRegolarUser(userAUSER);
+            //userService.addRegolarUser(userBUSER);
+            //userService.addRegolarUser(userUSER);
+            //ristoranteService.insert(risto, userAUSER);
         }
         
     }
