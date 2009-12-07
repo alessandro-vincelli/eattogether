@@ -22,10 +22,10 @@
 	<!--<import resource="applicationContext-jr-jca.xml" />--> 
 	<!--  <import resource="applicationContext-jr-local.xml" />-->
 	
-	<bean class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath:/properties/jackwicket.properties</value>
+				<value>${springPropertiesLocation}</value>
 			</list>
 		</property>
 	</bean>
@@ -38,7 +38,7 @@
 
 	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceUnitName" value="mainPersistance" />
-		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"></property>
+		<property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>		 
 	</bean>
 	
 	<!-- <bean id="entityManagerFactoryStaticData" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

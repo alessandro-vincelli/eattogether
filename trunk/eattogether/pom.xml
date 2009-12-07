@@ -54,7 +54,7 @@
 			</build>
 			<properties>
 				<wicketApplication.configurationType>development</wicketApplication.configurationType>
-				<repositoryConf>repository_mysql.xml</repositoryConf>
+				<springPropertiesLocation>file:/etc/properties/youeat.properties</springPropertiesLocation>
 				<repositoryHomeDir>/tmp/repository-eattogether</repositoryHomeDir>
 				<indexingConfiguration>/home/alessandro/workspace-jw/eattogether/src/main/resources/indexing_configuration.xml</indexingConfiguration>
 				<mysqlHost>127.0.0.1</mysqlHost>
@@ -62,6 +62,23 @@
 				<mysqlPort>3306</mysqlPort>
 				<mysqlUser>root</mysqlUser>
 				<mysqlPassword>root</mysqlPassword>
+			</properties>
+		</profile>
+		<profile>
+			<id>ci</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>ci</value>
+				</property>
+				<file>
+				</file>
+			</activation>
+			<build>
+			</build>
+			<properties>
+				<wicketApplication.configurationType>deployment</wicketApplication.configurationType>
+				<springPropertiesLocation>file:/etc/properties/youeat-ci.properties</springPropertiesLocation>
 			</properties>
 		</profile>
 		<profile>
@@ -75,10 +92,11 @@
 				</file>
 			</activation>
 			<build>
-				<filters>
-					<filter>/home/hudson/properties/eattogether.properties</filter>
-				</filters>
 			</build>
+			<properties>
+				<wicketApplication.configurationType>deployment</wicketApplication.configurationType>
+				<springPropertiesLocation>file:/etc/properties/youeat.properties</springPropertiesLocation>
+			</properties>
 		</profile>
 	</profiles>
 	<repositories>
