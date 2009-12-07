@@ -18,9 +18,11 @@ package it.av.eatt.web.page;
 import it.av.eatt.JackWicketException;
 import it.av.eatt.UserAlreadyExistsException;
 import it.av.eatt.ocm.model.Eater;
+import it.av.eatt.ocm.model.Language;
 import it.av.eatt.ocm.model.data.Country;
 import it.av.eatt.service.CountryService;
 import it.av.eatt.service.EaterService;
+import it.av.eatt.service.LanguageService;
 
 import java.awt.Dimension;
 import java.util.List;
@@ -32,6 +34,7 @@ import org.apache.wicket.extensions.captcha.kittens.KittenCaptchaPanel;
 import org.apache.wicket.extensions.validation.validator.RfcCompliantEmailAddressValidator;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.IChoiceRenderer;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.validation.EqualPasswordInputValidator;
@@ -41,6 +44,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 
 /**
@@ -57,6 +61,8 @@ public class SignUpPanel extends Panel {
     private Link<String> goSignInAfterSignUp;
     private String passwordConfirm = "";
     private final KittenCaptchaPanel captcha;
+    @SpringBean
+    private LanguageService languageService;
 
     /**
      * Constructor
@@ -90,9 +96,9 @@ public class SignUpPanel extends Panel {
             }
         }
         DropDownChoice<Country> country = new DropDownChoice<Country>(Eater.COUNTRY, countryService.getAll());
-
         // country.setDefaultModelObject(userCountry);
         signUpForm.add(country);
+        signUpForm.add(new DropDownChoice<Language>("language", languageService.getAll(), new LanguageRenderer()).setRequired(true));
         PasswordTextField pwd1 = new PasswordTextField(Eater.PASSWORD);
         pwd1.add(pwdValidator);
         signUpForm.add(pwd1);
@@ -171,6 +177,17 @@ public class SignUpPanel extends Panel {
 
     public final FeedbackPanel getFeedbackPanel() {
         return feedbackPanel;
+    }
+    
+    private class LanguageRenderer implements IChoiceRenderer<Language>{
+        @Override
+        public Object getDisplayValue(Language object) {
+            return getString(object.getLanguage());
+        }
+        @Override
+        public String getIdValue(Language object, int index) {
+            return object.getId();
+        }
     }
 
 }
