@@ -22,7 +22,7 @@
 	<!--<import resource="applicationContext-jr-jca.xml" />--> 
 	<!--  <import resource="applicationContext-jr-local.xml" />-->
 	
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<bean class="org.springframework.beans.factory.config.PropertyOverrideConfigurer">
 		<property name="locations">
 			<list>
 				<value>${springPropertiesLocation}</value>
