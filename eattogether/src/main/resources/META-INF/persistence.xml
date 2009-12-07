@@ -14,7 +14,7 @@
 
 		<properties>
 			<!-- Scan for annotated classes  -->
-			<!-- <property name="hibernate.archive.autodetection" value="class" />
+			<property name="hibernate.archive.autodetection" value="class" />
 			<property name="hibernate.jdbc.use_streams_for_binary" value="true"/>
 			
 			<property name="hibernate.search.default.directory_provider" value="org.hibernate.search.store.FSDirectoryProvider"/>
@@ -34,7 +34,6 @@
 				<property name="hibernate.connection.username" value="eat" />
 				<property name="hibernate.connection.password" value="eat" />
 				<property name="hibernate.hbm2ddl.auto" value="update" />
-				 -->
 				
 			<!-- Connecting to HSQL  -->
 			<!--<property name="hibernate.dialect"
