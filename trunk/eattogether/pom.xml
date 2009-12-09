@@ -1,16 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>it.av.eatt</groupId>
-	<artifactId>eattogether</artifactId>
+	<groupId>it.av.youeat</groupId>
+	<artifactId>youeat</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
-	<name>Eat Together</name>
+	<name>YouEat</name>
 	<description>Wiki and social network to share food experiences</description>
 	<url>http://code.google.com/p/eattogether</url>
 	<ciManagement>
 		<system>Hudson</system>
-		<url>http://www.alessandro.vincelli.name/hudson</url>
+		<url>http://www.youeat.org:8080/hudson/</url>
 	</ciManagement>
 	<developers>
 		<developer>
@@ -55,13 +55,6 @@
 			<properties>
 				<wicketApplication.configurationType>development</wicketApplication.configurationType>
 				<springPropertiesLocation>file:/etc/properties/youeat.properties</springPropertiesLocation>
-				<repositoryHomeDir>/tmp/repository-eattogether</repositoryHomeDir>
-				<indexingConfiguration>/home/alessandro/workspace-jw/eattogether/src/main/resources/indexing_configuration.xml</indexingConfiguration>
-				<mysqlHost>127.0.0.1</mysqlHost>
-				<mysqlDbName>eattogether_repo</mysqlDbName>
-				<mysqlPort>3306</mysqlPort>
-				<mysqlUser>root</mysqlUser>
-				<mysqlPassword>root</mysqlPassword>
 			</properties>
 		</profile>
 		<profile>
@@ -472,7 +465,7 @@
 						<deployables>
 							<deployable>
 								<properties>
-									<context>eattogether</context>
+									<context>/</context>
 								</properties>
 							</deployable>
 						</deployables>
@@ -524,9 +517,9 @@
 	        <groupId>org.apache.maven.plugins</groupId>
 	        <artifactId>maven-project-info-reports-plugin</artifactId>
 	        <configuration>
-	          <webAccessUrl>http://www.alessandro.vincelli.name/svn/deals-3/eattogether</webAccessUrl>
-	          <anonymousConnection>scm:svn:http://www.alessandro.vincelli.name/svn/deals-3/eattogether</anonymousConnection>
-	          <developerConnection>scm:svn:http://www.alessandro.vincelli.name/svn/deals-3/eattogether</developerConnection>
+	          <webAccessUrl>https://eattogether.googlecode.com/svn/trunk/eattogether</webAccessUrl>
+	          <anonymousConnection>scm:svn:https://eattogether.googlecode.com/svn/trunk/eattogether</anonymousConnection>
+	          <developerConnection>scm:svn:https://eattogether.googlecode.com/svn/trunk/eattogether</developerConnection>
 	        </configuration>
 	      </plugin>
 	      <plugin>
